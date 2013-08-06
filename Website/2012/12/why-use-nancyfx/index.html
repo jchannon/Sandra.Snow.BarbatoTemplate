@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2013-08-06T21:45:45.5289438+01:00" />
+    <meta http-equiv="last-modified" content="2013-08-06T22:04:04.4557988+01:00" />
     <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
 
@@ -228,14 +228,17 @@ protected override void ConfigureRequestContainer(TinyIoCContainer container, Na
 
 <p>So when your next project comes about and your manager says “Ok lets write our new app in ASP.NET MVC” your reactions should be reflected by these animated GIFs.</p>
 
-<p><strong>Should we really use ASP.NET MVC?</strong>
-<img src="http://i.minus.com/imM6lHNgto38I.gif" alt="Should we use ASP.NET MVC?" /></p>
+<p><strong>Should we really use ASP.NET MVC?</strong></p>
 
-<p><strong>The boss says we can use Nancy!</strong>
-<img src="http://i.minus.com/i3nPmdfBC2VaH.gif" alt="All systems go" /></p>
+<p><img src="http://i.minus.com/imM6lHNgto38I.gif" alt="Should we use ASP.NET MVC?" /></p>
 
-<p><strong>We have our new Nancy app up and running in no time!</strong>
-<img src="http://i.minus.com/ie4Om0y5NXhS1.gif" alt="Up and Running" /></p>
+<p><strong>The boss says we can use Nancy!</strong></p>
+
+<p><img src="http://i.minus.com/i3nPmdfBC2VaH.gif" alt="All systems go" /></p>
+
+<p><strong>We have our new Nancy app up and running in no time!</strong></p>
+
+<p><img src="http://i.minus.com/ie4Om0y5NXhS1.gif" alt="Up and Running" /></p>
 
 <p>For more infomation on Nancy checkout the <a href="http://nancyfx.org/">website</a> and <a href="https://github.com/NancyFx/Nancy/wiki/Documentation">documentation.</a></p>
 
@@ -274,7 +277,19 @@ protected override void ConfigureRequestContainer(TinyIoCContainer container, Na
     </div>
 
     </div>
+    
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
-            
 </body>
 </html>

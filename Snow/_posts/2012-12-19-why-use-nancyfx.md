@@ -142,12 +142,15 @@ In one of my last [blog posts][13] I described how you could test the full pipel
 So when your next project comes about and your manager says “Ok lets write our new app in ASP.NET MVC” your reactions should be reflected by these animated GIFs.
 
 **Should we really use ASP.NET MVC?**
+
 ![Should we use ASP.NET MVC?][14]
 
 **The boss says we can use Nancy!**
+
 ![All systems go][15]
 
 **We have our new Nancy app up and running in no time!**
+
 ![Up and Running][16]
 
 For more infomation on Nancy checkout the [website][1] and [documentation.][17]

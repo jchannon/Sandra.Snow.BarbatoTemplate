@@ -4,19 +4,23 @@
   Layout = "default.cshtml";
 }
 
-  <ul class="posts">
-    @foreach(var postPaged in Model.PostsPaged) {
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="@postPaged.Url">@postPaged.Title</a> 
-        <span>posted on @postPaged.DateFormatted</span>
-      </h1> 
-      @Html.Raw(postPaged.ContentExcerpt)
-      <p><a href="@postPaged.Url">Read more...</a></p>
-    </li>
-    }
-  </ul> 
-
+  @foreach(var postPaged in Model.PostsPaged) {
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="@postPaged.Url">@postPaged.Title</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">@postPaged.Date.ToString("MMMM dd, yyyy")</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          @Html.Raw(postPaged.ContentExcerpt)
+      </div>
+      <!--<p><a href="@postPaged.Url">Read more...</a></p>-->            
+    </div>
+  }
   <!-- Pagination links -->
   <div id="post-pagination" class="pagination">
 

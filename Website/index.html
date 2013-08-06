@@ -1,45 +1,92 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en-US">
+<!doctype html>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="last-modified" content="2013-08-06T18:02:07.5146518+01:00" />
-    <title>philliphaydon.com</title>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2013-08-06T21:45:45.5289438+01:00" />
+    <title>Jonathan Channon Blog</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <!-- custom CSS -->
+    <link href="/css/custom.css" media="screen" rel="stylesheet">
+
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="/js/libs/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+    <!-- carousel -->
+    <script src="/js/jquery.carouFredSel.min.js"></script>
+
 </head>
-<body class="home blog">
-    <div id="page" class="hfeed site">
-        <header id="masthead" class="site-header fancy-container lightgreen" role="banner">
-            <hgroup>
-                <h1 class="site-title"><a href="/" title="philliphaydon.com" rel="home">philliphaydon.com</a></h1>
-                <h2><small>Works on my PC...</small></h2>
-                <p class="site-description">Pleb from New Zealand who was banished overseas and currently resides in Singapore.</p>
-            </hgroup>
-            <nav role="navigation" class="site-navigation main-navigation">
-                <h1 class="assistive-text">Menu</h1>
-                <div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
-                <div class="menu">
-                    <ul>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/category">Categories</a></li>
-                        <li><a href="/archive">Archive</a></li>
-                        <li><a href="/rss">RSS</a> / <a href="/feed">Atom</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <div id="main">
-            <div id="primary" class="site-content">
-                <div id="content" role="main">
+
+<body>
+<div class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">My Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="#" disabled>Home</option>
+                <option value="about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="archive">Archive</option>
+                <option value="contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="content">
                   
 
-  <ul class="posts">
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/07/modifying-files-within-git-history/">Modifying files within Git history</a> 
-        <span>posted on 03 Jul 2013</span>
-      </h1> 
-      <h2>Modifying files within Git history</h2>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/07/modifying-files-within-git-history/">Modifying files within Git history</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">July 03, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Modifying files within Git history</h2>
 
 <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
 
@@ -58,14 +105,21 @@
 <p>Make a note of the parent commit id of the commit you want to edit.</p>
 
 
-      <p><a href="/2013/07/modifying-files-within-git-history/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/05/why-net-should-become-independent/">Why .Net should become independent!</a> 
-        <span>posted on 29 May 2013</span>
-      </h1> 
-      <h2>Why .Net should become independent!</h2>
+      </div>
+      <!--<p><a href="/2013/07/modifying-files-within-git-history/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/05/why-net-should-become-independent/">Why .Net should become independent!</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">May 29, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Why .Net should become independent!</h2>
 
 <p>I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in <a href="http://nancyfx.org/">Nancy</a> on my first day and paved the way for Git in the first week).</p>
 
@@ -87,14 +141,21 @@
 <p>So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).</p>
 
 
-      <p><a href="/2013/05/why-net-should-become-independent/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/04/mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a> 
-        <span>posted on 30 Apr 2013</span>
-      </h1> 
-      <h2>Mocking HttpContext with Fake It Easy</h2>
+      </div>
+      <!--<p><a href="/2013/05/why-net-should-become-independent/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/04/mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">April 30, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Mocking HttpContext with Fake It Easy</h2>
 
 <p>Lets start with the conclusion first and say “use <a href="http://nancyfx.org">Nancy</a> for your web applications and APIs” as its brilliant!</p>
 
@@ -107,14 +168,21 @@
 <p>Doing this is no easy feat with MVC (with Nancy its all <a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application">done for you</a>) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.</p>
 
 
-      <p><a href="/2013/04/mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/04/up-running-with-typescript-and-webstorm/">Up &amp; Running with TypeScript and WebStorm</a> 
-        <span>posted on 17 Apr 2013</span>
-      </h1> 
-      <h2>Up &amp; Running with TypeScript and WebStorm</h2>
+      </div>
+      <!--<p><a href="/2013/04/mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/04/up-running-with-typescript-and-webstorm/">Up &amp; Running with TypeScript and WebStorm</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">April 17, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Up &amp; Running with TypeScript and WebStorm</h2>
 
 <p>I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.</p>
 
@@ -125,14 +193,21 @@
 <p>So I went over to TypeScript’s <a href="http://www.typescriptlang.org/">website</a> and followed the Hello World type code examples under the “Learn” tab.</p>
 
 
-      <p><a href="/2013/04/up-running-with-typescript-and-webstorm/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/04/using-a-markdown-viewengine-with-nancy/">Using a Markdown ViewEngine with Nancy</a> 
-        <span>posted on 08 Apr 2013</span>
-      </h1> 
-      <h2>Using a Markdown ViewEngine with Nancy</h2>
+      </div>
+      <!--<p><a href="/2013/04/up-running-with-typescript-and-webstorm/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/04/using-a-markdown-viewengine-with-nancy/">Using a Markdown ViewEngine with Nancy</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">April 08, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Using a Markdown ViewEngine with Nancy</h2>
 
 <p>Whilst using <a href="http://stackoverflow.com">stackoverflow.com</a> and <a href="https://gist.github.com/">Github gists</a> I’ve become a frequent user of <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
 
@@ -156,14 +231,21 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into <a href="http://calepin.co/">Calepin</a> and <a href="http://scriptogr.am/">Scriptogr.am</a> as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.</p>
 
 
-      <p><a href="/2013/04/using-a-markdown-viewengine-with-nancy/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/04/using-datetime-in-c-and-sql/">Using DateTime in C# and SQL</a> 
-        <span>posted on 08 Apr 2013</span>
-      </h1> 
-      <h2>Using DateTime in C# and SQL</h2>
+      </div>
+      <!--<p><a href="/2013/04/using-a-markdown-viewengine-with-nancy/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/04/using-datetime-in-c-and-sql/">Using DateTime in C# and SQL</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">April 08, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Using DateTime in C# and SQL</h2>
 
 <p>I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.</p>
 
@@ -175,14 +257,21 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>When you display any DateTime information it must display as a local datetime value. You can do this by using     <code>myObject.ExpiryDate.ToLocalTime()</code></p>
 
 
-      <p><a href="/2013/04/using-datetime-in-c-and-sql/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/04/the-old-development-language-switcheroo/">The Old Development Language Switcheroo</a> 
-        <span>posted on 02 Apr 2013</span>
-      </h1> 
-      <h2>The Old Development Language Switcheroo</h2>
+      </div>
+      <!--<p><a href="/2013/04/using-datetime-in-c-and-sql/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/04/the-old-development-language-switcheroo/">The Old Development Language Switcheroo</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">April 02, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>The Old Development Language Switcheroo</h2>
 
 <p>As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?</p>
 
@@ -191,14 +280,21 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>Now I know there is <a href="http://www.typescriptlang.org/">TypeScript</a> that I could use for my <a href="http://nodejs.org/">node.js</a> apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.</p>
 
 
-      <p><a href="/2013/04/the-old-development-language-switcheroo/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/03/the-many-approaches-to-entity-framework/">The many approaches to Entity Framework</a> 
-        <span>posted on 04 Mar 2013</span>
-      </h1> 
-      <h2>The many approaches to Entity Framework</h2>
+      </div>
+      <!--<p><a href="/2013/04/the-old-development-language-switcheroo/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/03/the-many-approaches-to-entity-framework/">The many approaches to Entity Framework</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">March 04, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>The many approaches to Entity Framework</h2>
 
 <p>I recently had a need to look into using <a href="http://www.asp.net/entity-framework">Entity Framework (EF)</a> for a <a href="http://www.asp.net/mvc">ASP.NET MVC</a> project. In the past I have always used <a href="http://www.toptensoftware.com/petapoco/">PetaPoco</a> as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.</p>
 
@@ -207,14 +303,21 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.</p>
 
 
-      <p><a href="/2013/03/the-many-approaches-to-entity-framework/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-1/">Evaluating KnockoutJS and AngularJS – Part 1</a> 
-        <span>posted on 05 Feb 2013</span>
-      </h1> 
-      <h2>Evaluating KnockoutJS and AngularJS – Part 1</h2>
+      </div>
+      <!--<p><a href="/2013/03/the-many-approaches-to-entity-framework/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-1/">Evaluating KnockoutJS and AngularJS – Part 1</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">February 05, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Evaluating KnockoutJS and AngularJS – Part 1</h2>
 
 <p>As I stated in my earlier post <a href="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/" title="JavaScript is the future…maybe!">“JavaScript is the future…maybe”</a> so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at <a href="http://knockoutjs.com">KnockoutJS</a> and <a href="http://angularjs.org/">AngularJS</a>.</p>
 
@@ -223,14 +326,21 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>Getting to grips with any language or frameworks is tricky and the best way to do it is to write an application using it. The next difficult thing to overcome is an idea for writing an application. ToDo list’s are very common with JavaScript frameworks and there is a whole website for you to peruse but after looking at SammyJS and their docs they walk through writing a simple shopping basket so I thought I’d use that.</p>
 
 
-      <p><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-1/">Read more...</a></p>
-    </li>
-    <li class="fancy-container lightblue">
-      <h1>
-        <a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-2/">Evaluating KnockoutJS and AngularJS – Part 2</a> 
-        <span>posted on 05 Feb 2013</span>
-      </h1> 
-      <h2>Evaluating KnockoutJS and AngularJS – Part 2</h2>
+      </div>
+      <!--<p><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-1/">Read more...</a></p>-->            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-2/">Evaluating KnockoutJS and AngularJS – Part 2</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">February 05, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="link-comments"></span>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <h2>Evaluating KnockoutJS and AngularJS – Part 2</h2>
 
 <p>In <a href="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/" title="Evaluating KnockoutJS and AngularJS – Part 1">Part 1</a>, I described how I was using the demo tutorial from <a href="http://sammyjs.org/">SammyJS</a> to get a better understanding of <a href="http://angularjs.org/">AngularJS</a> and <a href="http://knockoutjs.com/">KnockoutJS</a>.</p>
 
@@ -243,10 +353,9 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 <p>Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank <a href="https://twitter.com/davepermen">David Spörri</a> for answering my newbie JS and Knockout questions.</p>
 
 
-      <p><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-2/">Read more...</a></p>
-    </li>
-  </ul> 
-
+      </div>
+      <!--<p><a href="/2013/02/evaluating-knockoutjs-and-angularjs-part-2/">Read more...</a></p>-->            
+    </div>
   <!-- Pagination links -->
   <div id="post-pagination" class="pagination">
 
@@ -262,110 +371,34 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
   </div>
 
 
-                </div>
+            </div>
                 <!-- #content -->
-            </div>
-            <!-- #primary .site-content -->
-
-            <div id="secondary" class="widget-area fancy-container lightred" role="complementary">
-                <aside id="text-5" class="widget widget_text">
-                    <h1 class="widget-title">Follow</h1>
-                    <div class="textwidget logos">
-                        <a href="https://twitter.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://twitter.com']);"><img src="/stylesheets/images/twitter.png"></a>
-                        <a href="http://stackoverflow.com/users/456813/phill" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://stackoverflow.com']);"><img src="/stylesheets/images/stackoverflow.png"></a>
-                        <a href="http://www.linkedin.com/in/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://www.linkedin.com']);"><img src="/stylesheets/images/linkedin.png"></a>
-                        <a href="https://plus.google.com/u/0/111751877537461442095" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://plus.google.com']);"><img src="/stylesheets/images/googleplus.png"></a>
-                        <a href="https://coderbits.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','https://coderbits.com/philliphaydon']);"><img src="/stylesheets/images/codebits.png"></a>
-                        <a href="https://github.com/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://github.com']);"><img src="/stylesheets/images/github.png"></a>
-                        <a href="http://www.codeschool.com/users/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://codeschool.com']);"><img src="/stylesheets/images/codeschool.png"></a>
-                        <a href="http://www.kickstarter.com/profile/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://kickstarter.com']);"><img src="/stylesheets/images/kickstarter.png"></a>
-                    </div>
-                    <a href="http://stackoverflow.com/users/456813/phill">
-                      <img src="http://stackoverflow.com/users/flair/456813.png" width="208" height="58" alt="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
-                    </a>
-                    
-                    <a href="http://nancyfx.org/mvm.html"><img src="/stylesheets/images/mvm.png"></a>
-                    
-                    <div id = "clustrback" style="width:162px; height:133px;  background:#f7f7f7 url(http://clustrmaps.com/admin/3d/images/st4_grey.png)  center no-repeat; text-align:center;">
-                      <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.philliphaydon.com/" style="width:160px; display:block; margin:0 auto;" id="clustrMapsLink">
-                        <img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.philliphaydon.com/" style="border:0px; margin:15px auto;margin:15px auto;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
-                      </a>
-                    </div>
-                </aside>
-                <!--aside id="text-8" class="widget widget_text">
-                    <h1 class="widget-title">Other sites</h1>
-                    <div class="textwidget">
-                        <a href="http://csharptube.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://csharptube.com']);">csharptube.com</a><br />
-                        <a href="http://thisisparrot.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://thisisparrot.com']);">Parrot</a><br />
-                        <a href="http://shitprogrammerswrite.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://shitprogrammerswrite.com']);">Shit programmers write</a><br />
-                    </div>
-                </aside-->
-                <aside id="linkcat-6" class="widget widget_links">
-                    <h1 class="widget-title">Other Blogs</h1>
-                    <ul class='xoxo blogroll'>
-                        <li><a href="http://www.nickharris.net/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://nickharris.net/']);">Nick Harris</a></li>
-                        <li><a href="http://www.mindscapehq.com/blog/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.mindscapehq.com/blog/']);">Mindscape</a></li>
-                        <li><a href="http://blog.orangelightning.co.uk/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://blog.orangelightning.co.uk/']);">Phil Jones</a></li>
-                        <li><a href="http://buildstarted.com/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://buildstarted.com']);">Ben Dornis</a></li>
-                        <li><a href="http://jflood.net/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://jflood.net/']);">Jospeh Flood</a></li>
-                    </ul>
-                    
-                </aside>
-                <aside id="archives-4" class="widget widget_archive">
-                    <h1 class="widget-title">Archive</h1>
-                    <ul class="posts">
-                          <li><a href="/archive#2013July">July, 2013</a></li>
-                          <li><a href="/archive#2013May">May, 2013</a></li>
-                          <li><a href="/archive#2013April">April, 2013</a></li>
-                          <li><a href="/archive#2013March">March, 2013</a></li>
-                          <li><a href="/archive#2013February">February, 2013</a></li>
-                          <li><a href="/archive#2013January">January, 2013</a></li>
-                          <li><a href="/archive#2012December">December, 2012</a></li>
-                          <li><a href="/archive#2012November">November, 2012</a></li>
-                          <li><a href="/archive#2012October">October, 2012</a></li>
-                          <li><a href="/archive#2012September">September, 2012</a></li>
-                    </ul>
-                </aside>
-            </div>
-            <!-- #secondary .widget-area -->
-
-
-        </div>
-        <!-- #main -->
-
-        <footer id="colophon" class="site-footer" role="contentinfo">
-            <div class="site-info">
-                Powered by <a href="https://github.com/Sandra/Sandra.Snow" rel="generator">Sandra.Snow</a>.	
-            </div>
-            <!-- .site-info -->
-        </footer>
-        <!-- #colophon .site-footer -->
+         </div>
     </div>
-    <!-- #page .hfeed .site -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src='/javascripts/prettify.js' type='text/javascript'></script>
-    <!--script src='http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js' type='text/javascript'></script-->
-    <script type='text/javascript'>
-      $(function () {
-        $("pre code").parent().each(function () {
-          if (!$(this).hasClass("prettyprint")) {
-            $(this).addClass("prettyprint");
-            a = true
-          }
-        });
+    <!--/ middle -->
 
-        prettyPrint();
-      });
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="#" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-655975-13']);
-      _gaq.push(['_trackPageview']);
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
+    </div>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+            
 </body>
 </html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="last-modified" content="2013-08-06T16:40:03.6631715+01:00" />
+    <title>philliphaydon.com</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+</head>
+<body class="home blog">
+    <div id="page" class="hfeed site">
+        <header id="masthead" class="site-header fancy-container lightgreen" role="banner">
+            <hgroup>
+                <h1 class="site-title"><a href="/" title="philliphaydon.com" rel="home">philliphaydon.com</a></h1>
+                <h2><small>Works on my PC...</small></h2>
+                <p class="site-description">Pleb from New Zealand who was banished overseas and currently resides in Singapore.</p>
+            </hgroup>
+            <nav role="navigation" class="site-navigation main-navigation">
+                <h1 class="assistive-text">Menu</h1>
+                <div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/category">Categories</a></li>
+                        <li><a href="/archive">Archive</a></li>
+                        <li><a href="/rss">RSS</a> / <a href="/feed">Atom</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="main">
+            <div id="primary" class="site-content">
+                <div id="content" role="main">
+                  
+
+<div id="post">
+    <h1>Evaluating KnockoutJS and AngularJS – Part 1</h1>
+
+    <div class="post-note">
+      posted on 05 Feb 2013
+       | <a href="/category/angularjs">angularjs</a>
+       | <a href="/category/handlebars">handlebars</a>
+       | <a href="/category/javascript">javascript</a>
+       | <a href="/category/knockoutjs">knockoutjs</a>
+       | <a href="/category/learning">learning</a>
+       | <a href="/category/oss">oss</a>
+       | <a href="/category/sammyjs">sammyjs</a>
+      
+      <div class="addthis_toolbox addthis_default_style" style="float:right;">
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+        <a class="addthis_button_linkedin_counter"></a>
+        <a class="addthis_counter addthis_pill_style"></a>
+      </div>
+    </div>
+        
+    <h2>Evaluating KnockoutJS and AngularJS – Part 1</h2>
+
+<p>As I stated in my earlier post <a href="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/" title="JavaScript is the future…maybe!">“JavaScript is the future…maybe”</a> so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at <a href="http://knockoutjs.com">KnockoutJS</a> and <a href="http://angularjs.org/">AngularJS</a>.</p>
+
+<p>Before I actually looked at these two I spent some time with <a href="http://sammyjs.org/">SammyJS</a> but realised afterwards it was mainly MVC based and not around 2-way binding that Knockout and Angular offer. However, I really liked it and it seemed very familiar and easy to use, the reason being it was inspired by <a href="http://www.sinatrarb.com/">Sinatra</a> which we all know <a href="http://nancyfx.org/">Nancy</a> was also inspired by and we also know how much <a href="http://nancyfx.org/mvm.html">I like Nancy</a>!</p>
+
+<p>Getting to grips with any language or frameworks is tricky and the best way to do it is to write an application using it. The next difficult thing to overcome is an idea for writing an application. ToDo list’s are very common with JavaScript frameworks and there is a whole website for you to peruse but after looking at SammyJS and their docs they walk through writing a simple shopping basket so I thought I’d use that.</p>
+
+<!--excerpt-->
+
+<p>If you just want to get to the code then feel free to take a look here for <a href="https://github.com/jchannon/AngularShopping">Angular</a> and here for <a href="https://github.com/jchannon/KnockoutShopping">Knockout</a>.</p>
+
+<p>This blog post will concentrate on AngularJS.</p>
+
+<h2>Angular</h2>
+
+<p>After looking at the demos on the the home page and reading the docs I was ready to start. (I also got recommended <a href="http://egghead.io/">egghead.io</a> for lots of free AngularJS videos)</p>
+
+<p>I liked the look of Angular’s data bindings, it was very similar to <a href="http://handlebarsjs.com/">HandlebarsJS</a> which is a templating engine for JS and their specific attributes for doing certain things in the DOM seemed clean.</p>
+
+<pre><code>&lt;input type="text" ng-model="yourName" placeholder="Enter a name here"&gt;
+&lt;hr&gt;
+&lt;h1&gt;Hello {{yourName}}!&lt;/h1&gt;
+</code></pre>
+
+<p>Angular uses “Controllers” and coming from experience with MVC it turned out they’re not really controllers but more ViewModels. Each Controller handles its own specific task for example, in CRUD you’d probably have a controller for each create, read, update and delete. I believe its possible to make it have one controller but that’s a bit more advanced!</p>
+
+<p>The data in the SammyJS demo comes via a data.json file so I duly created my file and followed the examples of wiring up a backend. This is when things start getting a bit more in depth with Angular opposed to a simple Hello World app. Angular provides its own internal IOC container which is recommended you use to keep things nicely separated and of course it then injects your controller’s dependencies for you. See <a href="http://docs.angularjs.org/guide/di">here</a> for more about the subject. There is a bit of configuration needed in various places and one missing item or spelling mistake and you’ll be stuck due to the nature of dynamic nature of JavaScript.</p>
+
+<p>I finally managed to get my wirings all sorted and my products displayed on screen but when I wanted to retrieve a single item this is when I started scratching my head. The recommended way of doing it was to use an abstracted class called $resource which allows you to query REST based services and obviously with just having one file this wasn’t going to work. $resource sits on top of $http but after playing with that I discarded my file and stuck it in memory for ease. If you’d like to see a $http demo with Nancy as a REST service see <a href="http://blogs.lessthandot.com/index.php/WebDev/UIDevelopment/Javascript/angularjs">this blog post</a> from <a href="http://blogs.lessthandot.com/index.php/All/?disp=authdir&amp;author=7">Christiaan Baes</a></p>
+
+<p>So now with a bit of filtering I could find my product and display it on screen. I had a controller for listing my products and another controller for displaying one item and a dependency injected into both to allow me to retrieve the data I wanted to display and I also had my routing setup.</p>
+
+<pre><code>//Routing
+var app = angular.module('myCart', []).
+        config(function ($routeProvider) {
+            $routeProvider.
+                when('/', {
+                    controller: 'IndexController',
+                    templateUrl: '/templates/list.html'
+                }).
+                when('/:id', {
+                    controller: 'DetailController',
+                    templateUrl: '/templates/detail.html'
+                }).
+                otherwise({ redirectTo: '/' });
+        });
+
+//Repository
+app.factory('shoppingItemsService', function () {
+        var data = [
+            //My data is here!
+        ];
+
+        return {
+            getItems: function () { return data; },
+            getItem: function (itemId) {
+                return data.filter(function (x) { return x.id === parseInt(itemId, 10); })[0];
+            }
+        };
+    });
+
+//List Controller
+app.controller(
+        'IndexController',
+        function ($scope, shoppingItemsService) {
+            $scope.items = shoppingItemsService.getItems();
+        }
+    );
+
+//Detail Controller
+app.controller(
+        'DetailController',
+        function ($scope, $routeParams, basketService, shoppingItemsService) {
+
+            $scope.item = shoppingItemsService.getItem($routeParams.id);
+            $scope.item.quantity = 1;
+
+            $scope.item.basketCount = basketService.getCount();
+
+            $scope.addItem = function () {
+                basketService.addItem($scope.item);
+            };
+        }
+    );
+</code></pre>
+
+<p>As the app is based around a single page application (SPA) the main area on the screen would show the products or product selected however I had an area, the cart info, that showed the quantity of items in my basket outside this main area. After a lot of head scratching I realised I could create a new controller that was responsible for setting a viewmodel property of the quantity and only update that specific area on screen. This meant when I was viewing a product and added a certain quantity to the basket this area would update automatically. Finally in the demo for a bit of added pizazz the cart info area animates.</p>
+
+<p>This is the one bit that took me a long time to get my head around. Angular recommends that no DOM manipulation occurs in controllers but in separate classes/functions called Directives. I understand why, to keep your viewmodel not dependent on your view but man it was hard work! Directives allow you to determine your own HTML elements that Angular understands, again you can pass in dependencies and they will get resolved for you. Put whatever logic you want in your directive and then manipulate the DOM.</p>
+
+<pre><code>app.directive('quantity', function () {
+        var linker = function (scope, element, attrs, basketService) {
+
+            scope.$watch(attrs.quantity, function (value, oldValue) {
+                if (value &gt; oldValue) {
+                    element
+                    .animate({ paddingTop: '30px' })
+                    .animate({ paddingTop: '10px' });
+                }
+            }, true);
+        };
+
+        return {
+            restrict: 'A',
+            link: linker
+        };
+    });
+
+//Usage
+&lt;div class="cart-info" ng-controller="CartController" quantity="basketCount()"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>One of the biggest things I found with Angular was that it was quite fiddly to setup however the documentation was very good and I had help from <a href="http://twitter.com/philjones88">Phil Jones</a>. Once I had solved whatever issue I was having at the time it was glaringly obvious what was needed and I why I was having problems but that’s all part of the learning curve I guess but mighty frustrating. Angular is certainly all encompassing by handling routing, model binding, separation of concerns and much more and so for a large app I can certainly see its potential but for small apps it may be a bit over the top but overall I did like it. There are also library extensions such as <a href="http://angular-ui.github.com/">AngularUI</a> which provide custom directives for DOM manipulation, ranked <a href="http://ngmodules.org/">popular modules</a> and specific <a href="https://github.com/angular/angularjs-batarang">Angular debuggers</a> so this framework certainly has a lot behind it and I definitely think it will be sticking around for a while.</p>
+
+
+	<div class="divider"></div>
+	<div id="disqus_thread"></div>
+	<script>
+	    var disqus_shortname = 'philliphaydon';
+	    var disqus_url = "http://www.philliphaydon.com@Model.Url";
+
+	    /* * * DON'T EDIT BELOW THIS LINE * * */
+	    (function () {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51ca97356d8c1454"></script>
+
+</div>
+                </div>
+                <!-- #content -->
+            </div>
+            <!-- #primary .site-content -->
+
+            <div id="secondary" class="widget-area fancy-container lightred" role="complementary">
+                <aside id="text-5" class="widget widget_text">
+                    <h1 class="widget-title">Follow</h1>
+                    <div class="textwidget logos">
+                        <a href="https://twitter.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://twitter.com']);"><img src="/stylesheets/images/twitter.png"></a>
+                        <a href="http://stackoverflow.com/users/456813/phill" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://stackoverflow.com']);"><img src="/stylesheets/images/stackoverflow.png"></a>
+                        <a href="http://www.linkedin.com/in/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://www.linkedin.com']);"><img src="/stylesheets/images/linkedin.png"></a>
+                        <a href="https://plus.google.com/u/0/111751877537461442095" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://plus.google.com']);"><img src="/stylesheets/images/googleplus.png"></a>
+                        <a href="https://coderbits.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','https://coderbits.com/philliphaydon']);"><img src="/stylesheets/images/codebits.png"></a>
+                        <a href="https://github.com/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://github.com']);"><img src="/stylesheets/images/github.png"></a>
+                        <a href="http://www.codeschool.com/users/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://codeschool.com']);"><img src="/stylesheets/images/codeschool.png"></a>
+                        <a href="http://www.kickstarter.com/profile/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://kickstarter.com']);"><img src="/stylesheets/images/kickstarter.png"></a>
+                    </div>
+                    <a href="http://stackoverflow.com/users/456813/phill">
+                      <img src="http://stackoverflow.com/users/flair/456813.png" width="208" height="58" alt="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+                    </a>
+                    
+                    <a href="http://nancyfx.org/mvm.html"><img src="/stylesheets/images/mvm.png"></a>
+                    
+                    <div id = "clustrback" style="width:162px; height:133px;  background:#f7f7f7 url(http://clustrmaps.com/admin/3d/images/st4_grey.png)  center no-repeat; text-align:center;">
+                      <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.philliphaydon.com/" style="width:160px; display:block; margin:0 auto;" id="clustrMapsLink">
+                        <img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.philliphaydon.com/" style="border:0px; margin:15px auto;margin:15px auto;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
+                      </a>
+                    </div>
+                </aside>
+                <!--aside id="text-8" class="widget widget_text">
+                    <h1 class="widget-title">Other sites</h1>
+                    <div class="textwidget">
+                        <a href="http://csharptube.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://csharptube.com']);">csharptube.com</a><br />
+                        <a href="http://thisisparrot.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://thisisparrot.com']);">Parrot</a><br />
+                        <a href="http://shitprogrammerswrite.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://shitprogrammerswrite.com']);">Shit programmers write</a><br />
+                    </div>
+                </aside-->
+                <aside id="linkcat-6" class="widget widget_links">
+                    <h1 class="widget-title">Other Blogs</h1>
+                    <ul class='xoxo blogroll'>
+                        <li><a href="http://www.nickharris.net/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://nickharris.net/']);">Nick Harris</a></li>
+                        <li><a href="http://www.mindscapehq.com/blog/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.mindscapehq.com/blog/']);">Mindscape</a></li>
+                        <li><a href="http://blog.orangelightning.co.uk/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://blog.orangelightning.co.uk/']);">Phil Jones</a></li>
+                        <li><a href="http://buildstarted.com/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://buildstarted.com']);">Ben Dornis</a></li>
+                        <li><a href="http://jflood.net/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://jflood.net/']);">Jospeh Flood</a></li>
+                    </ul>
+                    
+                </aside>
+                <aside id="archives-4" class="widget widget_archive">
+                    <h1 class="widget-title">Archive</h1>
+                    <ul class="posts">
+                          <li><a href="/archive#2013July">July, 2013</a></li>
+                          <li><a href="/archive#2013May">May, 2013</a></li>
+                          <li><a href="/archive#2013April">April, 2013</a></li>
+                          <li><a href="/archive#2013March">March, 2013</a></li>
+                          <li><a href="/archive#2013February">February, 2013</a></li>
+                          <li><a href="/archive#2013January">January, 2013</a></li>
+                          <li><a href="/archive#2012December">December, 2012</a></li>
+                          <li><a href="/archive#2012November">November, 2012</a></li>
+                          <li><a href="/archive#2012October">October, 2012</a></li>
+                          <li><a href="/archive#2012September">September, 2012</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <!-- #secondary .widget-area -->
+
+
+        </div>
+        <!-- #main -->
+
+        <footer id="colophon" class="site-footer" role="contentinfo">
+            <div class="site-info">
+                Powered by <a href="https://github.com/Sandra/Sandra.Snow" rel="generator">Sandra.Snow</a>.	
+            </div>
+            <!-- .site-info -->
+        </footer>
+        <!-- #colophon .site-footer -->
+    </div>
+    <!-- #page .hfeed .site -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src='/javascripts/prettify.js' type='text/javascript'></script>
+    <!--script src='http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js' type='text/javascript'></script-->
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        prettyPrint();
+      });
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-655975-13']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

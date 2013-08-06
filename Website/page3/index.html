@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="last-modified" content="2013-08-06T16:40:03.6631715+01:00" />
+    <title>philliphaydon.com</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+</head>
+<body class="home blog">
+    <div id="page" class="hfeed site">
+        <header id="masthead" class="site-header fancy-container lightgreen" role="banner">
+            <hgroup>
+                <h1 class="site-title"><a href="/" title="philliphaydon.com" rel="home">philliphaydon.com</a></h1>
+                <h2><small>Works on my PC...</small></h2>
+                <p class="site-description">Pleb from New Zealand who was banished overseas and currently resides in Singapore.</p>
+            </hgroup>
+            <nav role="navigation" class="site-navigation main-navigation">
+                <h1 class="assistive-text">Menu</h1>
+                <div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/category">Categories</a></li>
+                        <li><a href="/archive">Archive</a></li>
+                        <li><a href="/rss">RSS</a> / <a href="/feed">Atom</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="main">
+            <div id="primary" class="site-content">
+                <div id="content" role="main">
+                  
+
+  <ul class="posts">
+    <li class="fancy-container lightblue">
+      <h1>
+        <a href="/2012/10/node-js-express-hello-world-formula-1-style/">Node.js, Express, Hello World Formula 1 Style</a> 
+        <span>posted on 08 Oct 2012</span>
+      </h1> 
+      <h2>Node.js, Express, Hello World Formula 1 Style</h2>
+
+<p>In my ongoing efforts to be a better developer (plus I just like tinkering) I thought I would take a look at <a href="http://nodejs.org">node.js</a>.</p>
+
+<p>I did play with node.js about a year ago where I setup a TCP listener to listen to a TCP Server on the network broadcasting XML messages, I then took these, formatted them to JSON and passed it to a browser using <a href="http://socket.io/">Socket.IO</a>. It was pretty cool but the project never came to anything.</p>
+
+<p>However, I thought I would re-visit and setup a proper development environment on my Mac at home.</p>
+
+<h2>Editors</h2>
+
+<p>There are many editors/IDE’s that you can use for node.js development such as Vim, Eclipse, WebStorm, Aptana Studio, Emacs and Cloud9 IDE.  As I have used <a href="http://www.sublimetext.com/">Sublime Text 2</a> (ST2) before I thought I would use this because I like it and all the cool kids use it!!</p>
+
+<p>Coming from a mainly IDE based background I started to find things a bit hard going however ST2 allows plugins to be used to make the user experience a lot nicer.  Below are a list of plugins I have installed:</p>
+
+
+      <p><a href="/2012/10/node-js-express-hello-world-formula-1-style/">Read more...</a></p>
+    </li>
+    <li class="fancy-container lightblue">
+      <h1>
+        <a href="/2012/09/abstracting-the-file-system/">Abstracting the File System</a> 
+        <span>posted on 28 Sep 2012</span>
+      </h1> 
+      <h2>Abstracting the File System</h2>
+
+<p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+
+<p>So you have a a method similar to this:</p>
+
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo("C:\Mytext.txt")
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine("This blog post is cool");
+    w.Close();
+  }
+}
+</code></pre>
+
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p>
+
+
+      <p><a href="/2012/09/abstracting-the-file-system/">Read more...</a></p>
+    </li>
+    <li class="fancy-container lightblue">
+      <h1>
+        <a href="/2012/09/is-oss-good-for-your-career/">Is OSS good for your career?</a> 
+        <span>posted on 25 Sep 2012</span>
+      </h1> 
+      <h2>Is OSS good for your career?</h2>
+
+<p>Got your attention? Good.</p>
+
+<p>Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.</p>
+
+<p>Let me explain that I have had 4 jobs in the last 10-11 years. 3 of those were via recruitment agents. They check your skills, tick them off and pass you over to the employer if they match and hopefully you get an interview. That process has happened to me in each of those 3 times.</p>
+
+<p>If you have read my previous blog posts you’ll know I have spent the last year reading a lot of other peoples code and learning all the best practices I can in a bid to become a better software developer as well as give back to the developer community where I can.</p>
+
+<p>After spending a couple of months porting <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me">NerdDinner over to NancyFX</a> I realised that I had not looked at <a href="http://www.asp.net/mvc">ASP.Net MVC 4</a> and the new features built into it. I felt slightly strange at that point as I was usually an early adopter of these things keen to check out the new stuff. I think this was partly due to the fact I had spent a lot of time learning <a href="http://www.nancyfx.org">NancyFX</a> and really quite enjoying the framework and interacting with the small community of people who use Nancy.</p>
+
+
+      <p><a href="/2012/09/is-oss-good-for-your-career/">Read more...</a></p>
+    </li>
+    <li class="fancy-container lightblue">
+      <h1>
+        <a href="/2012/09/nancyfx-ravendb-nerddinner-and-me/">NancyFX, RavenDB, NerdDinner and Me</a> 
+        <span>posted on 21 Sep 2012</span>
+      </h1> 
+      <h2>NancyFX, RavenDB, NerdDinner and Me</h2>
+
+<p>As I said in my <a href="http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/" title="I’ve started blogging. Why?">first post</a>, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following <a href="http://twitter.com/squidge">@squidge</a> and <a href="http://twitter.com/cranialstrain">@cranialstrain</a> on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about <a href="http://ravendb.net">RavenDB</a>.</p>
+
+<h3>What is NancyFX?</h3>
+
+<p>From the official docs this explains NancyFX:</p>
+
+<p><em>Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.</em></p>
+
+<p><em>This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.</em></p>
+
+
+      <p><a href="/2012/09/nancyfx-ravendb-nerddinner-and-me/">Read more...</a></p>
+    </li>
+    <li class="fancy-container lightblue">
+      <h1>
+        <a href="/2012/09/ive-started-blogging-why/">I’ve started blogging. Why?</a> 
+        <span>posted on 17 Sep 2012</span>
+      </h1> 
+      <h2>I’ve started blogging. Why?</h2>
+
+<p>So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?</p>
+
+<p>I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an <a href="http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/">article</a> by <a href="http://twitter.com/buildstarted">Ben Dornis</a> titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.</p>
+
+
+      <p><a href="/2012/09/ive-started-blogging-why/">Read more...</a></p>
+    </li>
+  </ul> 
+
+  <!-- Pagination links -->
+  <div id="post-pagination" class="pagination">
+
+    <p class="previous">
+      <a href="/page2">Previous Page</a>
+    </p>
+
+
+
+  </div>
+
+
+                </div>
+                <!-- #content -->
+            </div>
+            <!-- #primary .site-content -->
+
+            <div id="secondary" class="widget-area fancy-container lightred" role="complementary">
+                <aside id="text-5" class="widget widget_text">
+                    <h1 class="widget-title">Follow</h1>
+                    <div class="textwidget logos">
+                        <a href="https://twitter.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://twitter.com']);"><img src="/stylesheets/images/twitter.png"></a>
+                        <a href="http://stackoverflow.com/users/456813/phill" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://stackoverflow.com']);"><img src="/stylesheets/images/stackoverflow.png"></a>
+                        <a href="http://www.linkedin.com/in/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://www.linkedin.com']);"><img src="/stylesheets/images/linkedin.png"></a>
+                        <a href="https://plus.google.com/u/0/111751877537461442095" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://plus.google.com']);"><img src="/stylesheets/images/googleplus.png"></a>
+                        <a href="https://coderbits.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','https://coderbits.com/philliphaydon']);"><img src="/stylesheets/images/codebits.png"></a>
+                        <a href="https://github.com/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://github.com']);"><img src="/stylesheets/images/github.png"></a>
+                        <a href="http://www.codeschool.com/users/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://codeschool.com']);"><img src="/stylesheets/images/codeschool.png"></a>
+                        <a href="http://www.kickstarter.com/profile/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://kickstarter.com']);"><img src="/stylesheets/images/kickstarter.png"></a>
+                    </div>
+                    <a href="http://stackoverflow.com/users/456813/phill">
+                      <img src="http://stackoverflow.com/users/flair/456813.png" width="208" height="58" alt="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+                    </a>
+                    
+                    <a href="http://nancyfx.org/mvm.html"><img src="/stylesheets/images/mvm.png"></a>
+                    
+                    <div id = "clustrback" style="width:162px; height:133px;  background:#f7f7f7 url(http://clustrmaps.com/admin/3d/images/st4_grey.png)  center no-repeat; text-align:center;">
+                      <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.philliphaydon.com/" style="width:160px; display:block; margin:0 auto;" id="clustrMapsLink">
+                        <img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.philliphaydon.com/" style="border:0px; margin:15px auto;margin:15px auto;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
+                      </a>
+                    </div>
+                </aside>
+                <!--aside id="text-8" class="widget widget_text">
+                    <h1 class="widget-title">Other sites</h1>
+                    <div class="textwidget">
+                        <a href="http://csharptube.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://csharptube.com']);">csharptube.com</a><br />
+                        <a href="http://thisisparrot.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://thisisparrot.com']);">Parrot</a><br />
+                        <a href="http://shitprogrammerswrite.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://shitprogrammerswrite.com']);">Shit programmers write</a><br />
+                    </div>
+                </aside-->
+                <aside id="linkcat-6" class="widget widget_links">
+                    <h1 class="widget-title">Other Blogs</h1>
+                    <ul class='xoxo blogroll'>
+                        <li><a href="http://www.nickharris.net/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://nickharris.net/']);">Nick Harris</a></li>
+                        <li><a href="http://www.mindscapehq.com/blog/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.mindscapehq.com/blog/']);">Mindscape</a></li>
+                        <li><a href="http://blog.orangelightning.co.uk/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://blog.orangelightning.co.uk/']);">Phil Jones</a></li>
+                        <li><a href="http://buildstarted.com/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://buildstarted.com']);">Ben Dornis</a></li>
+                        <li><a href="http://jflood.net/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://jflood.net/']);">Jospeh Flood</a></li>
+                    </ul>
+                    
+                </aside>
+                <aside id="archives-4" class="widget widget_archive">
+                    <h1 class="widget-title">Archive</h1>
+                    <ul class="posts">
+                          <li><a href="/archive#2013July">July, 2013</a></li>
+                          <li><a href="/archive#2013May">May, 2013</a></li>
+                          <li><a href="/archive#2013April">April, 2013</a></li>
+                          <li><a href="/archive#2013March">March, 2013</a></li>
+                          <li><a href="/archive#2013February">February, 2013</a></li>
+                          <li><a href="/archive#2013January">January, 2013</a></li>
+                          <li><a href="/archive#2012December">December, 2012</a></li>
+                          <li><a href="/archive#2012November">November, 2012</a></li>
+                          <li><a href="/archive#2012October">October, 2012</a></li>
+                          <li><a href="/archive#2012September">September, 2012</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <!-- #secondary .widget-area -->
+
+
+        </div>
+        <!-- #main -->
+
+        <footer id="colophon" class="site-footer" role="contentinfo">
+            <div class="site-info">
+                Powered by <a href="https://github.com/Sandra/Sandra.Snow" rel="generator">Sandra.Snow</a>.	
+            </div>
+            <!-- .site-info -->
+        </footer>
+        <!-- #colophon .site-footer -->
+    </div>
+    <!-- #page .hfeed .site -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src='/javascripts/prettify.js' type='text/javascript'></script>
+    <!--script src='http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js' type='text/javascript'></script-->
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        prettyPrint();
+      });
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-655975-13']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

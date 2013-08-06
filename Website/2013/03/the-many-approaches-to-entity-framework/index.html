@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="last-modified" content="2013-08-06T16:40:03.6631715+01:00" />
+    <title>philliphaydon.com</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+</head>
+<body class="home blog">
+    <div id="page" class="hfeed site">
+        <header id="masthead" class="site-header fancy-container lightgreen" role="banner">
+            <hgroup>
+                <h1 class="site-title"><a href="/" title="philliphaydon.com" rel="home">philliphaydon.com</a></h1>
+                <h2><small>Works on my PC...</small></h2>
+                <p class="site-description">Pleb from New Zealand who was banished overseas and currently resides in Singapore.</p>
+            </hgroup>
+            <nav role="navigation" class="site-navigation main-navigation">
+                <h1 class="assistive-text">Menu</h1>
+                <div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/category">Categories</a></li>
+                        <li><a href="/archive">Archive</a></li>
+                        <li><a href="/rss">RSS</a> / <a href="/feed">Atom</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="main">
+            <div id="primary" class="site-content">
+                <div id="content" role="main">
+                  
+
+<div id="post">
+    <h1>The many approaches to Entity Framework</h1>
+
+    <div class="post-note">
+      posted on 04 Mar 2013
+       | <a href="/category/.net">.net</a>
+       | <a href="/category/asp.net-mvc">asp.net mvc</a>
+       | <a href="/category/c#">c#</a>
+       | <a href="/category/entity-framework">entity framework</a>
+       | <a href="/category/github">github</a>
+       | <a href="/category/srp">SRP</a>
+      
+      <div class="addthis_toolbox addthis_default_style" style="float:right;">
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+        <a class="addthis_button_linkedin_counter"></a>
+        <a class="addthis_counter addthis_pill_style"></a>
+      </div>
+    </div>
+        
+    <h2>The many approaches to Entity Framework</h2>
+
+<p>I recently had a need to look into using <a href="http://www.asp.net/entity-framework">Entity Framework (EF)</a> for a <a href="http://www.asp.net/mvc">ASP.NET MVC</a> project. In the past I have always used <a href="http://www.toptensoftware.com/petapoco/">PetaPoco</a> as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.</p>
+
+<p>The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.</p>
+
+<p>I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.</p>
+
+<!--excerpt-->
+
+<h2>Approach One</h2>
+
+<p>My first approach was to create a generic repository, IRepository, to handle the the various crud methods needed and also a Save method. The implementation, Repository would take a IUnitOfWork constructor dependency which would expose the model type ie.Customer,Order, Product and allow EF to perform the CRUD actions.</p>
+
+<pre><code>public class Repository : IRepository where T : class
+{
+    private readonly IUnitOfWork unitOfWork;
+    private readonly DbSet entitySet;
+
+    public Repository(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+        entitySet = unitOfWork.GetEntitySet();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);        
+    }
+}
+
+public interface IUnitOfWork
+{
+    void SaveChanges();
+    DbSet GetEntitySet() where TEntity : class;
+}
+
+public OrderController(IRepository orderRepository, IRepository customerRepository )
+{
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository;
+}
+</code></pre>
+
+<p>There are two issues with this approach. Firstly, the IUnitOfWork exposes EF specific members which I don’t really want and secondly when a repository calls Save it will in turn call the SaveChanges method on EF which will save any changes across all repositories. This is because we have one EF database context per request as handled by our IOC container. To get around the saving issue we could have a new context per instance of the repository but I don’t think that is a good approach.</p>
+
+<p>The full code can be seen on the master branch at Github – <a href="https://github.com/jchannon/EntityFrameworkMVC/tree/master/EntityFrameworkMVC">https://github.com/jchannon/EntityFrameworkMVC/tree/master/EntityFrameworkMVC
+</a></p>
+
+<h2>Approach Two</h2>
+
+<p>Another approach we could use is to remove IUnitOfWork altogether, keep the Save method on the repository but inject the context into the repository and still inject the repositories into the controllers.</p>
+
+<pre><code>public class Repository : IRepository where T : class
+{
+    private readonly EntityFrameworkMvcDbContext context;
+    private readonly DbSet entitySet;
+
+    public Repository(EntityFrameworkMvcDbContext context)
+    {
+        this.context = context;
+        entitySet = context.Set();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);
+    }
+}
+</code></pre>
+
+<p>This approach is pretty close to what I think we would want and reasonably straight forward but I still don’t like the fact that the SaveChanges would effect every modified/added model across all repositories. If you’re happy to live with that then I think you’re good to go.</p>
+
+<p>The full code can be seen on the LessAbstraction branch at Github – <a href="https://github.com/jchannon/EntityFrameworkMVC/tree/LessAbstraction/EntityFrameworkMVC">https://github.com/jchannon/EntityFrameworkMVC/tree/LessAbstraction/EntityFrameworkMVC
+</a></p>
+
+<h2>Approach Three</h2>
+
+<p>Another approach for using EF and building on from approach one was to remove the GetEntitySet from the IUnitOfWork interface but keep the Save method, inject the context into the repositories to allow them to add/update and inject the IUnitOfWork and repositories into the controllers so the repositories could use Add and then IUnitOfWork could be used to call SaveChanges.</p>
+
+<pre><code>public interface IUnitOfWork
+{
+    void SaveChanges();
+}
+
+public class Repository : IRepository where T : class
+{
+    private readonly DbSet entitySet;
+
+    public Repository(EntityFrameworkMvcDbContext context)
+    {
+        entitySet = context.Set();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);  
+    }
+}
+
+public OrderController(IUnitOfWork unitOfWork, IRepository orderRepository, IRepository customerRepository)
+{
+    this.unitOfWork = unitOfWork;
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository;
+}
+</code></pre>
+
+<p>I think that’s a decent approach however, I think it could be tidied up so that the controllers don’t get cluttered with too many constructor dependencies.</p>
+
+<p>The full code can be seen on the GenericContextPerRequest branch at Github – <a href="https://github.com/jchannon/EntityFrameworkMVC/tree/GenericContextPerRequest/EntityFrameworkMVC">https://github.com/jchannon/EntityFrameworkMVC/tree/GenericContextPerRequest/EntityFrameworkMVC
+</a></p>
+
+<h2>Approach Four</h2>
+
+<p>This below was another approach and the approach I decided I would use. It uses all the understandings gained from the above samples and hopes to provide a decent way of using EF.</p>
+
+<p>The repositories are now exposed on the IUnitOfWork interface, the implementation takes the DBContext as a constructor dependency, the repository implementation also takes the DBContext to provide the CRUD features with EF and the controllers only have the IUnitOfWork injected into them.</p>
+
+<pre><code>public interface IUnitOfWork
+{
+    void SaveChanges();
+    IRepository CustomerRepository { get; }
+    IRepository ProductRepository { get; }
+    IRepository OrderRepository { get; }
+}
+
+public OrderController(IUnitOfWork unitOfWork )
+{
+    this.unitOfWork = unitOfWork;
+}
+</code></pre>
+
+<p>This means we can keep our one database context per request, the controllers are tidied up so we no longer have numerous constructor dependencies and the repositories can be used to do CRUD and then SaveChanges can be called by IUnitOfWork when we have finished with the repositories.</p>
+
+<p>The only possible downside could be in time that we have numerous constructor dependencies on the IUnitOfWork implementation as well as numerous exposed repository properties on the IUnitOfWork interface. I don’t see this as a big issue as its only one class in your solution. If you didn’t want this to get too polluted you could create a repository factory and inject that into the controller and just have the SaveChanges on the IUnitOfWork interface. You wouldn’t want the IUnitOfWork to expose the repositories because as <a href="https://twitter.com/daanleduc">@daanleduc</a> pointed out to me that would violate the SRP.</p>
+
+<h2>Conclusion</h2>
+
+<p>I only touched the basics of implementing EF into a MVC app but these approaches did take quite a while to discover and after hearing all the negativity towards EF and drawing from my experience I think I could see why people have issues with it in a much larger application as I’m sure there are other caveats to using EF. The biggest issue I saw with it was not exposing a Save method for the model type you were using, instead you have to commit all changes across the database context. I feel this made it quite difficult to create a decent architecture. I can see in a large enterprise application why EF could be helpful in allowing it to query the database for you and create/modify the tables for you based on your model changes but I think for now in smaller applications I think I still prefer micro-ORMs like PetaPoco, Dapper or Simple.Data due to the control it gives you and also the ease in which you can abstract the database communication. As <a href="https://twitter.com/Cranialstrain">@Cranialstrain</a> says “the database is an implementation detail”. I’d also like to thank all those on Jabbr that helped me with the above approaches and long discussions had about Entity Framework!</p>
+
+
+	<div class="divider"></div>
+	<div id="disqus_thread"></div>
+	<script>
+	    var disqus_shortname = 'philliphaydon';
+	    var disqus_url = "http://www.philliphaydon.com@Model.Url";
+
+	    /* * * DON'T EDIT BELOW THIS LINE * * */
+	    (function () {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51ca97356d8c1454"></script>
+
+</div>
+                </div>
+                <!-- #content -->
+            </div>
+            <!-- #primary .site-content -->
+
+            <div id="secondary" class="widget-area fancy-container lightred" role="complementary">
+                <aside id="text-5" class="widget widget_text">
+                    <h1 class="widget-title">Follow</h1>
+                    <div class="textwidget logos">
+                        <a href="https://twitter.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://twitter.com']);"><img src="/stylesheets/images/twitter.png"></a>
+                        <a href="http://stackoverflow.com/users/456813/phill" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://stackoverflow.com']);"><img src="/stylesheets/images/stackoverflow.png"></a>
+                        <a href="http://www.linkedin.com/in/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://www.linkedin.com']);"><img src="/stylesheets/images/linkedin.png"></a>
+                        <a href="https://plus.google.com/u/0/111751877537461442095" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://plus.google.com']);"><img src="/stylesheets/images/googleplus.png"></a>
+                        <a href="https://coderbits.com/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','https://coderbits.com/philliphaydon']);"><img src="/stylesheets/images/codebits.png"></a>
+                        <a href="https://github.com/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://github.com']);"><img src="/stylesheets/images/github.png"></a>
+                        <a href="http://www.codeschool.com/users/philliphaydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://codeschool.com']);"><img src="/stylesheets/images/codeschool.png"></a>
+                        <a href="http://www.kickstarter.com/profile/phillip-haydon" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://kickstarter.com']);"><img src="/stylesheets/images/kickstarter.png"></a>
+                    </div>
+                    <a href="http://stackoverflow.com/users/456813/phill">
+                      <img src="http://stackoverflow.com/users/flair/456813.png" width="208" height="58" alt="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Phill at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+                    </a>
+                    
+                    <a href="http://nancyfx.org/mvm.html"><img src="/stylesheets/images/mvm.png"></a>
+                    
+                    <div id = "clustrback" style="width:162px; height:133px;  background:#f7f7f7 url(http://clustrmaps.com/admin/3d/images/st4_grey.png)  center no-repeat; text-align:center;">
+                      <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.philliphaydon.com/" style="width:160px; display:block; margin:0 auto;" id="clustrMapsLink">
+                        <img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.philliphaydon.com/" style="border:0px; margin:15px auto;margin:15px auto;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
+                      </a>
+                    </div>
+                </aside>
+                <!--aside id="text-8" class="widget widget_text">
+                    <h1 class="widget-title">Other sites</h1>
+                    <div class="textwidget">
+                        <a href="http://csharptube.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://csharptube.com']);">csharptube.com</a><br />
+                        <a href="http://thisisparrot.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://thisisparrot.com']);">Parrot</a><br />
+                        <a href="http://shitprogrammerswrite.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://shitprogrammerswrite.com']);">Shit programmers write</a><br />
+                    </div>
+                </aside-->
+                <aside id="linkcat-6" class="widget widget_links">
+                    <h1 class="widget-title">Other Blogs</h1>
+                    <ul class='xoxo blogroll'>
+                        <li><a href="http://www.nickharris.net/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://nickharris.net/']);">Nick Harris</a></li>
+                        <li><a href="http://www.mindscapehq.com/blog/" target="_top" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.mindscapehq.com/blog/']);">Mindscape</a></li>
+                        <li><a href="http://blog.orangelightning.co.uk/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://blog.orangelightning.co.uk/']);">Phil Jones</a></li>
+                        <li><a href="http://buildstarted.com/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://buildstarted.com']);">Ben Dornis</a></li>
+                        <li><a href="http://jflood.net/" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://jflood.net/']);">Jospeh Flood</a></li>
+                    </ul>
+                    
+                </aside>
+                <aside id="archives-4" class="widget widget_archive">
+                    <h1 class="widget-title">Archive</h1>
+                    <ul class="posts">
+                          <li><a href="/archive#2013July">July, 2013</a></li>
+                          <li><a href="/archive#2013May">May, 2013</a></li>
+                          <li><a href="/archive#2013April">April, 2013</a></li>
+                          <li><a href="/archive#2013March">March, 2013</a></li>
+                          <li><a href="/archive#2013February">February, 2013</a></li>
+                          <li><a href="/archive#2013January">January, 2013</a></li>
+                          <li><a href="/archive#2012December">December, 2012</a></li>
+                          <li><a href="/archive#2012November">November, 2012</a></li>
+                          <li><a href="/archive#2012October">October, 2012</a></li>
+                          <li><a href="/archive#2012September">September, 2012</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <!-- #secondary .widget-area -->
+
+
+        </div>
+        <!-- #main -->
+
+        <footer id="colophon" class="site-footer" role="contentinfo">
+            <div class="site-info">
+                Powered by <a href="https://github.com/Sandra/Sandra.Snow" rel="generator">Sandra.Snow</a>.	
+            </div>
+            <!-- .site-info -->
+        </footer>
+        <!-- #colophon .site-footer -->
+    </div>
+    <!-- #page .hfeed .site -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src='/javascripts/prettify.js' type='text/javascript'></script>
+    <!--script src='http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js' type='text/javascript'></script-->
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        prettyPrint();
+      });
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-655975-13']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

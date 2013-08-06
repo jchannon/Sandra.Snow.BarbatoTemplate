@@ -4,8 +4,6 @@ title: JavaScript is the future…maybe!
 category:  .net,angularjs,backbonejs,c#,javascript,knockoutjs,learning,node.js,oss,typescript
 ---
 
-## JavaScript is the future…maybe!
-
 I’m not one for New Years resolutions but I thought it was time I looked at JavaScript more in depth.
 
 I looked at [Node.js a while back][1] and found it very interesting and I probably need to go back to it. Over the last month or so there has been a large discussion about async in .Net frameworks and there appears to be a lot of misunderstanding about it (and lets leave it at that, I don’t want to start another flame war) but the thing we can definitely say with [Node.js][2], well JavaScript to be fair is that it is perfectly asynchronous and non-blocking.

@@ -4,8 +4,6 @@ title: Modifying files within Git history
 category: git,github,sublime text 2, st2
 ---
 
-## Modifying files within Git history
-
 If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.
 
 I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.

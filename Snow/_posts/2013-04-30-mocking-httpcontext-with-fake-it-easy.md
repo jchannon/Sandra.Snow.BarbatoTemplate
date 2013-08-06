@@ -4,8 +4,6 @@ title: Mocking HttpContext with Fake It Easy
 category: .net,asp.net mvc,fake it easy,nancyfx,oss,unit testing,xunit
 ---
 
-## Mocking HttpContext with Fake It Easy
-
 Lets start with the conclusion first and say “use [Nancy][1] for your web applications and APIs” as its brilliant!
 
 If you want to continue reading lets crack on.

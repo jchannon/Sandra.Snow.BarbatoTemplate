@@ -4,8 +4,6 @@ title: The For Loop is the devil in disguise
 category: .net,c#,learning
 ---
 
-## The For Loop is the devil in disguise
-
 I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.
 
 I have only ever used it in the traditional sense of:

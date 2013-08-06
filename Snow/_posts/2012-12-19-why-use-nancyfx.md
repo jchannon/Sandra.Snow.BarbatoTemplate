@@ -4,8 +4,6 @@ title: Why use NancyFX?
 category: .net,asp.net mvc,asp.net web api,community,nancyfx,oss
 ---
 
-## Why use NancyFX?
-
 When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?
 
 I believe so and its called [NancyFX][1]. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?

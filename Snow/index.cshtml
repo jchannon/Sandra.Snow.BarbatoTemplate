@@ -22,24 +22,24 @@
     </div>
   }
   <!-- Pagination links -->
-  <div id="post-pagination" class="pagination">
+  <div class="text-center">
 
     @if (Model.HasPreviousPage) {
-    <p class="previous">
+    
       <a href="/page@(Model.PreviousPage)">Previous Page</a>
-    </p>
+    
     }
 
     @if (!Model.HasPreviousPage) {
-    <p class="previous">
+    
       <a href="/">Previous Page</a>
-    </p>
+    
     }
 
     @if (Model.HasNextPage) {
-    <p class="next">
+    
       <a href="/page@(Model.NextPage)">Next Page</a>
-    </p>
+    
     }
 
   </div>

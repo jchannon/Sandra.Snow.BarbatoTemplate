@@ -4,8 +4,6 @@ title: I’ve started blogging. Why?
 category: community,first blog post, nancyfx, oss
 ---
 
-## I’ve started blogging. Why? 
-
 So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?
 
 I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an [article][1] by [Ben Dornis][2] titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.

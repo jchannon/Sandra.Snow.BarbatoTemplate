@@ -4,8 +4,6 @@ title: ASP.NET Web API Testing
 category: .net,c#,asp.net web api,community,github,nancyfx,oss
 ---
 
-## ASP.NET Web API Testing
-
 As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate [NancyFX][1], [ASP.NET Web API][2] and [ServiceStack][3].
 
 Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on [my Github page][4].

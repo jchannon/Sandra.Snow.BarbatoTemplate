@@ -4,8 +4,6 @@ title: Evaluating KnockoutJS and AngularJS – Part 2
 category:  angularjs,handlebars,javascript,knockoutjs,learning,oss,sammyjs
 ---
 
-## Evaluating KnockoutJS and AngularJS – Part 2
-
 In [Part 1][1], I described how I was using the demo tutorial from [SammyJS][2] to get a better understanding of [AngularJS][3] and [KnockoutJS][4].
 
 In this blog post I will focus on what I found when using KnockoutJS.

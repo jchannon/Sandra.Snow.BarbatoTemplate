@@ -4,8 +4,6 @@ title: NancyFX, RavenDB, NerdDinner and Me
 category: community,dinner party, nancyfx, oss, ravendb, windows azure
 ---
 
-## NancyFX, RavenDB, NerdDinner and Me
-
 As I said in my [first post][1], NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following [@squidge][2] and [@cranialstrain][3] on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about [RavenDB][4].
 
 ### What is NancyFX?

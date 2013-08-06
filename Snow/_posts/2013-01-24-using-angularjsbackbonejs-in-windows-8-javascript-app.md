@@ -4,8 +4,6 @@ title: Using AngularJS/BackboneJS in Windows 8 JavaScript app
 category:  angularjs,backbonejs,github,javascript,knockoutjs,oss,windows 8,winjs
 ---
 
-## Using AngularJS/BackboneJS in Windows 8 JavaScript app
-
 To help me expand my JavaScript knowledge as I said I would in my [previous post][1] I thought I’d write a Windows 8 application using JavaScript.
 
 After following a few “Hello World” tutorials from Microsoft I thought I’d take a look at the ToDo list demos shown at [TodoMVC.com][2].

@@ -4,8 +4,6 @@ title: Simple .Net Twitter,Google,Facebook Authentication
 category: authentication,community,dinnerparty,nancyfx,oss,social,social authentication
 ---
 
-## Simple .Net Twitter,Google,Facebook Authentication
-
 Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details *again*. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as [LastPass][1].)
 
 ## Current Social Login Providers

@@ -4,8 +4,6 @@ title: Easily publish a NuGet package
 category: .net,asp.net web api,community,nuget,oss
 ---
 
-## Easily publish a NuGet package
-
 I recently published [WebAPI.Testing][1] on [Nuget][2] but found it a bit tricky to build a package ready for NuGet.
 
 There is [documentation ][3]about how to do it but I found it hard to follow so I thought I’d document how I finally got my package ready.

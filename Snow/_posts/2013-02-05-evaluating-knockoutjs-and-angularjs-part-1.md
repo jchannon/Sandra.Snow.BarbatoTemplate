@@ -4,8 +4,6 @@ title: Evaluating KnockoutJS and AngularJS – Part 1
 category:  angularjs,handlebars,javascript,knockoutjs,learning,oss,sammyjs
 ---
 
-## Evaluating KnockoutJS and AngularJS – Part 1
-
 As I stated in my earlier post [“JavaScript is the future…maybe”][1] so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at [KnockoutJS][2] and [AngularJS][3].
 
 Before I actually looked at these two I spent some time with [SammyJS][4] but realised afterwards it was mainly MVC based and not around 2-way binding that Knockout and Angular offer. However, I really liked it and it seemed very familiar and easy to use, the reason being it was inspired by [Sinatra][5] which we all know [Nancy][6] was also inspired by and we also know how much [I like Nancy][7]!

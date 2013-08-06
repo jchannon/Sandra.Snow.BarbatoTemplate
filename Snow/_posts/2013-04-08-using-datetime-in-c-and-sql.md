@@ -4,8 +4,6 @@ title: Using DateTime in C# and SQL
 category: .net,c#,sql,datetime
 ---
 
-## Using DateTime in C# and SQL
-
 I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.
 
 Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:

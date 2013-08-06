@@ -4,8 +4,6 @@ title: Testing your application’s email logic
 category: .net,oss,c#,email,node.js,papercut
 ---
 
-## Testing your application’s email logic
-
 If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.
 
 ### Papercut

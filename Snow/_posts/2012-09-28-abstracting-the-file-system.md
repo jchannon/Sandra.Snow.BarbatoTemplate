@@ -4,8 +4,6 @@ title: Abstracting the File System
 category: file system,SRP,oss,System.IO.Abstractions
 ---
 
-## Abstracting the File System
-
 Following on from my post about [OSS][1] I thought I would illustrate how cool OSS can be.
 
 The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.

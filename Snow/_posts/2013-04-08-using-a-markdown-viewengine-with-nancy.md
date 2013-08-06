@@ -4,8 +4,6 @@ title: Using a Markdown ViewEngine with Nancy
 category: .net,community,markdown,nancyfx,oss
 ---
 
-## Using a Markdown ViewEngine with Nancy
-
 Whilst using [stackoverflow.com][1] and [Github gists][2] I’ve become a frequent user of [Markdown][3].
 
 For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:

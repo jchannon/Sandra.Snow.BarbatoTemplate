@@ -4,8 +4,6 @@ title: Publishing to Windows Azure from Github
 category: .net,deployment,dinnerparty,git,github,windowsazure
 ---
 
-## Publishing to Windows Azure from Github
-
 Back in [July 2012][1] Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my [DinnerParty blog post][2] but have only just looked at implementing it.
 
 ## Preparation

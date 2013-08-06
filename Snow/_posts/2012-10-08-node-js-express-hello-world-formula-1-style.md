@@ -4,8 +4,6 @@ title: Node.js, Express, Hello World Formula 1 Style
 category: editor,express,f1,ide,jade,json,node.js,oss,st2,sublime text 2
 ---
 
-## Node.js, Express, Hello World Formula 1 Style
-
 In my ongoing efforts to be a better developer (plus I just like tinkering) I thought I would take a look at [node.js][1].
 
 I did play with node.js about a year ago where I setup a TCP listener to listen to a TCP Server on the network broadcasting XML messages, I then took these, formatted them to JSON and passed it to a browser using [Socket.IO][2]. It was pretty cool but the project never came to anything.

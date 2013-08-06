@@ -4,8 +4,6 @@ title: Is OSS good for your career?
 category: community,career,oss
 ---
 
-## Is OSS good for your career?
-
 Got your attention? Good.
 
 Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.

@@ -4,8 +4,6 @@ title: .gitignore not working – fixed!
 category: community,git,github,oss,stackoverflow
 ---
 
-## .gitignore not working – fixed!
-
 This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.
 
 ### New project scenario

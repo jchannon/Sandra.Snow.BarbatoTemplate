@@ -4,8 +4,6 @@ title: Why .Net should become independent!
 category: .net,c#,career,community,oss
 ---
 
-## Why .Net should become independent!
-
 I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in [Nancy][1] on my first day and paved the way for Git in the first week).
 
 My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.
@@ -32,7 +30,7 @@ There is a vicious circle here, MS provide the full stack and companies feel com
 This circle only happens in .Net. Lets look at other frameworks and tools for another language that implement similar things in the tech list that companies are looking for.
 
 * **Operating System** : Linux
-* **Framework **: node.js
+* **Framework**: node.js
 * **Web Framework** : express.js
 * **Language** : JavaScript
 * **Tooling** : Sublime Text or WebStorm or Notepad++or [insert many others]

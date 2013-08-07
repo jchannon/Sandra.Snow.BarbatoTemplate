@@ -93,7 +93,7 @@ I think this is a great little app and a real time saver. I highly recommend tha
 They also offer a web based version called [DummySMTP][8] which allows you to test an almost live copy of your application but DummySMTP captures the emails sent out to customers, for example.
 
    [1]: http://twitter.com/TheCodeJunkie
-   [2]: http://blog.jonathanchannon.com/wp-content/uploads/2012/10/tweet.png ()
+   [2]: http://blog.jonathanchannon.com/wp-content/uploads/2012/10/tweet.png
    [3]: http://papercut.codeplex.com/
    [4]: http://blog.jonathanchannon.com/wp-content/uploads/2012/10/Untitled.png (Papertray System Tray Icon)
    [5]: http://blog.jonathanchannon.com/wp-content/uploads/2012/10/raw-620x330.png (Raw View)

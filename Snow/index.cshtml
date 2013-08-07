@@ -25,14 +25,17 @@
   <div class="text-center">
 
     @if (Model.HasPreviousPage) {
-    
-      <a href="/page@(Model.PreviousPage)">Previous Page</a>
-    
+      if (Model.PreviousPage == 1) {
+        <a href="/">Previous Page</a>
+      }
+      else {
+        <a href="/page@(Model.PreviousPage)">Previous Page</a>
+      }
     }
 
     @if (!Model.HasPreviousPage) {
     
-      <a href="/">Previous Page</a>
+      <!--<a href="/">Previous Page</a>-->
     
     }
 

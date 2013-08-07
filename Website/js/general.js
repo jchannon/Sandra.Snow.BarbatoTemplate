@@ -22,8 +22,8 @@ jQuery(document).ready(function($) {
         if (count == 1)
           countText = " comment";
              
-        $('.link-comments').html(count + countText);
-
+        // $('.link-comments').html(count + countText);
+        $('<span class="link-comments">'+count + countText+'</span>').insertAfter('.post-date');
       }
     }
   });

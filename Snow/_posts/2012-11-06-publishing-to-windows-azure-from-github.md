@@ -70,12 +70,12 @@ Away you go!
    [2]: http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/ (NancyFX, RavenDB, NerdDinner and Me)
    [3]: http://jabbr.net
    [4]: http://twitter.com/davidfowl
-   [5]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/deploymenthistory-620x604.png (Deployment History)
-   [6]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/afterdeploymentdelete-620x527.png (Setup )
-   [7]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/setup-620x320.png (Authorize)
-   [8]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/authorize.png (Repository)
-   [9]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/deploying-initial-620x197.png (Deploying)
-   [10]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/deployed-620x202.png (Deployed)
-   [11]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/azurehook-620x135.png (Azure Hook)
-   [12]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/github-hook-620x260.png (Github Hook)
+   [5]: /images/blogpostimages/deploymenthistory-620x604.png (Deployment History)
+   [6]: /images/blogpostimages/afterdeploymentdelete-620x527.png (Setup )
+   [7]: /images/blogpostimages/setup-620x320.png (Authorize)
+   [8]: /images/blogpostimages/authorize.png (Repository)
+   [9]: /images/blogpostimages/deploying-initial-620x197.png (Deploying)
+   [10]: /images/blogpostimages/deployed-620x202.png (Deployed)
+   [11]: /images/blogpostimages/azurehook-620x135.png (Azure Hook)
+   [12]: /images/blogpostimages/github-hook-620x260.png (Github Hook)
   

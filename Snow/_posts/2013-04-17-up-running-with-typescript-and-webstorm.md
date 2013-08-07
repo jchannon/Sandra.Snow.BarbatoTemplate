@@ -63,6 +63,6 @@ I hope this helps someone else to get up and running with TypeScript and WebStor
    [1]: http://www.jetbrains.com/webstorm/
    [2]: http://www.typescriptlang.org/
    [3]: http://en.wikipedia.org/wiki/Duck_typing
-   [4]: http://blog.jonathanchannon.com/wp-content/uploads/2013/04/WebstormDebug-620x390.png (Webstorm Debug)
+   [4]: /images/blogpostimages/WebstormDebug-620x390.png (Webstorm Debug)
    [5]: http://en.wikipedia.org/wiki/RTFM
   

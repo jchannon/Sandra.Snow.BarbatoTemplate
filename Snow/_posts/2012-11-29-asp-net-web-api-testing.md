@@ -132,6 +132,6 @@ The Github repository is located [here][11] and if you like what you see please 
    [9]: http://www.strathweb.com/2012/06/asp-net-web-api-integration-testing-with-in-memory-hosting/
    [10]: http://xunit.codeplex.com/
    [11]: https://github.com/jchannon/WebAPI.Testing
-   [12]: http://blog.jonathanchannon.com/wp-content/uploads/2012/11/nancy-horizontal-framed-bf-wb-620x240.png (NancyFX)
+   [12]: /images/blogpostimages/nancy-horizontal-framed-bf-wb-620x240.png (NancyFX)
    [13]: http://nuget.org/packages/WebAPI.Testing
   

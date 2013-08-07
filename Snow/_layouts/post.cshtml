@@ -17,7 +17,9 @@
     <div class="post-descr entry">
         @Html.Raw(Model.PostContent)
     </div> 
+    <div id="tagcloud">
     @foreach (var category in Model.Categories) {
-     @:| <a href="/category/@category.Url">@category.Name</a>
+     <a href="/category/@category.Url"><span>@category.Name</span></a>
     }             
+    </div>
 </div>

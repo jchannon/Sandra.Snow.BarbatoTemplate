@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2013-08-07T17:44:50.4001109+01:00" />
+    <meta http-equiv="last-modified" content="2013-08-07T20:29:05.6559762+01:00" />
     <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
 
@@ -226,12 +226,14 @@ public OrderController(IUnitOfWork unitOfWork )
 <p>I only touched the basics of implementing EF into a MVC app but these approaches did take quite a while to discover and after hearing all the negativity towards EF and drawing from my experience I think I could see why people have issues with it in a much larger application as I’m sure there are other caveats to using EF. The biggest issue I saw with it was not exposing a Save method for the model type you were using, instead you have to commit all changes across the database context. I feel this made it quite difficult to create a decent architecture. I can see in a large enterprise application why EF could be helpful in allowing it to query the database for you and create/modify the tables for you based on your model changes but I think for now in smaller applications I think I still prefer micro-ORMs like PetaPoco, Dapper or Simple.Data due to the control it gives you and also the ease in which you can abstract the database communication. As <a href="https://twitter.com/Cranialstrain">@Cranialstrain</a> says “the database is an implementation detail”. I’d also like to thank all those on Jabbr that helped me with the above approaches and long discussions had about Entity Framework!</p>
 
     </div> 
-     | <a href="/category/.net">.net</a>
-     | <a href="/category/asp.net-mvc">asp.net mvc</a>
-     | <a href="/category/c#">c#</a>
-     | <a href="/category/entity-framework">entity framework</a>
-     | <a href="/category/github">github</a>
-     | <a href="/category/srp">SRP</a>
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/asp.net-mvc"><span>asp.net mvc</span></a>
+     <a href="/category/c#"><span>c#</span></a>
+     <a href="/category/entity-framework"><span>entity framework</span></a>
+     <a href="/category/github"><span>github</span></a>
+     <a href="/category/srp"><span>SRP</span></a>
+    </div>
 </div>
             </div>
                 <!-- #content -->

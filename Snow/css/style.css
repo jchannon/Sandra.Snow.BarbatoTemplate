@@ -2143,12 +2143,12 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 	margin-bottom:15px}
 	
 /* widget tag cloud */	
-.widget_tag_cloud .tagcloud {
+.widget_tag_cloud .tagcloud, #tagcloud {
 
 	font-family:Arial, Helvetica, sans-serif;
 	font-weight:bold;}
 	
-.widget_tag_cloud .tagcloud a {
+.widget_tag_cloud .tagcloud a, #tagcloud a {
 	display:inline-block;
 	color:#5c5c5c;
 	text-shadow:0 1px 1px #fff;
@@ -2158,12 +2158,12 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 	padding:0 15px 0 0;
 	font-size:12px !important;}
 
-.widget_tag_cloud .tagcloud a span {
+.widget_tag_cloud .tagcloud a span, #tagcloud a span{
 	display:block;
 	background:url("../images/tags_bg.png") left 0 scroll no-repeat;
 	padding:0 0 0 25px}
 	
-.widget_tag_cloud .tagcloud a:hover span {
+.widget_tag_cloud .tagcloud a:hover span, #tagcloud a:hover span {
 	color:#e23e29;}
 
 /* Twitter  widget */

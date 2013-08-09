@@ -1,0 +1,203 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2013-08-09T18:35:47.7642005+01:00" />
+    <title>Jonathan Channon Blog</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <!-- custom CSS -->
+    <link href="/css/custom.css" media="screen" rel="stylesheet">
+
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="/js/libs/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+    <!-- carousel -->
+    <script src="/js/jquery.carouFredSel.min.js"></script>
+
+</head>
+
+<body>
+<div class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012/11/06/publishing-to-windows-azure-from-github">Publishing to Windows Azure from Github</a></h1>/2012/11/06/publishing-to-windows-azure-from-github
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 06, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>Back in <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">July 2012</a> Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/" title="NancyFX, RavenDB, NerdDinner and Me">DinnerParty blog post</a> but have only just looked at implementing it.</p>
+
+<h2>Preparation</h2>
+
+<p>As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on <a href="http://jabbr.net">Jabbr</a>. Luckily <a href="http://twitter.com/davidfowl">David Fowler</a> was online. Why is that lucky? He wrote the Github integration feature of Azure.</p>
+
+<p>To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.</p>
+
+<p><img src="/images/blogpostimages/deploymenthistory-620x604.png" alt="Deployment History" title="Deployment History" /></p>
+
+<p><em>Deployment History</em></p>
+
+<!--excerpt-->
+
+<h3>Setup</h3>
+
+<p>Once the history is deleted, if you go to the Deployments tab in the Azure account you will now see a link to “Deploy from my GitHub repository”.</p>
+
+<p><img src="/images/blogpostimages/afterdeploymentdelete-620x527.png" alt="Setup" title="Setup " /></p>
+
+<p><em>Setup</em></p>
+
+<p>By clicking the link it will inform you that you need to authorize Azure to have access to your Github repository and that if there is code already in your repository it will be deployed again.</p>
+
+<p><img src="/images/blogpostimages/setup-620x320.png" alt="Authorize" title="Authorize" /></p>
+
+<p><em>Authorize</em></p>
+
+<p>Once you authorize Azure to read your Github account you need to tell it which repository it should watch.</p>
+
+<p><img src="/images/blogpostimages/authorize.png" alt="Repository" title="Repository" /></p>
+
+<p><em>Repository</em></p>
+
+<p>As stated earlier, if there is code in the repo it will begin to deploy automatically and confirm deployment once this has been done.</p>
+
+<p><img src="/images/blogpostimages/deploying-initial-620x197.png" alt="Deploying" title="Deploying" /></p>
+
+<p><em>Deploying</em></p>
+
+<p><img src="/images/blogpostimages/deployed-620x202.png" alt="Deployed" title="Deployed" /></p>
+
+<p><em>Deployed</em></p>
+
+<p>From now on, once you push changes to your Github repository Azure will pick them up and deploy the project to your web site! Could it get any easier?</p>
+
+<p><strong>UPDATE 7th Nov 2012:</strong> After speaking to <a href="http://twitter.com/davidfowl">David Fowler</a> again he remembered that you could take the Git webservice hook and enter that into the Github repository account settings.</p>
+
+<p>Go to the Configure tab in Azure and copy the Git hoook URL.</p>
+
+<p><img src="/images/blogpostimages/azurehook-620x135.png" alt="Azure Hook" title="Azure Hook" /></p>
+
+<p><em>Azure Hook</em></p>
+
+<p>Then go to your Github repo and into the Admin section and under Service Hooks enter the copied Azure URL</p>
+
+<p><img src="/images/blogpostimages/github-hook-620x260.png" alt="Github Hook" title="Github Hook" /></p>
+
+<p><em>Github Hook</em></p>
+
+<p>Away you go!</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/deployment"><span>deployment</span></a>
+     <a href="/category/dinnerparty"><span>dinnerparty</span></a>
+     <a href="/category/git"><span>git</span></a>
+     <a href="/category/github"><span>github</span></a>
+     <a href="/category/windowsazure"><span>windowsazure</span></a>
+    </div>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="#" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+</body>
+</html>

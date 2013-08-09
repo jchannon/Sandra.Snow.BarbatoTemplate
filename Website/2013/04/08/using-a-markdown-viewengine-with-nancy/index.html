@@ -1,0 +1,253 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2013-08-09T18:35:47.7642005+01:00" />
+    <title>Jonathan Channon Blog</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <!-- custom CSS -->
+    <link href="/css/custom.css" media="screen" rel="stylesheet">
+
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="/js/libs/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+    <!-- carousel -->
+    <script src="/js/jquery.carouFredSel.min.js"></script>
+
+</head>
+
+<body>
+<div class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013/04/08/using-a-markdown-viewengine-with-nancy">Using a Markdown ViewEngine with Nancy</a></h1>/2013/04/08/using-a-markdown-viewengine-with-nancy
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 08, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>Whilst using <a href="http://stackoverflow.com">stackoverflow.com</a> and <a href="https://gist.github.com/">Github gists</a> I’ve become a frequent user of <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
+
+<p>For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:</p>
+
+<pre><code>#Hello World!
+##You're awesome!
+The quick brown fox jumped over the lazy coder
+What the **hell** is this?
+This is an [example link](http://example.com/)
+
+&lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;h2&gt;You're awesome!&lt;/h2&gt;
+&lt;p&gt;The quick brown fox jumped over the lazy coder&lt;/p&gt;
+What the &lt;strong&gt;hell&lt;/strong&gt; is this?
+This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
+</code></pre>
+
+<p>You can see more examples in the earlier link.</p>
+
+<p>When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into <a href="http://calepin.co/">Calepin</a> and <a href="http://scriptogr.am/">Scriptogr.am</a> as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.</p>
+
+<!--excerpt-->
+
+<p>As you may be aware, I’m a great fan of <a href="http://nancyfx.org/">Nancy</a> and the team/contributors were discussing having something similar to Calepin for Nancy so users could upload a Markdown file as a pull request or community article or have something that uses Markdown that can be plugged into Jekyll.</p>
+
+<p>I initially looked into how hard it would be to convert Markdown into HTML with Nancy and as ever, very easy! I found some libraries that already provided the conversion process and decided upon <a href="http://nuget.org/packages/MarkdownSharp/">MarkdownSharp</a>.</p>
+
+<p>I then thought we could use Markdown as a proper view engine like Razor. I was unsure of how to provide the ability of model binding, master pages etc but after speaking to <a href="http://twitter.com/grumpydev">@grumpydev</a> he suggested using the built in view engine with Nancy to provide that functionality.</p>
+
+<p>What this means is that you can have a Nancy route such as:</p>
+
+<pre><code>public class SampleModule : NancyModule
+{
+    public SampleModule()
+    {
+        Get["/"] = _ =&gt;
+        {
+          var model = new UserModel{FirstName = "John", LastName = "Smith"};
+          return View["Home", model];
+        }
+    }
+}
+</code></pre>
+
+<p>This will find a Markdown file called Home.md or Home.markdown, translate the model and convert the markdown into a HTML view. You could define you markdown view like so:</p>
+
+<pre><code>#Hi there!
+
+My first name is [ERR!] and my last name is [ERR!]
+</code></pre>
+
+<p>This would then translate to:</p>
+
+<pre><code>&lt;h1&gt;Hi there!&lt;/h1&gt;
+&lt;p&gt;My first name is John and my last name is Smith&lt;/p&gt;
+</code></pre>
+
+<p>This is a simple demonstration but what it means is that you can now use the Markdown view engine instead of Razor if you so wished. Things like model binding, master pages, partials, model iteration etc etc can all be handled by the view engine and your views can be written in Markdown. To use features like partials and master pages you use the Super Simple View Engine syntax that as it sounds is super simple.</p>
+
+<p>When I wrote the Markdown view engine I also wrote a demo with the easy approach of Calepin in mind.</p>
+
+<p>I wrote a HTML view to act as my master page and then a route in Nancy that would take anything after the URL and find the view for it:</p>
+
+<pre><code>Get["/{viewname}"] = parameters =&gt;
+{
+    var popularposts = GetModel();
+
+    dynamic postModel = new ExpandoObject();
+    postModel.PopularPosts = popularposts;
+    postModel.MetaData = popularposts.FirstOrDefault(x =&gt; x.Slug == parameters.viewname);
+
+    return View["Posts/" + parameters.viewname, postModel];
+};
+</code></pre>
+
+<p>In the Markdown file I would reference the master page, some partials, the model and a custom section for meta data about the blog post:</p>
+
+<pre><code>@Master['master']
+
+@Tags
+Date: 15/03/2013
+Title: Readme
+Tags: Nancy,Runtime
+@EndTags
+
+@Section['Content']
+
+[ERR!]
+
+# Readme!
+
+## Markdown Viewengine
+
+This Markdown Viewengine allows views to be written in Markdown.
+
+* Full Model support
+* Master page support
+* Supports HTML within any MD content
+* Simple call `return View["Home"]` for Nancy to render your MD file
+
+## Markdown Blog Demo
+</code></pre>
+
+<p>This would then render a good looking website with all the features expected in a view engine. It would use the meta data provided to write out things like page titles and tags for a blog post. It would also mean you could use the approach to write your own blog using Nancy and Markdown.</p>
+
+<p>The GetModel() method used above checks a “Posts” directory for Markdown files and reads the metadata for them. What this means is that you can easily write a blog post using Nancy, Markdown and SuperSimpleViewEngine by just uploading the markdown file to a specific directory.</p>
+
+<p>Ideally I would like to get rid of the master page and partial references so you could just have Markdown content in your file but I haven’t figured that out yet. Hopefully someone else can use the Markdown view engine or take the demo app and find an alternative way to provide the simplicity that Calepin offers.</p>
+
+<p>Overall it’s another nice feature that Nancy can offer its users and I have enjoyed contributing to the OSS project and tinkering with code!</p>
+
+<p>The Markdown View Engine and Demo will be released in 0.17 of Nancy due very soon!</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/community"><span>community</span></a>
+     <a href="/category/markdown"><span>markdown</span></a>
+     <a href="/category/nancyfx"><span>nancyfx</span></a>
+     <a href="/category/oss"><span>oss</span></a>
+    </div>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="#" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+</body>
+</html>

@@ -1135,6 +1135,15 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 	box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.13);
 	margin-bottom:20px}
 
+.catboxed {	
+	padding:10px 60px;
+	background: url("../images/box_bg_bot.jpg") bottom repeat-x #fafafa;
+	border-radius:15px;
+	-webkit-border-radius:15px;
+	-webkit-box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.13);
+	box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.13);
+	margin-bottom:0px}
+
 .thinbox {
 	padding:20px 60px;
 	min-height:70px}
@@ -1511,6 +1520,16 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 	top:26px;
 	background:url("../images/icons/post_labels.png") right 0 no-repeat}
 
+.cat-label {
+	display:block;
+	width:58px;
+	height:44px;
+	overflow:hidden;
+	position:absolute;
+	left:-10px;
+	top:3px;
+	background:url("../images/icons/post_labels.png") right -220px no-repeat}
+
 .label-link {
 	background-position:right 0}
 .label-image {
@@ -1805,4 +1824,3 @@ input.btn-submit, input.btn-arrow,
 
 .valid{border:1px solid #70A41B!important; overflow:hide;} /*#70A41B*/
 .error{overflow:hide; border:1px solid red!important;}
-	

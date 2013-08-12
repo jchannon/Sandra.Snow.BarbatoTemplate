@@ -4,18 +4,13 @@
   Layout = "default.cshtml";
 }
 
-  <header>
-  <div class="head-inner">
-    <h1><a href="/category/">Categories</a></h1>
-  </div>
-  </header>
-
-  <ul class="category-list fancy-container orange">
+    <h1><a href="/category/">Other Posts in this Category</a></h1>
+  
     @foreach(var catInPost in Model.CategoriesInPost){
-      <li>
-        <a href="@catInPost.Url" title="@catInPost.Title">@catInPost.Title</a> 
-        <small>(@catInPost.Date.ToString("MMMM dd, yyyy"))</small>
-      </li>
+      <div class="catboxed" style="position:relative; margin-bottom:20px;">
+        <span class="cat-label"></span>
+        <a href="@catInPost.Url" title="@catInPost.Title">@catInPost.Title</a> <small>(@catInPost.Date.ToString("MMMM dd, yyyy"))</small>
+      </div>
     }
-  </ul>
+  
   

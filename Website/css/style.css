@@ -173,13 +173,9 @@ hr { border: solid #d4d4d4; border-width: 1px 0 0; clear: both; margin: 10px 0 2
 
 /* Links 
 ===================================*/
-a { color: #e23e29; text-decoration: none; outline:none; }
+a {color: #000; text-decoration: none; outline:none; }
 a:hover, a:focus { color: #ea4f34; }
 
-.container a {
-	color:#e23e29}
-
-.container a:hover, .container a:focus { color: #ea4f34; text-decoration: underline; }
 
 /* Lists
 ===================================*/
@@ -1563,11 +1559,11 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 	line-height:1em;
 	margin-bottom:0.5em}
 
-.post-title h2 a {
+/*.post-title h2 a {
 	color:#000}
 
 .post-title h2 a:hover {
-	color:#e23e29}
+	color:#e23e29}*/
 
 .post-meta-top {
 	color:#868686;
@@ -1611,8 +1607,10 @@ p.wp-caption-text, .frame_caption, .image_frame figcaption {
 .post-detail .post-descr p {
 	margin:0 0 16px 0}
 
-.entry a {
-	color:#e8750f}
+.entry a, .text-center a, .readmore {
+	color:#ea4f34}
+
+.entry a:hover, .text-center a:hover, .readmore:hover {text-decoration: underline;}
 
 .entry .subtitle {
 	color:#009551;

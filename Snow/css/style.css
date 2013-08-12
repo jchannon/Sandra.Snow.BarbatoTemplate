@@ -176,6 +176,11 @@ hr { border: solid #d4d4d4; border-width: 1px 0 0; clear: both; margin: 10px 0 2
 a { color: #e23e29; text-decoration: none; outline:none; }
 a:hover, a:focus { color: #ea4f34; }
 
+.container a {
+	color:#e23e29}
+
+.container a:hover, .container a:focus { color: #ea4f34; text-decoration: underline; }
+
 /* Lists
 ===================================*/
 ul { list-style: none outside; }

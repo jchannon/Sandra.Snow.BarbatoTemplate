@@ -114,25 +114,6 @@ jQuery(document).ready(function($) {
 		$(this).next(".toggle_content").slideToggle(300,'easeInQuad');
 	});
 
-// pricing table
-	if (screenRes > 750) {
-		// style 1
-		$(".price_style1 ul").each(function () {			
-			if ($(this).children(".price_col").hasClass('col_active')) {
-				var price_col = ($(this).width() - 40)/ $(this).children(".price_col").size();
-				var price_active_col = price_col + 40;
-				$(this).find(".price_col").css('width', price_col);
-				$(this).children(".col_active").css('width', price_active_col);
-			} else {
-				$(this).find(".price_col").css('width', $(this).width() / $(this).children(".price_col").size() );
-			}
-		});
-		// style 2
-		$(".price_style2 ul").each(function () {
-			$(".price_style2 .price_col").css('width',$(".price_style2 ul").width() / $(".price_style2 .price_col").size() - 20);			
-		});
-	} 
-	
 
 // buttons	
 	$(".button, .button_styled, .btn, .contact-social img, .btn-submit, .sign_up a").hover(function(){
@@ -140,10 +121,7 @@ jQuery(document).ready(function($) {
 	},function(){
 		$(this).stop().animate({"opacity": 1});
 	});
-// Audio player
-	if($('audio').length > 0) { 
-		$('audio').audioPlayer();
-	}
+
 
 // Smooth Scroling of ID anchors	
   function filterPath(string) {

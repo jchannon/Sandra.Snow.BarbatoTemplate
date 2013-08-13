@@ -12,26 +12,28 @@ jQuery(document).ready(function($) {
 	urlArray.push('link:' + url);
   });
     
-  $.ajax({
-    type: 'GET',
-    url: "https://disqus.com/api/3.0/threads/set.json",
-    data: { api_key: disqusPublicKey, forum : disqusShortname, thread : urlArray },
-    cache: false,
-    dataType: 'json',
-    success: function (result) {
-      for (var i in result.response) {
+  if (urlArray.length > 0) {
+	  $.ajax({
+	    type: 'GET',
+	    url: "https://disqus.com/api/3.0/threads/set.json",
+	    data: { api_key: disqusPublicKey, forum : disqusShortname, thread : urlArray },
+	    cache: false,
+	    dataType: 'json',
+	    success: function (result) {
+	      for (var i in result.response) {
 
-        var countText = " comments";
-        var count = result.response[i].posts;
+	        var countText = " comments";
+	        var count = result.response[i].posts;
 
-        if (count == 1)
-          countText = " comment";
-             
-        $('div[data-disqus-url="' + result.response[i].link + '"]').html('<span class="link-comments">'+count + countText+'</span>');
-        //$('<span class="link-comments">'+count + countText+'</span>').insertAfter('.post-date');
-      }
-    }
-  });
+	        if (count == 1)
+	          countText = " comment";
+	             
+	        $('div[data-disqus-url="' + result.response[i].link + '"]').html('<span class="link-comments">'+count + countText+'</span>');
+	        //$('<span class="link-comments">'+count + countText+'</span>').insertAfter('.post-date');
+	      }
+	    }
+	  });
+	}
 
 // Remove links outline in IE 7
 	$("a").attr("hideFocus", "true").css("outline", "none");

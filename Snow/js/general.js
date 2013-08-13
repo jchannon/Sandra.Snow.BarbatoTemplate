@@ -5,7 +5,12 @@ jQuery(document).ready(function($) {
   var disqusShortname = "jonathanchannonblog"; 
 
   var urlArray = [];
-  urlArray.push('link:'+'http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/');
+  //urlArray.push('link:'+'http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/');
+    
+  $('.commentcount').each(function () {
+	var url = $(this).attr('data-disqus-url');
+	urlArray.push('link:' + url);
+  });
     
   $.ajax({
     type: 'GET',
@@ -22,8 +27,8 @@ jQuery(document).ready(function($) {
         if (count == 1)
           countText = " comment";
              
-        // $('.link-comments').html(count + countText);
-        $('<span class="link-comments">'+count + countText+'</span>').insertAfter('.post-date');
+        $('div[data-disqus-url="' + result.response[i].link + '"]').html('<span class="link-comments">'+count + countText+'</span>');
+        //$('<span class="link-comments">'+count + countText+'</span>').insertAfter('.post-date');
       }
     }
   });

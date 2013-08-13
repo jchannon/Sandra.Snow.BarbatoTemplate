@@ -4,9 +4,9 @@
   Layout = "default.cshtml";
 }
 
-    <h1><a href="/category/">Other Posts in this Category</a></h1>
+    <h1><a href="/category/">Other posts in the "@Model.Category.Name" category</a></h1>
   
-    @foreach(var catInPost in Model.CategoriesInPost){
+    @foreach(var catInPost in Model.PostsInCategory){
       <div class="catboxed" style="position:relative; margin-bottom:20px;">
         <span class="cat-label"></span>
         <a href="@catInPost.Url" title="@catInPost.Title">@catInPost.Title</a> <small>(@catInPost.Date.ToString("MMMM dd, yyyy"))</small>

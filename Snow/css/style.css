@@ -316,7 +316,23 @@ img.alignright {
 
 #topm-select {
 	position:absolute;
-	top:5px}
+	top:5px;
+
+  color:#333;
+  font-size:14px;
+  width:242px;
+  margin:3px 0;
+  line-height: 16px;
+  resize:none;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e1e1e1;
+  font-weight: bold;
+  border:1px solid #b2b2b2;
+  border-bottom: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
+  border-radius: 5px;
+  box-shadow:inset 1px 1px 1px 1px rgba(198,198,198,0.7);
+}
 
 .dropdown {	
 	z-index:1300;

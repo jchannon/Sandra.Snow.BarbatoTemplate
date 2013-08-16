@@ -1,0 +1,843 @@
+﻿<?xml version="1.0" encoding="utf-8"?><rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.rss</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</guid><link>http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</link><title>Modifying files within Git history</title><description>&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
+
+</description><pubDate>Tue, 02 Jul 2013 23:00:00 Z</pubDate><a10:updated>2013-07-02T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Run this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase --interactive 1185cb0de5d5e5b4c79f83a0c51ed06a5d22d7c4^
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will open Sublime Text and you’ll see lines similar to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pick d3adb33 My Commit message
+pick d5bdb67 Other Commit message
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Change “pick” to “edit” on the commit you want to modify, save and exit&lt;/p&gt;
+
+&lt;p&gt;You can then make the changes to your files and when ready run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit --all --amend
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sublime Text will open again so you can edit the commit message, just save, exit and run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We’re done!&lt;/p&gt;
+
+&lt;p&gt;Your previous commit has been amended and you’re back to where you were with the latest commits ready to be pushed.  &lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/05/29/why-net-should-become-independent/</guid><link>http://blog.jonathanchannon.com/2013/05/29/why-net-should-become-independent/</link><title>Why .Net should become independent!</title><description>&lt;p&gt;I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp;amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in &lt;a href="http://nancyfx.org/"&gt;Nancy&lt;/a&gt; on my first day and paved the way for Git in the first week).&lt;/p&gt;
+
+&lt;p&gt;My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.&lt;/p&gt;
+
+&lt;p&gt;These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What’s the common denominator here?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; They are all owned by Microsoft.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What operating system do these all run on?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft Windows&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What framework and programming language do they run on?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft .Net and C#&lt;/p&gt;
+
+&lt;p&gt;Spot a pattern?&lt;/p&gt;
+
+&lt;p&gt;So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).&lt;/p&gt;
+
+</description><pubDate>Tue, 28 May 2013 23:00:00 Z</pubDate><a10:updated>2013-05-28T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp;amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in &lt;a href="http://nancyfx.org/"&gt;Nancy&lt;/a&gt; on my first day and paved the way for Git in the first week).&lt;/p&gt;
+
+&lt;p&gt;My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.&lt;/p&gt;
+
+&lt;p&gt;These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What’s the common denominator here?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; They are all owned by Microsoft.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What operating system do these all run on?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft Windows&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What framework and programming language do they run on?&lt;br /&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft .Net and C#&lt;/p&gt;
+
+&lt;p&gt;Spot a pattern?&lt;/p&gt;
+
+&lt;p&gt;So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;There is a vicious circle here, MS provide the full stack and companies feel comfortable with this as MS are a large company and therefore must be reliable. They also believe they have someone to shout at or sue if things go wrong and someone to call for support if they get stuck. Remind me what is the direct phone number to speak to someone about the issue I’m having with my LINQ statement or asynchronous method? You don’t have one you use Stackoverflow? Intersting. The circles continues as developers learn this stack to get jobs and recruiters are instructed to find people that list the MS items on their CV.&lt;/p&gt;
+
+&lt;p&gt;This circle only happens in .Net. Lets look at other frameworks and tools for another language that implement similar things in the tech list that companies are looking for.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operating System&lt;/strong&gt; : Linux&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Framework&lt;/strong&gt;: node.js&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Framework&lt;/strong&gt; : express.js&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language&lt;/strong&gt; : JavaScript&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tooling&lt;/strong&gt; : Sublime Text or WebStorm or Notepad++or [insert many others]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Storage&lt;/strong&gt; : PostgreSQL&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ORM&lt;/strong&gt;: node-postgres&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LINQ&lt;/strong&gt; : linq.js&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Services&lt;/strong&gt; : restify&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Spot a pattern?&lt;/p&gt;
+
+&lt;p&gt;They are all completely independent from each other and there are more than one option for each that are more than acceptable. Acceptable being the keyword. If I write the same list for alternative frameworks/libraries/tooling for .Net this is what you end up with but the question is are they acceptable to the majority of companies?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operating System&lt;/strong&gt; : Linux&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Framework&lt;/strong&gt; : Nancy&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tooling&lt;/strong&gt;: Xamarin&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Storage&lt;/strong&gt;: PostgreSQL&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ORM&lt;/strong&gt;: Simple.Data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Services&lt;/strong&gt;: Service Stack&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’m not saying companies have to chuck out Windows and Visual Studio (from my own experience Visual Studio is better than Xamarin) but at least be aware of them, the same goes for developers. These alternative frameworks and libraries may offer something a lot better than what MS give you but if you don’t look you won’t know.&lt;/p&gt;
+
+&lt;p&gt;One of the issues is getting companies/developers to look. People have said to me in the past that why should I bother learning ‘X’ if I can’t get a job in it or whatever the majority of developers use I will stick with that. I can understand where they are coming from because if companies only want to employ people that use libraries that are MS owned there is no incentive for them even if they offer better performance or solutions. These kind of attitudes of are in turn effecting community events in that the talks are often MS based and those in the community that put forward talks on alternative approaches are not getting enough votes to make the cut because people want to learn the MS stuff as they feel it will keep them secure in their jobs.&lt;/p&gt;
+
+&lt;p&gt;The only solution of breaking the vicious circle is for companies to change their attitudes in terms of tooling, frameworks and libraries that they use. Microsoft recently made a change to their &lt;a href="http://www.asp.net/mvc/open-source"&gt;OSS page&lt;/a&gt; which now lists alternative web frameworks on the .Net framework which is great and thanks to Scott Hanselman for doing this. This helps educate those developers/companies that are MS facing because now they have a bit more exposure to alternative/better libraries. In turn this may hopefully help companies realise that there are alternative libraries that are not one man bands and likely to disappear overnight and do offer better ways of providing solutions to their problems.&lt;/p&gt;
+
+&lt;p&gt;This is the answer to why .Net should become independent. You are not tied to one company for all your resources. You can adopt many other libraries and tools better than MS provided ones and allow the frameworks, tooling, libraries and community to become more feature rich with alternatives. The more ideas/projects out there which are used will inspire more projects which may provide better solutions. I can already here people saying “that’s crazy, at least if we follow MS we only have one thing to learn”. My response “Are you sheep, can you not make your own mind up?”. Take a look at some of the alternatives and see if you like it and see if it solves a problem, if it doesn’t fair enough but at least you looked and tried. I believe its a developer’s responsibility to push for “change”, to open eyes and widen opinions on the non-MS stuff although there is a balancing act to use all the new shiny stuff as you don’t want to get burnt but need to use new libraries otherwise you will never know. This is part of continual learning and progress and writing spikes to see if things fit. I’m not saying that if you go off and write your own library it will automatically get main stream adoption because there can only be a handful of great libraries trying to solve the same problem but if they exist and there is no restriction for you as a developer/company you may actually gain by looking elsewhere.&lt;/p&gt;
+
+&lt;p&gt;As a open minded developer and not a MS facing developer I have found myself having to learn the technologies on the list of what recruiters want as well as learn other libraries that interest me and provide better solutions. This is the way of the alternative .Net developer but its a pain the ass. If recruiters started advertising experience for Nancy, Simple.Data and ServiceStack it would make our lives easier! Will the attitude change I speak of happen overnight? Probably not, its been going on for years. Should I wait for the culture change or move languages? You would think that I should change language if I’m not happy with the culture of the MS stack but I enjoy C# and .Net and I enjoy using the OSS projects out there, its just when looking for jobs I need to find a company that is willing to look at new libraries and not just Microsoft’s approach. This is very hard to do unless you are in London. Companies there have changed their attitudes and are more open to using alternative libraries and do advertise for people with experience in the alternative libraries but for the rest of the UK they mostly remain MS orientated.&lt;/p&gt;
+
+&lt;p&gt;Here comes the spanner in the works, the available jobs for Python, JVM languages or node.js are virtually non-existent so whilst as much as I bitch and moan that companies should look at MS alternatives I pretty much have to deal with it because the majority of jobs are for .Net with a MS stack. I could go the way of my friend mentioned earlier and work for myself writing software in using the tech/tooling I want but what if I run out of contracts and need to get back into the job market? I will face the same issue as he did.&lt;/p&gt;
+
+&lt;p&gt;There is no perfect job out there regardless of tech/tools used (if you say you have it then you are either a liar or very very lucky) which is something I have recently accepted but if the majority of jobs are on the MS stack and there are great alternative .Net projects waiting to be discovered can we please ask our companies to open their eyes and take a look at what else might be out there.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/04/30/mocking-httpcontext-with-fake-it-easy/</guid><link>http://blog.jonathanchannon.com/2013/04/30/mocking-httpcontext-with-fake-it-easy/</link><title>Mocking HttpContext with Fake It Easy</title><description>&lt;p&gt;Lets start with the conclusion first and say “use &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt; for your web applications and APIs” as its brilliant!&lt;/p&gt;
+
+&lt;p&gt;If you want to continue reading lets crack on.&lt;/p&gt;
+
+&lt;p&gt;I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, &lt;em&gt;eg. Response.Write(“How will I mock thee?”);&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Having moved over to &lt;a href="http://xunit.codeplex.com/"&gt;xUnit&lt;/a&gt; and &lt;a href="https://github.com/FakeItEasy/FakeItEasy"&gt;FakeItEasy&lt;/a&gt; recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.&lt;/p&gt;
+
+&lt;p&gt;Doing this is no easy feat with MVC (with Nancy its all &lt;a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application"&gt;done for you&lt;/a&gt;) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.&lt;/p&gt;
+
+</description><pubDate>Mon, 29 Apr 2013 23:00:00 Z</pubDate><a10:updated>2013-04-29T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;Lets start with the conclusion first and say “use &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt; for your web applications and APIs” as its brilliant!&lt;/p&gt;
+
+&lt;p&gt;If you want to continue reading lets crack on.&lt;/p&gt;
+
+&lt;p&gt;I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, &lt;em&gt;eg. Response.Write(“How will I mock thee?”);&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Having moved over to &lt;a href="http://xunit.codeplex.com/"&gt;xUnit&lt;/a&gt; and &lt;a href="https://github.com/FakeItEasy/FakeItEasy"&gt;FakeItEasy&lt;/a&gt; recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.&lt;/p&gt;
+
+&lt;p&gt;Doing this is no easy feat with MVC (with Nancy its all &lt;a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application"&gt;done for you&lt;/a&gt;) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;I found that there a quite a lot of samples with Moq but nothing for Fake It Easy(FIE) so I checked in at the &lt;a href="https://jabbr.net/#/rooms/fakeiteasy"&gt;FIE Jabbr room&lt;/a&gt; and got some help and worked through some ideas and below is the result.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//Controller
+public class MyController : Controller
+{
+    [HttpPost]
+    public void Index()
+    {
+        Response.Write("This is fiddly");
+        Response.Flush();
+    }
+}
+
+//Unit Test
+[Fact]
+public void Should_contain_fiddly_in_response()
+{
+    var sb = new StringBuilder();
+
+    var formCollection = new NameValueCollection();
+    formCollection.Add("MyPostedData","Boo");
+
+    var request = A.Fake();
+    A.CallTo(() =&amp;gt; request.HttpMethod).Returns("POST");
+    A.CallTo(() =&amp;gt; request.Headers).Returns(new NameValueCollection());
+    A.CallTo(() =&amp;gt; request.Form).Returns(formCollection);
+    A.CallTo(() =&amp;gt; request.QueryString).Returns(new NameValueCollection());
+
+    var response = A.Fake();
+    A.CallTo(() =&amp;gt; response.Write(A.Ignored)).Invokes((string x) =&amp;gt; sb.Append(x));
+
+    var mockHttpContext = A.Fake();
+    A.CallTo(() =&amp;gt; mockHttpContext.Request).Returns(request);
+    A.CallTo(() =&amp;gt; mockHttpContext.Response).Returns(response);
+
+    var controllerContext = new ControllerContext(mockHttpContext, new RouteData(), A.Fake());
+
+    var myController = new MyController()
+        {
+            ControllerContext = controllerContext
+        };
+
+    myController.Index();
+
+    Assert.Contains("fiddly", sb.ToString());
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As we are not running this against a live web server we need to mock everything from base controller types to requests, responses and everything in between. My example initiates a bit more than is required ie. querystring and headers but hopefully it demonstrates what’s needed.&lt;/p&gt;
+
+&lt;p&gt;Firstly we create an instance of a StringBuilderthat will store the response information that we can assert against. We setup a NameValueCollection to add keys/values for posted data, we could do the same for headers etc if we wanted.&lt;/p&gt;
+
+&lt;p&gt;We then create an instance of a fake HttpRequestBase using FIE and setup all the relevant request properties.&lt;/p&gt;
+
+&lt;p&gt;We then create an instance of a fake HttpResponseBase and configure a callback that is invoked when our controller calls Response.Write. We also configure it to watch any calls to Response.Write with any string using the FIE syntax of A.Ignored, you could change it so it only looks for specific argument contents if you wanted. When the method is called it then takes the argument and adds it to the StringBuilder.&lt;/p&gt;
+
+&lt;p&gt;We then create a fake instance of HttpContextBase and assign the properties of Request and Response to the previously setup fakes.&lt;/p&gt;
+
+&lt;p&gt;We then have to create a ControllerContext and pass the fake Http context, a route collection and a fake ControllerBase which the controller under test inherits off. We then assign the controller context to an instance of the controller class we are testing.&lt;/p&gt;
+
+&lt;p&gt;We can now finally call the method under test and assert the results.&lt;/p&gt;
+
+&lt;p&gt;I would obviously recommend you put the fake setup in a factory method if you have multiple tests you class to prevent duplication. You can obviously then add header, querystring, form method arguments if you want the context populated with that kind of information.&lt;/p&gt;
+
+&lt;p&gt;Hope this helps anyone in a similar situation and provides a point of reference for the Fake It Easy project.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/04/17/up-running-with-typescript-and-webstorm/</guid><link>http://blog.jonathanchannon.com/2013/04/17/up-running-with-typescript-and-webstorm/</link><title>Up &amp; Running with TypeScript and WebStorm</title><description>&lt;p&gt;I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.&lt;/p&gt;
+
+&lt;p&gt;As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use &lt;a href="http://www.jetbrains.com/webstorm/"&gt;WebStorm&lt;/a&gt; from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).&lt;/p&gt;
+
+&lt;h2&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;So I went over to TypeScript’s &lt;a href="http://www.typescriptlang.org/"&gt;website&lt;/a&gt; and followed the Hello World type code examples under the “Learn” tab.&lt;/p&gt;
+
+</description><pubDate>Tue, 16 Apr 2013 23:00:00 Z</pubDate><a10:updated>2013-04-16T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.&lt;/p&gt;
+
+&lt;p&gt;As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use &lt;a href="http://www.jetbrains.com/webstorm/"&gt;WebStorm&lt;/a&gt; from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).&lt;/p&gt;
+
+&lt;h2&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;So I went over to TypeScript’s &lt;a href="http://www.typescriptlang.org/"&gt;website&lt;/a&gt; and followed the Hello World type code examples under the “Learn” tab.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;After understanding the basics of it and wanting to learn more I spotted this demo code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Student {
+    fullname : string;
+    constructor(public firstname, public middleinitial, public lastname) {
+        this.fullname = firstname %2B " " %2B middleinitial %2B " " %2B lastname;
+    }
+}
+
+interface Person {
+    firstname: string;
+    lastname: string;
+}
+
+function greeter(person : Person) {
+    return "Hello, " %2B person.firstname %2B " " %2B person.lastname;
+}
+
+var user = new Student("Jane", "M.", "User");
+
+document.body.innerHTML = greeter(user);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There is an interface that expects public properties of firstname and lastname. There is a Student class that has a constructor with arguments for firstname, middleinitial and lastname. TypeScript constructor arguments are shorthand for making the arguments properties on the object itself without having to code all that yourself. We then have a function called greeter that takes a method argument of our Person interface and uses the properties of it to return a string. We then create a new instance of the Student class and then call the greeter function with our instance. Woooaaahhh! I want static typing, WTF is going on here? Essentially TypeScript allows for &lt;a href="http://en.wikipedia.org/wiki/Duck_typing"&gt;Duck Typing&lt;/a&gt; where any object that makes calls to or uses properties that match another type, it will allow. Now technically you can do this in C# by using the “dynamic” keyword but I would still keep and one to one mapping even if it was dynamic/duck typed so not to confuse future users.&lt;/p&gt;
+
+&lt;p&gt;It may be this example that I don’t like where properties are being un-used or the fact that the keyword “interface” is being used and the class is not statically implementing it but I guess this is how TypeScript uses interfaces ie/duck typing. I can’t think of a reason why you’d have an object that exposes properties that are not used when they have been shoe horned/duck typed into another with fewer properties etc, however, this might just be my statically typed mind not liking it and it should chill and get with the dynamic nature of things!&lt;/p&gt;
+
+&lt;h2&gt;Webstorm&lt;/h2&gt;
+
+&lt;p&gt;So in my quest to develop something on my Mac I chose Webstorm as my IDE. I haven’t heard one bad thing against Jetbrains so it must be good right? Must be simple and intuitive? Ummm, no. Webstorm has support for TypeScript and uses the computer’s version of TypeScript to compile *.ts files into *.js files. So I installed Node.js and TypeScript (&lt;em&gt;npm install -g typescript&lt;/em&gt;) and fired up Webstorm. Webstorm offers various project types to create new projects from but unfortunately no TypeScript one so I created an empty application. I added a *.ts file and Webstorm spots that this is a TypeScript file and wants to add a File Watcher. This means every time a change is made it recompiles in the background to produce *.js, that seems a bit keen for my liking and would prefer it on every time the file is saved but each to their own. I copied the above code into my my *.ts file. I then created a html file and referenced the JavaScript file that was created from the TypeScript compilation in the head section. (I’m using the term compilation but I guess it should be transpiling but you know what I’m getting at).&lt;/p&gt;
+
+&lt;p&gt;Ok, we’re ready to go and debug and here comes the confusion!&lt;/p&gt;
+
+&lt;p&gt;Being used to Visual Studio I thought it would start a web server instance up, open my system browser and away we go but unfortunately not. I was baffled but that doesn’t take much! I found the Run menu item and it had a Debug option and it then popped up window with a Edit Configuration option so I clicked that and it came up with the below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/blogpostimages/WebstormDebug-620x390.png" alt="WebStorm Debug" title="Webstorm Debug" /&gt;&lt;/p&gt;
+
+&lt;p&gt;As there was no TypeScript option I assumed JavaScript was the option to go with. Under this option it has Local and Remote menu items to choose from. If you look at Local it autofills a path to the index.html on the filesystem, under the Remote option it shows the project structure and asks for a URL. I tried localhost:1234 but nothing so I went back to the filesystem option and clicked Apply but that doesn’t actually do anything.&lt;/p&gt;
+
+&lt;p&gt;So went through it all again and saw the + icon in the screenshot and it gives you an option to add a JavaScript configuration and is a complete mirror of the above screenshot. Very odd. Clicked Apply, then tried to Debug again and it gave me the configuration I chose and then opened Chrome. Nothing. WTF!&lt;/p&gt;
+
+&lt;p&gt;Had a rummage around WebStorm and saw a note about needing a Jetbrains Chrome extension to debug. So off to the Chrome Store I went and installed the plugin. Tried to Debug and it now opened a browser with my page so things are looking good. Went to the TypeScript file and put a breakpoint on a line but it wasn’t getting hit. I then put a breakpoint on a line in the JavaScript file and it got hit. Yay! But no content was in my page. Baffled again. WebStorm was saying that it couldn’t set the innerHTML property of null. Eh? How can a body be null? After a while of head scratching I sussed it. Those of you that are eagle eyed will have spotted that I put the script declaration in my head and therefore when it got executed there was no such thing as a body tag in the DOM yet. So I moved the script declaration to the body and bingo we have content. I should know better and should have put the script tag at the bottom of the body anyway but this was just a “Hello World” app so wasn’t too worried.&lt;/p&gt;
+
+&lt;p&gt;Anyway it now works and either I’m too entrenched in Visual Studio and should learn to adapt to new IDE’s or I expect things to just work without having to &lt;a href="http://en.wikipedia.org/wiki/RTFM"&gt;RTFM&lt;/a&gt;. I must say if I have to read the manual on how to use pieces of software you have an instant fail however, as I’ve heard such great things about Jetbrains and Webstorm I’m willing to give it another go but it has me on the back foot already. I’m also still unsure how to set WebStorm up to use a local web server because debugging by pointing to a file system seems wrong, if anyone knows please let me know.&lt;/p&gt;
+
+&lt;p&gt;I hope this helps someone else to get up and running with TypeScript and WebStorm, if not I’m sure there are plenty who’ve had a laugh from this article asking how one person can be so dumb :)&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/04/08/using-a-markdown-viewengine-with-nancy/</guid><link>http://blog.jonathanchannon.com/2013/04/08/using-a-markdown-viewengine-with-nancy/</link><title>Using a Markdown ViewEngine with Nancy</title><description>&lt;p&gt;Whilst using &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; and &lt;a href="https://gist.github.com/"&gt;Github gists&lt;/a&gt; I’ve become a frequent user of &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#Hello World!
+##You're awesome!
+The quick brown fox jumped over the lazy coder
+What the **hell** is this?
+This is an [example link](http://example.com/)
+
+&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;
+&amp;lt;h2&amp;gt;You're awesome!&amp;lt;/h2&amp;gt;
+&amp;lt;p&amp;gt;The quick brown fox jumped over the lazy coder&amp;lt;/p&amp;gt;
+What the &amp;lt;strong&amp;gt;hell&amp;lt;/strong&amp;gt; is this?
+This is an &amp;lt;a href="http://example.com/"&amp;gt; example link&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see more examples in the earlier link.&lt;/p&gt;
+
+&lt;p&gt;When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into &lt;a href="http://calepin.co/"&gt;Calepin&lt;/a&gt; and &lt;a href="http://scriptogr.am/"&gt;Scriptogr.am&lt;/a&gt; as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.&lt;/p&gt;
+
+</description><pubDate>Sun, 07 Apr 2013 23:00:00 Z</pubDate><a10:updated>2013-04-07T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;Whilst using &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; and &lt;a href="https://gist.github.com/"&gt;Github gists&lt;/a&gt; I’ve become a frequent user of &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#Hello World!
+##You're awesome!
+The quick brown fox jumped over the lazy coder
+What the **hell** is this?
+This is an [example link](http://example.com/)
+
+&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;
+&amp;lt;h2&amp;gt;You're awesome!&amp;lt;/h2&amp;gt;
+&amp;lt;p&amp;gt;The quick brown fox jumped over the lazy coder&amp;lt;/p&amp;gt;
+What the &amp;lt;strong&amp;gt;hell&amp;lt;/strong&amp;gt; is this?
+This is an &amp;lt;a href="http://example.com/"&amp;gt; example link&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see more examples in the earlier link.&lt;/p&gt;
+
+&lt;p&gt;When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into &lt;a href="http://calepin.co/"&gt;Calepin&lt;/a&gt; and &lt;a href="http://scriptogr.am/"&gt;Scriptogr.am&lt;/a&gt; as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;As you may be aware, I’m a great fan of &lt;a href="http://nancyfx.org/"&gt;Nancy&lt;/a&gt; and the team/contributors were discussing having something similar to Calepin for Nancy so users could upload a Markdown file as a pull request or community article or have something that uses Markdown that can be plugged into Jekyll.&lt;/p&gt;
+
+&lt;p&gt;I initially looked into how hard it would be to convert Markdown into HTML with Nancy and as ever, very easy! I found some libraries that already provided the conversion process and decided upon &lt;a href="http://nuget.org/packages/MarkdownSharp/"&gt;MarkdownSharp&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I then thought we could use Markdown as a proper view engine like Razor. I was unsure of how to provide the ability of model binding, master pages etc but after speaking to &lt;a href="http://twitter.com/grumpydev"&gt;@grumpydev&lt;/a&gt; he suggested using the built in view engine with Nancy to provide that functionality.&lt;/p&gt;
+
+&lt;p&gt;What this means is that you can have a Nancy route such as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class SampleModule : NancyModule
+{
+    public SampleModule()
+    {
+        Get["/"] = _ =&amp;gt;
+        {
+          var model = new UserModel{FirstName = "John", LastName = "Smith"};
+          return View["Home", model];
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will find a Markdown file called Home.md or Home.markdown, translate the model and convert the markdown into a HTML view. You could define you markdown view like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#Hi there!
+
+My first name is [ERR!] and my last name is [ERR!]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This would then translate to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Hi there!&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;My first name is John and my last name is Smith&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a simple demonstration but what it means is that you can now use the Markdown view engine instead of Razor if you so wished. Things like model binding, master pages, partials, model iteration etc etc can all be handled by the view engine and your views can be written in Markdown. To use features like partials and master pages you use the Super Simple View Engine syntax that as it sounds is super simple.&lt;/p&gt;
+
+&lt;p&gt;When I wrote the Markdown view engine I also wrote a demo with the easy approach of Calepin in mind.&lt;/p&gt;
+
+&lt;p&gt;I wrote a HTML view to act as my master page and then a route in Nancy that would take anything after the URL and find the view for it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Get["/{viewname}"] = parameters =&amp;gt;
+{
+    var popularposts = GetModel();
+
+    dynamic postModel = new ExpandoObject();
+    postModel.PopularPosts = popularposts;
+    postModel.MetaData = popularposts.FirstOrDefault(x =&amp;gt; x.Slug == parameters.viewname);
+
+    return View["Posts/" + parameters.viewname, postModel];
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the Markdown file I would reference the master page, some partials, the model and a custom section for meta data about the blog post:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Master['master']
+
+@Tags
+Date: 15/03/2013
+Title: Readme
+Tags: Nancy,Runtime
+@EndTags
+
+@Section['Content']
+
+[ERR!]
+
+# Readme!
+
+## Markdown Viewengine
+
+This Markdown Viewengine allows views to be written in Markdown.
+
+* Full Model support
+* Master page support
+* Supports HTML within any MD content
+* Simple call `return View["Home"]` for Nancy to render your MD file
+
+## Markdown Blog Demo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This would then render a good looking website with all the features expected in a view engine. It would use the meta data provided to write out things like page titles and tags for a blog post. It would also mean you could use the approach to write your own blog using Nancy and Markdown.&lt;/p&gt;
+
+&lt;p&gt;The GetModel() method used above checks a “Posts” directory for Markdown files and reads the metadata for them. What this means is that you can easily write a blog post using Nancy, Markdown and SuperSimpleViewEngine by just uploading the markdown file to a specific directory.&lt;/p&gt;
+
+&lt;p&gt;Ideally I would like to get rid of the master page and partial references so you could just have Markdown content in your file but I haven’t figured that out yet. Hopefully someone else can use the Markdown view engine or take the demo app and find an alternative way to provide the simplicity that Calepin offers.&lt;/p&gt;
+
+&lt;p&gt;Overall it’s another nice feature that Nancy can offer its users and I have enjoyed contributing to the OSS project and tinkering with code!&lt;/p&gt;
+
+&lt;p&gt;The Markdown View Engine and Demo will be released in 0.17 of Nancy due very soon!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/04/08/using-datetime-in-c-and-sql/</guid><link>http://blog.jonathanchannon.com/2013/04/08/using-datetime-in-c-and-sql/</link><title>Using DateTime in C# and SQL</title><description>&lt;p&gt;I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.&lt;/p&gt;
+
+&lt;p&gt;Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+&lt;code&gt;myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In every central place where you update/insert DateTime values on your objects you will need the above.&lt;/p&gt;
+
+&lt;p&gt;When you display any DateTime information it must display as a local datetime value. You can do this by using     &lt;code&gt;myObject.ExpiryDate.ToLocalTime()&lt;/code&gt;&lt;/p&gt;
+
+</description><pubDate>Sun, 07 Apr 2013 23:00:00 Z</pubDate><a10:updated>2013-04-07T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.&lt;/p&gt;
+
+&lt;p&gt;Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+&lt;code&gt;myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In every central place where you update/insert DateTime values on your objects you will need the above.&lt;/p&gt;
+
+&lt;p&gt;When you display any DateTime information it must display as a local datetime value. You can do this by using     &lt;code&gt;myObject.ExpiryDate.ToLocalTime()&lt;/code&gt;&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;An example of this is if you stored a DateTime that was converted to UTC and it stored April 8th 14:30 2013, when a user in USA was given the date in their web application they would see it as April 8th 10:30 but UK users would read it as April 8th 15:30&lt;/p&gt;
+
+&lt;p&gt;If you have an existing application you need to make sure the server side logic regarding date storage converts to UTC and that your view layer converts to local time.&lt;/p&gt;
+
+&lt;p&gt;Its risky but if your users are all on the same time zone and the database server and all operating systems are the same you don’t need to worry about this and can use DateTime.Now for everything.  &lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/04/02/the-old-development-language-switcheroo/</guid><link>http://blog.jonathanchannon.com/2013/04/02/the-old-development-language-switcheroo/</link><title>The Old Development Language Switcheroo</title><description>&lt;p&gt;As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?&lt;/p&gt;
+
+&lt;p&gt;I have looked more into JavaScript recently and with that comes server and client scope for the use of the language so with some understanding of JS that would be probably the best bet for me however, as much as this may annoy some I think I actually prefer statically typed languages.&lt;/p&gt;
+
+&lt;p&gt;Now I know there is &lt;a href="http://www.typescriptlang.org/"&gt;TypeScript&lt;/a&gt; that I could use for my &lt;a href="http://nodejs.org/"&gt;node.js&lt;/a&gt; apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.&lt;/p&gt;
+
+</description><pubDate>Mon, 01 Apr 2013 23:00:00 Z</pubDate><a10:updated>2013-04-01T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?&lt;/p&gt;
+
+&lt;p&gt;I have looked more into JavaScript recently and with that comes server and client scope for the use of the language so with some understanding of JS that would be probably the best bet for me however, as much as this may annoy some I think I actually prefer statically typed languages.&lt;/p&gt;
+
+&lt;p&gt;Now I know there is &lt;a href="http://www.typescriptlang.org/"&gt;TypeScript&lt;/a&gt; that I could use for my &lt;a href="http://nodejs.org/"&gt;node.js&lt;/a&gt; apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;You could argue that I could go back to my first language of Delphi or I could look into C++, Java or PHP but my counter argument might just be laughter. In my opinion these are old languages. They may be reliable for some needs but I feel its looking back to the past somewhat and not looking forward.&lt;/p&gt;
+
+&lt;p&gt;I have recently come across &lt;a href="http://www.dartlang.org/"&gt;Dart&lt;/a&gt; and want to spend some time looking into it to see if we suit each other.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Dart is a class-based, object-oriented language with lexical scoping, closures, and optional static typing. Dart helps you build structured modern web apps and is easy to learn for a wide range of developers.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There is also &lt;a href="http://www.tryfsharp.org/"&gt;F#&lt;/a&gt; which I need to look at as my Twitter timeline has more and more references to this language.&lt;/p&gt;
+
+&lt;p&gt;There is also &lt;a href="http://kotlin.jetbrains.org/"&gt;Kotlin&lt;/a&gt; but that’s as much as I know about it, the name. I think its based on Java and that rings alarm bells for me but I’m sure &lt;a href="http://twitter.com/Cranialstrain"&gt;@Cranialstrain&lt;/a&gt; will put me right.&lt;/p&gt;
+
+&lt;p&gt;There is also &lt;a href="http://golang.org/"&gt;Go&lt;/a&gt; and I’m sure there are many others that I could find but rightly or wrongly when deciding upon a language which lets be honest is a big investment you need to know there are the available jobs out there in that language. Its nice to learn new stuff and I highly recommend it but for me a whole new investment in a language has to warrant some pay offs such as employment.&lt;/p&gt;
+
+&lt;p&gt;I can’t say for sure what language I’d use if I had to change, at present most likely JavaScript but probably that is based out of limited options on my part, maybe I need to become a better polyglot programmer and learn some more languages to have better “options” and not become irrelevant.&lt;/p&gt;
+
+&lt;p&gt;Let me know what your primary language is and what you’d jump to if you had to.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/03/04/the-many-approaches-to-entity-framework/</guid><link>http://blog.jonathanchannon.com/2013/03/04/the-many-approaches-to-entity-framework/</link><title>The many approaches to Entity Framework</title><description>&lt;p&gt;I recently had a need to look into using &lt;a href="http://www.asp.net/entity-framework"&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href="http://www.asp.net/mvc"&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href="http://www.toptensoftware.com/petapoco/"&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;
+
+</description><pubDate>Mon, 04 Mar 2013 00:00:00 Z</pubDate><a10:updated>2013-03-04T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I recently had a need to look into using &lt;a href="http://www.asp.net/entity-framework"&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href="http://www.asp.net/mvc"&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href="http://www.toptensoftware.com/petapoco/"&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;h2&gt;Approach One&lt;/h2&gt;
+
+&lt;p&gt;My first approach was to create a generic repository, IRepository, to handle the the various crud methods needed and also a Save method. The implementation, Repository would take a IUnitOfWork constructor dependency which would expose the model type ie.Customer,Order, Product and allow EF to perform the CRUD actions.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class Repository : IRepository where T : class
+{
+    private readonly IUnitOfWork unitOfWork;
+    private readonly DbSet entitySet;
+
+    public Repository(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+        entitySet = unitOfWork.GetEntitySet();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);        
+    }
+}
+
+public interface IUnitOfWork
+{
+    void SaveChanges();
+    DbSet GetEntitySet() where TEntity : class;
+}
+
+public OrderController(IRepository orderRepository, IRepository customerRepository )
+{
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are two issues with this approach. Firstly, the IUnitOfWork exposes EF specific members which I don’t really want and secondly when a repository calls Save it will in turn call the SaveChanges method on EF which will save any changes across all repositories. This is because we have one EF database context per request as handled by our IOC container. To get around the saving issue we could have a new context per instance of the repository but I don’t think that is a good approach.&lt;/p&gt;
+
+&lt;p&gt;The full code can be seen on the master branch at Github – &lt;a href="https://github.com/jchannon/EntityFrameworkMVC/tree/master/EntityFrameworkMVC"&gt;https://github.com/jchannon/EntityFrameworkMVC/tree/master/EntityFrameworkMVC
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Approach Two&lt;/h2&gt;
+
+&lt;p&gt;Another approach we could use is to remove IUnitOfWork altogether, keep the Save method on the repository but inject the context into the repository and still inject the repositories into the controllers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class Repository : IRepository where T : class
+{
+    private readonly EntityFrameworkMvcDbContext context;
+    private readonly DbSet entitySet;
+
+    public Repository(EntityFrameworkMvcDbContext context)
+    {
+        this.context = context;
+        entitySet = context.Set();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This approach is pretty close to what I think we would want and reasonably straight forward but I still don’t like the fact that the SaveChanges would effect every modified/added model across all repositories. If you’re happy to live with that then I think you’re good to go.&lt;/p&gt;
+
+&lt;p&gt;The full code can be seen on the LessAbstraction branch at Github – &lt;a href="https://github.com/jchannon/EntityFrameworkMVC/tree/LessAbstraction/EntityFrameworkMVC"&gt;https://github.com/jchannon/EntityFrameworkMVC/tree/LessAbstraction/EntityFrameworkMVC
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Approach Three&lt;/h2&gt;
+
+&lt;p&gt;Another approach for using EF and building on from approach one was to remove the GetEntitySet from the IUnitOfWork interface but keep the Save method, inject the context into the repositories to allow them to add/update and inject the IUnitOfWork and repositories into the controllers so the repositories could use Add and then IUnitOfWork could be used to call SaveChanges.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public interface IUnitOfWork
+{
+    void SaveChanges();
+}
+
+public class Repository : IRepository where T : class
+{
+    private readonly DbSet entitySet;
+
+    public Repository(EntityFrameworkMvcDbContext context)
+    {
+        entitySet = context.Set();
+    }
+
+    public void Add(T entity)
+    {
+        entitySet.Add(entity);  
+    }
+}
+
+public OrderController(IUnitOfWork unitOfWork, IRepository orderRepository, IRepository customerRepository)
+{
+    this.unitOfWork = unitOfWork;
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I think that’s a decent approach however, I think it could be tidied up so that the controllers don’t get cluttered with too many constructor dependencies.&lt;/p&gt;
+
+&lt;p&gt;The full code can be seen on the GenericContextPerRequest branch at Github – &lt;a href="https://github.com/jchannon/EntityFrameworkMVC/tree/GenericContextPerRequest/EntityFrameworkMVC"&gt;https://github.com/jchannon/EntityFrameworkMVC/tree/GenericContextPerRequest/EntityFrameworkMVC
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Approach Four&lt;/h2&gt;
+
+&lt;p&gt;This below was another approach and the approach I decided I would use. It uses all the understandings gained from the above samples and hopes to provide a decent way of using EF.&lt;/p&gt;
+
+&lt;p&gt;The repositories are now exposed on the IUnitOfWork interface, the implementation takes the DBContext as a constructor dependency, the repository implementation also takes the DBContext to provide the CRUD features with EF and the controllers only have the IUnitOfWork injected into them.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public interface IUnitOfWork
+{
+    void SaveChanges();
+    IRepository CustomerRepository { get; }
+    IRepository ProductRepository { get; }
+    IRepository OrderRepository { get; }
+}
+
+public OrderController(IUnitOfWork unitOfWork )
+{
+    this.unitOfWork = unitOfWork;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This means we can keep our one database context per request, the controllers are tidied up so we no longer have numerous constructor dependencies and the repositories can be used to do CRUD and then SaveChanges can be called by IUnitOfWork when we have finished with the repositories.&lt;/p&gt;
+
+&lt;p&gt;The only possible downside could be in time that we have numerous constructor dependencies on the IUnitOfWork implementation as well as numerous exposed repository properties on the IUnitOfWork interface. I don’t see this as a big issue as its only one class in your solution. If you didn’t want this to get too polluted you could create a repository factory and inject that into the controller and just have the SaveChanges on the IUnitOfWork interface. You wouldn’t want the IUnitOfWork to expose the repositories because as &lt;a href="https://twitter.com/daanleduc"&gt;@daanleduc&lt;/a&gt; pointed out to me that would violate the SRP.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I only touched the basics of implementing EF into a MVC app but these approaches did take quite a while to discover and after hearing all the negativity towards EF and drawing from my experience I think I could see why people have issues with it in a much larger application as I’m sure there are other caveats to using EF. The biggest issue I saw with it was not exposing a Save method for the model type you were using, instead you have to commit all changes across the database context. I feel this made it quite difficult to create a decent architecture. I can see in a large enterprise application why EF could be helpful in allowing it to query the database for you and create/modify the tables for you based on your model changes but I think for now in smaller applications I think I still prefer micro-ORMs like PetaPoco, Dapper or Simple.Data due to the control it gives you and also the ease in which you can abstract the database communication. As &lt;a href="https://twitter.com/Cranialstrain"&gt;@Cranialstrain&lt;/a&gt; says “the database is an implementation detail”. I’d also like to thank all those on Jabbr that helped me with the above approaches and long discussions had about Entity Framework!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/</guid><link>http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/</link><title>Evaluating KnockoutJS and AngularJS – Part 1</title><description>&lt;p&gt;As I stated in my earlier post &lt;a href="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/" title="JavaScript is the future…maybe!"&gt;“JavaScript is the future…maybe”&lt;/a&gt; so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at &lt;a href="http://knockoutjs.com"&gt;KnockoutJS&lt;/a&gt; and &lt;a href="http://angularjs.org/"&gt;AngularJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before I actually looked at these two I spent some time with &lt;a href="http://sammyjs.org/"&gt;SammyJS&lt;/a&gt; but realised afterwards it was mainly MVC based and not around 2-way binding that Knockout and Angular offer. However, I really liked it and it seemed very familiar and easy to use, the reason being it was inspired by &lt;a href="http://www.sinatrarb.com/"&gt;Sinatra&lt;/a&gt; which we all know &lt;a href="http://nancyfx.org/"&gt;Nancy&lt;/a&gt; was also inspired by and we also know how much &lt;a href="http://nancyfx.org/mvm.html"&gt;I like Nancy&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;Getting to grips with any language or frameworks is tricky and the best way to do it is to write an application using it. The next difficult thing to overcome is an idea for writing an application. ToDo list’s are very common with JavaScript frameworks and there is a whole website for you to peruse but after looking at SammyJS and their docs they walk through writing a simple shopping basket so I thought I’d use that.&lt;/p&gt;
+
+</description><pubDate>Tue, 05 Feb 2013 00:00:00 Z</pubDate><a10:updated>2013-02-05T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;As I stated in my earlier post &lt;a href="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/" title="JavaScript is the future…maybe!"&gt;“JavaScript is the future…maybe”&lt;/a&gt; so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at &lt;a href="http://knockoutjs.com"&gt;KnockoutJS&lt;/a&gt; and &lt;a href="http://angularjs.org/"&gt;AngularJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before I actually looked at these two I spent some time with &lt;a href="http://sammyjs.org/"&gt;SammyJS&lt;/a&gt; but realised afterwards it was mainly MVC based and not around 2-way binding that Knockout and Angular offer. However, I really liked it and it seemed very familiar and easy to use, the reason being it was inspired by &lt;a href="http://www.sinatrarb.com/"&gt;Sinatra&lt;/a&gt; which we all know &lt;a href="http://nancyfx.org/"&gt;Nancy&lt;/a&gt; was also inspired by and we also know how much &lt;a href="http://nancyfx.org/mvm.html"&gt;I like Nancy&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;Getting to grips with any language or frameworks is tricky and the best way to do it is to write an application using it. The next difficult thing to overcome is an idea for writing an application. ToDo list’s are very common with JavaScript frameworks and there is a whole website for you to peruse but after looking at SammyJS and their docs they walk through writing a simple shopping basket so I thought I’d use that.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;If you just want to get to the code then feel free to take a look here for &lt;a href="https://github.com/jchannon/AngularShopping"&gt;Angular&lt;/a&gt; and here for &lt;a href="https://github.com/jchannon/KnockoutShopping"&gt;Knockout&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This blog post will concentrate on AngularJS.&lt;/p&gt;
+
+&lt;h2&gt;Angular&lt;/h2&gt;
+
+&lt;p&gt;After looking at the demos on the the home page and reading the docs I was ready to start. (I also got recommended &lt;a href="http://egghead.io/"&gt;egghead.io&lt;/a&gt; for lots of free AngularJS videos)&lt;/p&gt;
+
+&lt;p&gt;I liked the look of Angular’s data bindings, it was very similar to &lt;a href="http://handlebarsjs.com/"&gt;HandlebarsJS&lt;/a&gt; which is a templating engine for JS and their specific attributes for doing certain things in the DOM seemed clean.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;input type="text" ng-model="yourName" placeholder="Enter a name here"&amp;gt;
+&amp;lt;hr&amp;gt;
+&amp;lt;h1&amp;gt;Hello {{yourName}}!&amp;lt;/h1&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Angular uses “Controllers” and coming from experience with MVC it turned out they’re not really controllers but more ViewModels. Each Controller handles its own specific task for example, in CRUD you’d probably have a controller for each create, read, update and delete. I believe its possible to make it have one controller but that’s a bit more advanced!&lt;/p&gt;
+
+&lt;p&gt;The data in the SammyJS demo comes via a data.json file so I duly created my file and followed the examples of wiring up a backend. This is when things start getting a bit more in depth with Angular opposed to a simple Hello World app. Angular provides its own internal IOC container which is recommended you use to keep things nicely separated and of course it then injects your controller’s dependencies for you. See &lt;a href="http://docs.angularjs.org/guide/di"&gt;here&lt;/a&gt; for more about the subject. There is a bit of configuration needed in various places and one missing item or spelling mistake and you’ll be stuck due to the nature of dynamic nature of JavaScript.&lt;/p&gt;
+
+&lt;p&gt;I finally managed to get my wirings all sorted and my products displayed on screen but when I wanted to retrieve a single item this is when I started scratching my head. The recommended way of doing it was to use an abstracted class called $resource which allows you to query REST based services and obviously with just having one file this wasn’t going to work. $resource sits on top of $http but after playing with that I discarded my file and stuck it in memory for ease. If you’d like to see a $http demo with Nancy as a REST service see &lt;a href="http://blogs.lessthandot.com/index.php/WebDev/UIDevelopment/Javascript/angularjs"&gt;this blog post&lt;/a&gt; from &lt;a href="http://blogs.lessthandot.com/index.php/All/?disp=authdir&amp;amp;author=7"&gt;Christiaan Baes&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;So now with a bit of filtering I could find my product and display it on screen. I had a controller for listing my products and another controller for displaying one item and a dependency injected into both to allow me to retrieve the data I wanted to display and I also had my routing setup.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//Routing
+var app = angular.module('myCart', []).
+        config(function ($routeProvider) {
+            $routeProvider.
+                when('/', {
+                    controller: 'IndexController',
+                    templateUrl: '/templates/list.html'
+                }).
+                when('/:id', {
+                    controller: 'DetailController',
+                    templateUrl: '/templates/detail.html'
+                }).
+                otherwise({ redirectTo: '/' });
+        });
+
+//Repository
+app.factory('shoppingItemsService', function () {
+        var data = [
+            //My data is here!
+        ];
+
+        return {
+            getItems: function () { return data; },
+            getItem: function (itemId) {
+                return data.filter(function (x) { return x.id === parseInt(itemId, 10); })[0];
+            }
+        };
+    });
+
+//List Controller
+app.controller(
+        'IndexController',
+        function ($scope, shoppingItemsService) {
+            $scope.items = shoppingItemsService.getItems();
+        }
+    );
+
+//Detail Controller
+app.controller(
+        'DetailController',
+        function ($scope, $routeParams, basketService, shoppingItemsService) {
+
+            $scope.item = shoppingItemsService.getItem($routeParams.id);
+            $scope.item.quantity = 1;
+
+            $scope.item.basketCount = basketService.getCount();
+
+            $scope.addItem = function () {
+                basketService.addItem($scope.item);
+            };
+        }
+    );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As the app is based around a single page application (SPA) the main area on the screen would show the products or product selected however I had an area, the cart info, that showed the quantity of items in my basket outside this main area. After a lot of head scratching I realised I could create a new controller that was responsible for setting a viewmodel property of the quantity and only update that specific area on screen. This meant when I was viewing a product and added a certain quantity to the basket this area would update automatically. Finally in the demo for a bit of added pizazz the cart info area animates.&lt;/p&gt;
+
+&lt;p&gt;This is the one bit that took me a long time to get my head around. Angular recommends that no DOM manipulation occurs in controllers but in separate classes/functions called Directives. I understand why, to keep your viewmodel not dependent on your view but man it was hard work! Directives allow you to determine your own HTML elements that Angular understands, again you can pass in dependencies and they will get resolved for you. Put whatever logic you want in your directive and then manipulate the DOM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;app.directive('quantity', function () {
+        var linker = function (scope, element, attrs, basketService) {
+
+            scope.$watch(attrs.quantity, function (value, oldValue) {
+                if (value &amp;gt; oldValue) {
+                    element
+                    .animate({ paddingTop: '30px' })
+                    .animate({ paddingTop: '10px' });
+                }
+            }, true);
+        };
+
+        return {
+            restrict: 'A',
+            link: linker
+        };
+    });
+
+//Usage
+&amp;lt;div class="cart-info" ng-controller="CartController" quantity="basketCount()"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One of the biggest things I found with Angular was that it was quite fiddly to setup however the documentation was very good and I had help from &lt;a href="http://twitter.com/philjones88"&gt;Phil Jones&lt;/a&gt;. Once I had solved whatever issue I was having at the time it was glaringly obvious what was needed and I why I was having problems but that’s all part of the learning curve I guess but mighty frustrating. Angular is certainly all encompassing by handling routing, model binding, separation of concerns and much more and so for a large app I can certainly see its potential but for small apps it may be a bit over the top but overall I did like it. There are also library extensions such as &lt;a href="http://angular-ui.github.com/"&gt;AngularUI&lt;/a&gt; which provide custom directives for DOM manipulation, ranked &lt;a href="http://ngmodules.org/"&gt;popular modules&lt;/a&gt; and specific &lt;a href="https://github.com/angular/angularjs-batarang"&gt;Angular debuggers&lt;/a&gt; so this framework certainly has a lot behind it and I definitely think it will be sticking around for a while.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-2/</guid><link>http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-2/</link><title>Evaluating KnockoutJS and AngularJS – Part 2</title><description>&lt;p&gt;In &lt;a href="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/" title="Evaluating KnockoutJS and AngularJS – Part 1"&gt;Part 1&lt;/a&gt;, I described how I was using the demo tutorial from &lt;a href="http://sammyjs.org/"&gt;SammyJS&lt;/a&gt; to get a better understanding of &lt;a href="http://angularjs.org/"&gt;AngularJS&lt;/a&gt; and &lt;a href="http://knockoutjs.com/"&gt;KnockoutJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this blog post I will focus on what I found when using KnockoutJS.&lt;/p&gt;
+
+&lt;p&gt;Again if you just want to get to the code then feel free to take a look here for &lt;a href="https://github.com/jchannon/AngularShopping"&gt;Angular&lt;/a&gt; and here for &lt;a href="https://github.com/jchannon/KnockoutShopping"&gt;Knockout&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Knockout&lt;/h2&gt;
+
+&lt;p&gt;Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank &lt;a href="https://twitter.com/davepermen"&gt;David Spörri&lt;/a&gt; for answering my newbie JS and Knockout questions.&lt;/p&gt;
+
+</description><pubDate>Tue, 05 Feb 2013 00:00:00 Z</pubDate><a10:updated>2013-02-05T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;In &lt;a href="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/" title="Evaluating KnockoutJS and AngularJS – Part 1"&gt;Part 1&lt;/a&gt;, I described how I was using the demo tutorial from &lt;a href="http://sammyjs.org/"&gt;SammyJS&lt;/a&gt; to get a better understanding of &lt;a href="http://angularjs.org/"&gt;AngularJS&lt;/a&gt; and &lt;a href="http://knockoutjs.com/"&gt;KnockoutJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this blog post I will focus on what I found when using KnockoutJS.&lt;/p&gt;
+
+&lt;p&gt;Again if you just want to get to the code then feel free to take a look here for &lt;a href="https://github.com/jchannon/AngularShopping"&gt;Angular&lt;/a&gt; and here for &lt;a href="https://github.com/jchannon/KnockoutShopping"&gt;Knockout&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Knockout&lt;/h2&gt;
+
+&lt;p&gt;Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank &lt;a href="https://twitter.com/davepermen"&gt;David Spörri&lt;/a&gt; for answering my newbie JS and Knockout questions.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Knockout also uses HTML elements and attributes like Angular to determine behaviour but Knockout’s approach is more HTML5 in that the most common usage is using the data-bind attribute. For example, the below will use the artist property on the viewmodel to render the div contents.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div data-bind="text: artist"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As this was going to be a SPA (Single Page Application), the main screen would have an area that would display either a list of products or more information about a single product. The way Knockout handles this is via a ‘with’ keyword.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id="main"&amp;gt;
+  &amp;lt;!-- Main Page --&amp;gt;
+  &amp;lt;div data-bind="with: items"&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;!-- Detail Page --&amp;gt;
+  &amp;lt;div data-bind="with: chosenProduct"&amp;gt;&amp;lt;div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So when the viewmodel’s ‘items’ property is populated it would show the first div and when the ‘chosenProduct’ property was populated it would show the second div. Nice and simple. You can then populate your markup with properties from the items and chosenProduct within those div’s.&lt;/p&gt;
+
+&lt;p&gt;As we have 2 pages/sections in our app we need to handle routing so that when we’re going to the root it populates our view model with all our products and when the user clicks a specific product it finds that product and populates our view model. KnockoutJS does not have this built into it like Angular does and uses SammyJS to handle this.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var app = Sammy(function () {
+    this.get('#/:id', function (context) {
+        self.items(null);
+        var product = data.filter(function (x) {
+            return x.id === parseInt(context.params.id, 10);
+        })[0];
+        product.quantity = 1;
+        self.chosenProduct(product);
+    });
+
+    this.get('/', function () {
+        self.items(data);
+        self.chosenProduct(null);
+    });
+});
+
+jQuery(function () {
+    console.log('rn');
+    app.run();
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Compared to Angular’s separation approach, here we have most things all in one class/viewmodel i.e/ the routing to assign the items property for all products and single item for the selected product as well as other viewmodel properties. We also have functions to add items and determine quantity as well as saving the information to &lt;a href="https://developer.mozilla.org/en-US/docs/DOM/Storage"&gt;localStorage&lt;/a&gt;. I guess it keeps it altogether in one place but this may get tricky once the app becomes quite large however, I’ve been told things can get separated by using &lt;a href="http://requirejs.org/"&gt;RequireJS&lt;/a&gt; although I think in this demo that would require a large refactor.&lt;/p&gt;
+
+&lt;p&gt;Again in this demo outside of the main area that gets changed with markup we have a shopping cart that needs to update when we add something. I already had a function that calculated my quantities but it did not update the div with the new value. Even though the viewmodel property was a computed function it was not re-run every time something was added to the basket, for that to happen the computed function needs to have an observable property within it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;self.basketItemCount = ko.computed(function () {
+       var count = 0;
+       var items = self.basketItems();
+       for (var i = 0; i &amp;lt; items.length; i%2B%2B) {
+           count %2B= items[i].quantity(); //Given that the quantity is an observable property
+       }
+       return count;
+   });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We also wanted to do some animation when the item was added to the basket and because SammyJS has a dependency on jQuery it was very easy to add this to the viewmodel’s addItem function however like Angular this is not recommended as it ties the view to the viewmodel. What Knockout recommend is custom bindings.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ko.bindingHandlers.animateCart = {
+    update: function (element, valueAccessor, allBindingsAccessor) {
+        $(element)
+            .animate({ paddingTop: '30px' })
+            .animate({ paddingTop: '10px' });
+    }
+};
+
+//Usage
+&amp;lt;div class="cart-info" data-bind="animateCart: basketAsJson()"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now this is where the data binding gets confusing/interesting. My HTML could not use the basketItems viewmodel property as this is an observable array and so would only react when the array changed NOT when properties of objects within the array changed. I was a bit disappointed with that so I had to create a new function that obviously used an observeable within it ie/the basketItems but that was not enough to handle the properties changing within that array. So the recommendation from &lt;a href="https://twitter.com/robwesterlund"&gt;Robert Westerlund&lt;/a&gt; (a Javascript, Knockout and Regex wizard) was to use ko.toJSON(basketItems()). (The reason we use ko.toJSON and not JSON.stringify is because that would not pick up the observeable property values) This would mean that it would have to traverse all the objects to find the values and because they are observeable this function would fire every time, genius! This also meant when it changed I could also store the changes in localStorage for when the user came back to the website!&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I found Knockout easier to comprehend and get going with compared to Angular which is always a winner when starting something new but Knockout is pretty much just about binding so for things like routing and separation of concerns you need to use other libraries whereas Angular has all that built in. I think for smaller projects without too much logic required Knockout is ideal and I really like the simplicity of SammyJS however, for larger applications that requires dependency injection, a clear separation of concerns and the easy ability to unit test logic Angular is a winner. In this case the term “pick the right tool for the job” certainly applies.&lt;/p&gt;
+
+&lt;p&gt;I guess I should go ahead and investigate Backbone now just to fully educate myself and I’ve been recommend this link – &lt;a href="https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md"&gt;“Step by step from jQuery to Backbone”&lt;/a&gt; so here goes…&lt;/p&gt;
+</a10:content></item></channel></rss>

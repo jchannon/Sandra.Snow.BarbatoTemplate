@@ -152,6 +152,7 @@ mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold}
 del { text-decoration: line-through}
 dfn { font-style: italic; }
 pre { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; margin: 0 0 16px 0; padding:6px; }
+p code { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; margin: 0; padding:2px 4px; background-color: #f7f7f9; border: 1px solid #e1e1e8; color:#ea4f34; }
 pre { white-space: pre; overflow:auto;}
 /*, code, kbd, samp*/
 .text-red {

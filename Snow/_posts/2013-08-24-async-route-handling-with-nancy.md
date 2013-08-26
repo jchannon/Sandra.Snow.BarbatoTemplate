@@ -3,7 +3,7 @@ layout: post
 title: Async Route Handling with Nancy
 category: nancyfx, oss, community, async, .net
 ---
-I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. 
+I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. 
 
 The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. 
 
@@ -62,25 +62,25 @@ Lets imagine we are one of those types that love QR codes and we need to generat
         {
             Get["/"] = parameters => View["Index"];
 
-            Post["/", true] = async (x, ctx) =>
+            Post["/", true] = async (x, ct) =>
             {
-                var link = await GetQrCode();
+                var link = await GetQrCode(ct);
                 var model = new { QrPath = link };
                 return View["Index", model];
             };
         }
 
-        private async Task<string> GetQrCode()
+        private async Task<string> GetQrCode(CancellationToken ct)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders
-                .Add("X-Mashape-Authorization", "oEzDRdFudTpsuLtmgewrIGcuj08tK7PI");
+            client.DefaultRequestHeaders.Add("X-Mashape-Authorization", "oEzDRdFudTpsuLtmgewrIGcuj08tK7PI");
             var response = await client.GetAsync(
-                "https://mutationevent-qr-code-generator.p.mashape.com/generate.php?content=http://www.nancyfx.org&type=url");
+                    "https://mutationevent-qr-code-generator.p.mashape.com/generate.php?content=http://www.nancyfx.org&type=url"
+                    , ct);
 
             var stringContent = await response.Content.ReadAsStringAsync();
-
-            dynamic model = JsonObject.Parse(stringContent); 
+            ct.ThrowIfCancellationRequested();
+            dynamic model = JsonObject.Parse(stringContent);
 
             return model["image_url"];
         }
@@ -102,7 +102,7 @@ In the view we then have some code that determines when to show the QR image:
 
     @if (Model != null)
     {
-        <img alt="QR Code" src="@Model.QrPath"/>
+        <img alt="QR Code" src="Model.QrPath"/>
     }
 
 You can view this code as a running application in my Github repository [here][4].

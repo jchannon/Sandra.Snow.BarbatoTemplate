@@ -1,8 +1,12 @@
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Sandra.Snow.PreCompiler.ViewModels.PostViewModel>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Snow.ViewModels.PostViewModel>
 @using System.Collections.Generic
 @{
   Layout = "default.cshtml";
 }
+@section title{
+    Jonathan Channon Blog - @Model.Title
+}
+
 
 <div class="post-item boxed post-detail">
     <span class="post-label label-quotes"></span>           
@@ -23,5 +27,8 @@
      <a href="/category/@category.Url"><span>@category.Name</span></a>
     }             
     </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
     @Html.RenderDisqusComments("jonathanchannonblog")
 </div>

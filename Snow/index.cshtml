@@ -1,4 +1,4 @@
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Sandra.Snow.PreCompiler.ViewModels.ContentViewModel>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Snow.ViewModels.ContentViewModel>
 @using System.Collections.Generic
 @{
   Layout = "default.cshtml";
@@ -19,7 +19,9 @@
       <div class="post-descr entry">
           @Html.Raw(postPaged.ContentExcerpt)
       </div>
+      @if (postPaged.Content.Length > postPaged.ContentExcerpt.Length){
       <p><a class="readmore" href="@postPaged.Url">Read more...</a></p>            
+      }
     </div>
   }
   <!-- Pagination links -->

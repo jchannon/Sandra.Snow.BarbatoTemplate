@@ -1,6 +1,7 @@
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Sandra.Snow.PreCompiler.ViewModels.BaseViewModel>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Snow.ViewModels.BaseViewModel>
 @using System.Collections.Generic
 <!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
 <!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
@@ -12,7 +13,15 @@
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="last-modified" content="@Model.GeneratedDate" />
-    <title>Jonathan Channon Blog</title>
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+    @if (IsSectionDefined("title"))
+    {
+        <title>@RenderSection("title")</title>
+    }
+    else
+    {
+        <title>Jonathan Channon Blog</title>
+    }
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" media="screen" rel="stylesheet">
     <link href="/css/screen.css" media="screen" rel="stylesheet">
@@ -20,7 +29,7 @@
 </head>
 
 <body>
-<div class="body_wrap">
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
     
     
     <div class="logo">

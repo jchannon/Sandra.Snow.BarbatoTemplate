@@ -12,8 +12,8 @@ There is some documentation [here][1] but its not the greatest in terms of clari
 
 Anyhow here's some example Git commands to wire it all up
 
-    git commit -am "status change #PROJ-158 Complete"
-    git commit -am "status change #PROJ-158 Complete add work 1h"
+    git commit -am "I fixed a massive bug #PROJ-158 Complete"
+    git commit -am "I fixed a massive bug #PROJ-158 Complete add work 1h"
 
 The first command will update the status of YouTrack item #PROJ-158 to Complete.  The second item will do the same but also add Time Tracking information to the item in YouTrack.
 

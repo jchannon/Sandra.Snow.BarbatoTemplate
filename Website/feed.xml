@@ -1,0 +1,871 @@
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</guid><link>http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</link><title>Using Git to update YouTrack via TeamCity</title><description>&lt;p&gt;This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.&lt;/p&gt;
+
+&lt;p&gt;YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.&lt;/p&gt;
+
+&lt;p&gt;There is some documentation &lt;a href="http://confluence.jetbrains.com/display/YTD4/Executing+Commands+from+Comment+to+VCS+Commit"&gt;here&lt;/a&gt; but its not the greatest in terms of clarity and I've spoken to &lt;a href="https://twitter.com/hhariri"&gt;Hadi Hariri&lt;/a&gt; from JetBrains about improving this so hopefully they're working on it.&lt;/p&gt;
+
+&lt;p&gt;Anyhow here's some example Git commands to wire it all up&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -am "I fixed a massive bug #PROJ-158 Complete"
+git commit -am "I fixed a massive bug #PROJ-158 Complete add work 1h"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first command will update the status of YouTrack item #PROJ-158 to Complete.  The second item will do the same but also add Time Tracking information to the item in YouTrack.&lt;/p&gt;
+
+&lt;p&gt;Hope that helps, Happy Coding!&lt;/p&gt;
+</description><pubDate>Thu, 07 Nov 2013 00:00:00 Z</pubDate><a10:updated>2013-11-07T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.&lt;/p&gt;
+
+&lt;p&gt;YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.&lt;/p&gt;
+
+&lt;p&gt;There is some documentation &lt;a href="http://confluence.jetbrains.com/display/YTD4/Executing+Commands+from+Comment+to+VCS+Commit"&gt;here&lt;/a&gt; but its not the greatest in terms of clarity and I've spoken to &lt;a href="https://twitter.com/hhariri"&gt;Hadi Hariri&lt;/a&gt; from JetBrains about improving this so hopefully they're working on it.&lt;/p&gt;
+
+&lt;p&gt;Anyhow here's some example Git commands to wire it all up&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -am "I fixed a massive bug #PROJ-158 Complete"
+git commit -am "I fixed a massive bug #PROJ-158 Complete add work 1h"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first command will update the status of YouTrack item #PROJ-158 to Complete.  The second item will do the same but also add Time Tracking information to the item in YouTrack.&lt;/p&gt;
+
+&lt;p&gt;Hope that helps, Happy Coding!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/</guid><link>http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/</link><title>Running Mocha tests within Sublime Text</title><description>&lt;p&gt;I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.&lt;/p&gt;
+
+&lt;p&gt;In a bid to expand my mind I'm working on a little project that is made up of JS entirely so I've dug out &lt;a href="http://sublimetext.com"&gt;Sublime Text&lt;/a&gt;. It has lots of plugins that are very handy, especially &lt;a href="https://github.com/victorporof/Sublime-HTMLPrettify"&gt;Sublime-HTMLPrettify&lt;/a&gt; which will tidy your HTML, CSS &amp;amp; JS for you.&lt;/p&gt;
+
+&lt;p&gt;When writing tests for JS there are many libraries you can use but I've chosen &lt;a href="http://visionmedia.github.io/mocha/"&gt;Mocha&lt;/a&gt; for now.  The one thing I couldn't work out was to run my tests within Sublime Text until now.&lt;/p&gt;
+
+&lt;h3&gt;Build System&lt;/h3&gt;
+
+&lt;p&gt;Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via &lt;kbd&gt;cmd&lt;/kbd&gt;+&lt;kbd&gt;B&lt;/kbd&gt;.&lt;/p&gt;
+
+&lt;p&gt;To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:&lt;/p&gt;
+
+</description><pubDate>Sun, 20 Oct 2013 23:00:00 Z</pubDate><a10:updated>2013-10-20T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.&lt;/p&gt;
+
+&lt;p&gt;In a bid to expand my mind I'm working on a little project that is made up of JS entirely so I've dug out &lt;a href="http://sublimetext.com"&gt;Sublime Text&lt;/a&gt;. It has lots of plugins that are very handy, especially &lt;a href="https://github.com/victorporof/Sublime-HTMLPrettify"&gt;Sublime-HTMLPrettify&lt;/a&gt; which will tidy your HTML, CSS &amp;amp; JS for you.&lt;/p&gt;
+
+&lt;p&gt;When writing tests for JS there are many libraries you can use but I've chosen &lt;a href="http://visionmedia.github.io/mocha/"&gt;Mocha&lt;/a&gt; for now.  The one thing I couldn't work out was to run my tests within Sublime Text until now.&lt;/p&gt;
+
+&lt;h3&gt;Build System&lt;/h3&gt;
+
+&lt;p&gt;Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via &lt;kbd&gt;cmd&lt;/kbd&gt;+&lt;kbd&gt;B&lt;/kbd&gt;.&lt;/p&gt;
+
+&lt;p&gt;To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    "cmd": ["make"],
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "working_dir": "${project_path:${folder:${file_path}}}",
+    "selector": "source.makefile",
+    "shell": true,
+    "variants": [{
+        "name": "Clean",
+        "cmd": ["make", "clean"]
+    }]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Click Save and call it Mocha&lt;/p&gt;
+
+&lt;p&gt;Now when you have a project go to Tools - Build System and select Mocha&lt;/p&gt;
+
+&lt;h3&gt;Make file&lt;/h3&gt;
+
+&lt;p&gt;A Make file is a script that allows you to execute various commands and its what our build system looks for when we tell Sublime to build our project. We need a file called &lt;code&gt;makefile&lt;/code&gt; in the root of our project.  Inside that &lt;code&gt;makefile&lt;/code&gt; we can invoke Mocha to run our tests.&lt;/p&gt;
+
+&lt;p&gt;Place this in your &lt;code&gt;makefile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;test:
+    mocha --recursive --reporter spec moviebucketlist.tests/*.js
+.PHONY: test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now when you invoke the build system via &lt;kbd&gt;cmd&lt;/kbd&gt;+&lt;kbd&gt;B&lt;/kbd&gt; in Sublime it will execute Mocha and give you the results in the console of Sublime.  Mocha by default will look for a folder called &lt;code&gt;test&lt;/code&gt; and execute the tests inside it. If you have a different folder name you can append the folder name and wildcard to js files like I have done above.&lt;/p&gt;
+
+&lt;p&gt;Happy Coding!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/10/01/blogging-with-markdown-and-git/</guid><link>http://blog.jonathanchannon.com/2013/10/01/blogging-with-markdown-and-git/</link><title>Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title><description>&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href="http://calepin.co/"&gt;Calepin&lt;/a&gt;, &lt;a href="http://scriptogr.am/"&gt;Scriptogram&lt;/a&gt; and even &lt;a href="http://wordpress.org/"&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href="https://github.com/Sandra/Sandra.Snow"&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+
+&lt;p&gt;Even if you don't want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+
+&lt;p&gt;The "layout" refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you'd prefer.  These "layout" files should exist in the "_layouts" folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+
+&lt;p&gt;The "category" or "categories" property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+
+&lt;p&gt;The "title" should hopefully be self explanatory!&lt;/p&gt;
+
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.
+</description><pubDate>Mon, 30 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-30T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href="http://calepin.co/"&gt;Calepin&lt;/a&gt;, &lt;a href="http://scriptogr.am/"&gt;Scriptogram&lt;/a&gt; and even &lt;a href="http://wordpress.org/"&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href="https://github.com/Sandra/Sandra.Snow"&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+
+&lt;p&gt;Even if you don't want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+
+&lt;p&gt;The "layout" refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you'd prefer.  These "layout" files should exist in the "_layouts" folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+
+&lt;p&gt;The "category" or "categories" property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+
+&lt;p&gt;The "title" should hopefully be self explanatory!&lt;/p&gt;
+
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.
+&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h3&gt;Global Config&lt;/h3&gt;
+
+&lt;p&gt;In the root of the site template is a snow.config file which is what Sandra.Snow uses to determine url format, where to look for posts and layouts and other related information. It is JSON formatted and looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  "blogTitle" : "Joe Bloggs Blog",
+  "author" : "Mr.Guest",
+  "email" : "guest@gmail.com",
+  "siteUrl": "http://blog.joebloggs.com",
+  "posts": "Snow/_posts",
+  "layouts": "Snow/_layouts",
+  "output": "../MYRelativeWebsiteFolder",
+  "urlFormat": "yyyy/MM/dd/slug",
+  "copyDirectories": [
+    "Snow/images =&amp;gt; images",
+    "Snow/js =&amp;gt; js",
+    "Snow/css =&amp;gt; css"
+  ],
+  "processFiles": [{
+    "file": "Snow/index.cshtml",
+    "loop": "Posts"
+  },{
+    "file": "Snow/category.cshtml",
+    "loop": "Categories"
+  },{
+    "file": "Snow/categories.cshtml =&amp;gt; categories"
+  },{
+    "file": "Snow/archive.cshtml =&amp;gt; archive"
+  },{
+    "file": "Snow/about.cshtml =&amp;gt; about"
+  },{
+    "file": "Snow/contact.cshtml =&amp;gt; contact"
+  },{
+    "file": "feed.xml",
+    "loop": "RSS"
+  },{
+    "file": "sitemap.xml",
+    "loop": "sitemap"
+  }]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is an explanation:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;"blogTitle" : The title of the blog you want to appear on your RSS feed&lt;/li&gt;
+&lt;li&gt;"author" : The author's name&lt;/li&gt;
+&lt;li&gt;"email" : The author's email.(You can use an &lt;a href="https://github.com/Sandra/Sandra.Snow/wiki/Gravatar-Support"&gt;HTMLHelper&lt;/a&gt; in the view that gets the author's Gravatar from the global/post settings)&lt;/li&gt;
+&lt;li&gt;"siteUrl": "This is used to enable Disqus support. Simply use an &lt;a href="https://github.com/Sandra/Sandra.Snow/wiki/Disqus-Support"&gt;HTMLHelper&lt;/a&gt; to render Disqus comments"&lt;/li&gt;
+&lt;li&gt;"posts" : The location of the markdown files&lt;/li&gt;
+&lt;li&gt;"layouts" : The location of the layout files&lt;/li&gt;
+&lt;li&gt;"output" : The location where Sandra.Snow will put the static HTML. This is relative&lt;/li&gt;
+&lt;li&gt;"urlFormat" : The format of the URL to your blog post&lt;/li&gt;
+&lt;li&gt;"copyDirectories" : The directories in your template that it will copy to the output&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;"processFiles" : This takes an object of the filename and property information on how to render the file.  Each file/view will be called and rendered with model information availble.  The model information available to these views are shown below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public List&amp;lt;Post&amp;gt; PostsInCategory { get; set; }
+public Dictionary&amp;lt;int, Dictionary&amp;lt;int, List&amp;lt;Post&amp;gt;&amp;gt;&amp;gt; PostsGroupedByYearThenMonth { get; set; }
+public List&amp;lt;Post&amp;gt; Posts { get; set; }
+public List&amp;lt;Post&amp;gt; PostsPaged { get; set; }
+
+
+public bool HasPreviousPage { get; set; }
+public bool HasNextPage { get; set; }
+public int NextPage { get; set; }
+public int PreviousPage { get; set; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the standard website template there are category, categories, about and index *.cshtml pages which accept this model information and render the relevant information. Based on the file name you can guess what each file outputs.  The "loop" in the settings is used internally by Sandra.Snow to process the relevant data. For example "RSS" creates a RSS file based on the list of posts while Posts/Categories create sub-directories for the relevant model type eg/categories/posts.  "sitemap" will use the &lt;code&gt;List&amp;lt;Post&amp;gt;&lt;/code&gt; to create a sitemap.xml in the root of your blog. &lt;/p&gt;
+
+&lt;p&gt;As Sandra.Snow is a static HTML generator it will create folders with the relevant name for the post or file named in the config file eg/&lt;code&gt;http://mydomain.com/2013/08/18/this-is-a-great-article&lt;/code&gt; or &lt;code&gt;http://mydomain.com/categories&lt;/code&gt; and create a &lt;code&gt;index.html&lt;/code&gt; file for each folder.  In the root of the website it will create a &lt;code&gt;index.html&lt;/code&gt; with 10 blog posts inside it.  If you have 100 markdown posts it will it will page this for you and create links to &lt;code&gt;http://mydomain.com/page2&lt;/code&gt; etc.  If you use &lt;code&gt;&amp;lt;!--excerpt--&amp;gt;&lt;/code&gt; in your Markdown it will read up to that point so you can click a "read more" link otherwise it will use the whole Markdown content.    If you look at the model properties you'll see your index layout view can tell if there is a next/previous page and therefore create the relevant links in the HTML.&lt;/p&gt;
+
+&lt;p&gt;Once you run the Sandra.Snow exe it will output the HTML and you can then FTP your files to your website.&lt;/p&gt;
+
+&lt;p&gt;Check out the &lt;a href="https://github.com/Sandra/Sandra.Snow/wiki"&gt;wiki&lt;/a&gt; for more details about other HTMLHelpers such as Google Analytics.&lt;/p&gt;
+
+&lt;h3&gt;Git Integration&lt;/h3&gt;
+
+&lt;p&gt;FTP is so 2001 so Sandra.Snow has a website called Sandra.Snow.Barbato which allows you to access it (final URL to be confirmed) and log in with your Github credentials.  It will then give you a list of your repositories, the idea being one of them is your blog with the markdown posts and snow.config etc.  A &lt;a href="https://github.com/Sandra/Sandra.Snow.BarbatoTemplate"&gt;base template&lt;/a&gt; is available in the Sandra repository for you to fork.  You can then choose whether you'd like to deploy to another Git repository that supports Git deployment eg/Azure, AppHarbor, Heroku or you can select FTP.  In either scenario, enter your details and off you go. The website will use Sandra.Snow to create the output and it will then wire it over to your chosen destination.  &lt;/p&gt;
+
+&lt;p&gt;Sandra.Snow.Barbato is also setup to handle Github hooks so in Github if you tell your repository to do a post commit hook to the website, after you write a new blog post and push to Github it will post to the website and know if you've previously logged in and if so generate the HTML and re-deploy your blog.  It will also push the generated content back to your Github repository on the master branch. Very nice!&lt;/p&gt;
+
+&lt;h3&gt;Setting up Sandra.Snow.Barbato&lt;/h3&gt;
+
+&lt;p&gt;One you have forked the Barbato template you can begin to style your blog pages.  Obviously every time you want to make a style change you want to see the results.  There are 2 ways to do this.  i) Run Sandra.Snow locally, setup a webserver eg/IISExpress to point to the Snow output directory and open up your browser to see the changes. Keep making changes to the *.cshtml and *.css files until happy ii) Make the changes in your repo, sign up with Sandra.Snow.Barbato and go to your domain to check the changes that were deployed.&lt;/p&gt;
+
+&lt;h4&gt;Azure&lt;/h4&gt;
+
+&lt;p&gt;If deploying to Azure you must have a .deployment file in the root of your repository that contains:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[config]
+project = Website
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is needed because when your template repository is pushed to Azure it needs to know what to deploy. This simply tells it to use the Website folder ie.the output folder from Sandra.Snow.&lt;/p&gt;
+
+&lt;h4&gt;Github Pages&lt;/h4&gt;
+
+&lt;p&gt;If deploying to Github you need a few things. Your repository needs to be called &lt;code&gt;username.github.io&lt;/code&gt;. You then need to create a CNAME file in your repo that has the domain you will be using inside it. Finally you need to setup the DNS on your domain to point to &lt;code&gt;username.github.io&lt;/code&gt; by creating a CNAME record in your DNS Manager. What you'll have to probably do is clone your &lt;code&gt;username.github.io&lt;/code&gt; repo and run Snow and set the output setting in snow.config to the path of your &lt;code&gt;username.github.io&lt;/code&gt; folder. You can then push the changes to Github. &lt;/p&gt;
+
+&lt;h3&gt;Wordpress Migration&lt;/h3&gt;
+
+&lt;p&gt;My blog was previously using Wordpress so I needed to get my data out.  The most common referred to tool was &lt;a href="https://github.com/dreikanter/wp2md"&gt;wp2md&lt;/a&gt; which uses Python to go through the exported Wordpress content and then convert to Markdown.  For some reason I didn't go with that choice and went with &lt;a href="http://heckyesmarkdown.com/"&gt;http://heckyesmarkdown.com/&lt;/a&gt;.  Its a bit more work because you have to give it your previous URLs to your blog posts and it reads the source of the page and converts it to Markdown.  It worked brilliantly for me.  I had to make a few changes on the output it provided by generally it was very good.&lt;/p&gt;
+
+&lt;p&gt;As I didn't want to worry about HTTP 302, I made sure I saved my markdown files as the urls are on my live site so &lt;a href="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"&gt;http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/&lt;/a&gt; was saved in a file called &lt;code&gt;2012-12-19-why-use-nancyfx.md&lt;/code&gt;. This file naming format is currently enforced so Snow can gather date and slug information(unsafe characters in the slug/title for URLs will be removed).&lt;/p&gt;
+
+&lt;p&gt;I then went through addind the meta headers to tell Sandra.Snow a bit more about the posts and also added in the &lt;code&gt;&amp;lt;!--excerpt--&amp;gt;&lt;/code&gt; information so not to render the whole blog content on the home pages.&lt;/p&gt;
+
+&lt;p&gt;I then went through and styled the master page &lt;code&gt;default.cshtml&lt;/code&gt; in the _layouts folder as well as the &lt;code&gt;post.cshtml&lt;/code&gt; and the other files in the root of the site template folder.&lt;/p&gt;
+
+&lt;p&gt;Once done I ran the .exe file to generate my content.  One of the great things about Sandra.Snow is its speed. It takes less than a second to do 100 blog posts, luckily I only have 25 so its really fast.  I opened up a browser and checked my files and if some styling needed tweaking I could do so and re-run.  Once all ok I can deploy or push the template folder to Github, setup the post commit hook and then use Sandra.Snow.Barbato to handle deployment from now on.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;If you're a Git and Markdown user and want to create a blog with complete simplicity this is a great tool.  No more messy Wordpress, no more running exe's on your machine (unless you want to), its completely automated apart from writing the blog posts!  In fact I'm so happy with this project, this blog is using it!  Give it a try and if you like the look of it get involved with its development.  &lt;a href="https://github.com/Sandra/Sandra.Snow"&gt;Sandra.Snow&lt;/a&gt; the new modern, simplistic and effective tool for blogging.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/</guid><link>http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/</link><title>Returning multiple fake objects with FakeItEasy</title><description>&lt;p&gt;I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  &lt;/p&gt;
+
+&lt;p&gt;With &lt;a href="https://github.com/FakeItEasy/FakeItEasy"&gt;FakeItEasy&lt;/a&gt; this is easy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All very nice, but now if I have multiple calls to &lt;code&gt;myInterface&lt;/code&gt; I have to execute the above statement 'x' amount of times:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&amp;lt;IApplication&amp;gt;();
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(3)).Returns(new Something());
+
+  var result = sut.DoSomething(myInterface);
+
+  Assert.Equal("Super Duper", result);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+</description><pubDate>Thu, 19 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-19T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  &lt;/p&gt;
+
+&lt;p&gt;With &lt;a href="https://github.com/FakeItEasy/FakeItEasy"&gt;FakeItEasy&lt;/a&gt; this is easy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All very nice, but now if I have multiple calls to &lt;code&gt;myInterface&lt;/code&gt; I have to execute the above statement 'x' amount of times:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&amp;lt;IApplication&amp;gt;();
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(3)).Returns(new Something());
+
+  var result = sut.DoSomething(myInterface);
+
+  Assert.Equal("Super Duper", result);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;There is a tidier way to do the above where you can return specific objects and its called &lt;code&gt;ReturnsLazily&lt;/code&gt;.  Lets take a look at this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class Employee
+{
+    public string Name { get; set; }
+}
+
+public interface IEmployeeRepository
+{
+    Employee GetEmployeeById(int id);
+}
+
+public class App
+{
+    private readonly IEmployeeRepository employeeRepository;
+
+    public App(IEmployeeRepository employeeRepository)
+    {
+        this.employeeRepository = employeeRepository;
+    }
+
+    public string GetNamesAsCsv(int[] ids)
+    {
+        var employees = ids.Select(id =&amp;gt; employeeRepository.GetEmployeeById(id).Name);
+        return string.Join(",", employees);
+    }
+}
+
+public class AppTests
+{
+    [Fact]
+    public void AppReturnsNamesAsCsv()
+    {
+        //Given
+        var employees = new Dictionary&amp;lt;int, Employee&amp;gt;
+        {
+            { 1, new Employee { Name = "Moss"} },
+            { 2, new Employee { Name = "Roy"} },
+        };
+
+        var fakeRepository = A.Fake&amp;lt;IEmployeeRepository&amp;gt;();
+        A.CallTo(() =&amp;gt; fakeRepository.GetEmployeeById(A&amp;lt;int&amp;gt;.Ignored))
+            .ReturnsLazily&amp;lt;Employee, int&amp;gt;(id =&amp;gt; employees[id]);
+
+        var app = new App(fakeRepository);
+
+        //When
+        var result = app.GetNamesAsCsv(employees.Keys.ToArray());
+
+        //Then
+        Assert.Equal("Moss,Roy", result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have an &lt;code&gt;Employee&lt;/code&gt; object, a &lt;code&gt;IEmployeeRepository&lt;/code&gt; which returns an &lt;code&gt;Employee&lt;/code&gt; object and an App that returns a CSV.  We then want to test this and make sure we get back a CSV from multiple objects.&lt;/p&gt;
+
+&lt;p&gt;So we set our fake setup and say that when &lt;code&gt;GetEmployeeById&lt;/code&gt; is called we want to return a specific object.  Our App class will call &lt;code&gt;GetEmployeeById&lt;/code&gt; twice with the id of 1 and 2.  This is done by passing in &lt;code&gt;employees.Keys.ToArray()&lt;/code&gt; to our GetNamesAsCsv method under test. &lt;/p&gt;
+
+&lt;p&gt;When this is called with the id we want to return specific objects &lt;code&gt;.ReturnsLazily&amp;lt;Employee, int&amp;gt;(id =&amp;gt; employees[id]);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This says we want to return an Employee and the argument in the repository call is an int.  We can then use that to return a specific object based on that id which is where the &lt;code&gt;Dictionary&amp;lt;int, Employee&amp;gt;&lt;/code&gt; comes in handy.  Based on the key it will return either an Employee called Moss or Roy.  Our &lt;code&gt;GetNamesAsCsv&lt;/code&gt; will then join Moss &amp;amp; Roy together as a CSV and we can assert that our method works.&lt;/p&gt;
+
+&lt;p&gt;Hope that helps someone!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/</guid><link>http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/</link><title>Enabling CORS in IISExpress</title><description>&lt;p&gt;I was playing around with &lt;a href="https://github.com/wordnik/swagger-ui"&gt;swagger-ui&lt;/a&gt; and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.&lt;/p&gt;
+
+&lt;p&gt;I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.&lt;/p&gt;
+
+&lt;p&gt;The solution is to go to &lt;code&gt;C:\Program Files (x86)\IIS Express\AppServer&lt;/code&gt; and open the &lt;code&gt;applicationhost.config&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Search for &lt;code&gt;httpProtocol&lt;/code&gt; and you should see this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;httpProtocol&amp;gt;
+    &amp;lt;customHeaders&amp;gt;
+        &amp;lt;clear /&amp;gt;
+        &amp;lt;add name="X-Powered-By" value="ASP.NET" /&amp;gt;
+    &amp;lt;/customHeaders&amp;gt;
+    &amp;lt;redirectHeaders&amp;gt;
+        &amp;lt;clear /&amp;gt;
+    &amp;lt;/redirectHeaders&amp;gt;
+&amp;lt;/httpProtocol&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now add this to the &lt;code&gt;customHeaders&lt;/code&gt; node:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;add name="Access-Control-Allow-Origin" value="*" /&amp;gt;
+&amp;lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.&lt;/p&gt;
+
+&lt;p&gt;Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress&lt;/p&gt;
+</description><pubDate>Sun, 15 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-15T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I was playing around with &lt;a href="https://github.com/wordnik/swagger-ui"&gt;swagger-ui&lt;/a&gt; and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.&lt;/p&gt;
+
+&lt;p&gt;I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.&lt;/p&gt;
+
+&lt;p&gt;The solution is to go to &lt;code&gt;C:\Program Files (x86)\IIS Express\AppServer&lt;/code&gt; and open the &lt;code&gt;applicationhost.config&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Search for &lt;code&gt;httpProtocol&lt;/code&gt; and you should see this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;httpProtocol&amp;gt;
+    &amp;lt;customHeaders&amp;gt;
+        &amp;lt;clear /&amp;gt;
+        &amp;lt;add name="X-Powered-By" value="ASP.NET" /&amp;gt;
+    &amp;lt;/customHeaders&amp;gt;
+    &amp;lt;redirectHeaders&amp;gt;
+        &amp;lt;clear /&amp;gt;
+    &amp;lt;/redirectHeaders&amp;gt;
+&amp;lt;/httpProtocol&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now add this to the &lt;code&gt;customHeaders&lt;/code&gt; node:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;add name="Access-Control-Allow-Origin" value="*" /&amp;gt;
+&amp;lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.&lt;/p&gt;
+
+&lt;p&gt;Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/09/12/keeping-sql-data-organised-in-integration-tests/</guid><link>http://blog.jonathanchannon.com/2013/09/12/keeping-sql-data-organised-in-integration-tests/</link><title>Keeping SQL Data Organised in Integration Tests</title><description>&lt;p&gt;In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp;amp; MainApp.Tests.Integration.&lt;/p&gt;
+
+&lt;p&gt;I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  &lt;a href="http://xunit.codeplex.com/"&gt;xUnit&lt;/a&gt; allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is &lt;a href="http://xunit.codeplex.com/wikipage?title=Comparisons&amp;amp;referringTitle=Home#note2"&gt;frowned upon&lt;/a&gt;.  However I felt for my needs I would implement this.&lt;/p&gt;
+
+&lt;p&gt;I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.&lt;/p&gt;
+
+&lt;p&gt;This was working perfectly until I wanted to test another method on my repository.&lt;/p&gt;
+
+&lt;p&gt;I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.&lt;/p&gt;
+
+&lt;p&gt;My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.
+</description><pubDate>Wed, 11 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-11T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp;amp; MainApp.Tests.Integration.&lt;/p&gt;
+
+&lt;p&gt;I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  &lt;a href="http://xunit.codeplex.com/"&gt;xUnit&lt;/a&gt; allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is &lt;a href="http://xunit.codeplex.com/wikipage?title=Comparisons&amp;amp;referringTitle=Home#note2"&gt;frowned upon&lt;/a&gt;.  However I felt for my needs I would implement this.&lt;/p&gt;
+
+&lt;p&gt;I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.&lt;/p&gt;
+
+&lt;p&gt;This was working perfectly until I wanted to test another method on my repository.&lt;/p&gt;
+
+&lt;p&gt;I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.&lt;/p&gt;
+
+&lt;p&gt;My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.
+&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;I started playing with the attributes on my tests to see if xUnit offered me something and was chuffed to find the &lt;code&gt;BeforeAfterTestAttribute&lt;/code&gt;.  This does exactly what it says on the tin.  Its an abstract class that you inherit from for your own implementation and overide the &lt;code&gt;Before&lt;/code&gt; and &lt;code&gt;After&lt;/code&gt; methods;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class RepoMethod1BeforeAfter : BeforeAfterTestAttribute
+{
+    public override void After(MethodInfo methodUnderTest)
+    {
+      //Insert data into tables
+    }
+
+    public override void Before(MethodInfo methodUnderTest)
+    {
+      //Drop data from tables
+    }
+}
+
+[Fact]
+[RepoMethod1BeforeAfter]
+public void RepoMethod1_Should_be_Awesome()
+{
+  //Check it's awesome
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can then put an attribute on the relevant tests that need to have specific data inserted/deleted and it keeps the design of your test class follow best practices as well as not implementing IDisposable.&lt;/p&gt;
+
+&lt;p&gt;The only thing I can spot as a slight issue is remembering to put the attribute on your tests but I think that'll be quite obvious when your tests start failing!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/09/11/comparing-object-instances-with-fakeiteasy/</guid><link>http://blog.jonathanchannon.com/2013/09/11/comparing-object-instances-with-fakeiteasy/</link><title>Comparing object instances with FakeItEasy</title><description>&lt;p&gt;I had the task of writing a new application recently and of course I chose &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt;.  One of the many great reasons is the testing capabilites it offers (For more on that see &lt;a href="http://www.marcusoft.net/2013/01/NancyTesting1.html"&gt;this&lt;/a&gt; great series of articles).&lt;/p&gt;
+
+&lt;p&gt;The basics of a test with Nancy looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+
+    // When
+    var result = browser.Get("/", with =&amp;gt; {
+        with.HttpRequest();
+    });
+
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the &lt;code&gt;ConfigurableBootstrapper&lt;/code&gt;.&lt;/p&gt;
+
+</description><pubDate>Tue, 10 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-10T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I had the task of writing a new application recently and of course I chose &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt;.  One of the many great reasons is the testing capabilites it offers (For more on that see &lt;a href="http://www.marcusoft.net/2013/01/NancyTesting1.html"&gt;this&lt;/a&gt; great series of articles).&lt;/p&gt;
+
+&lt;p&gt;The basics of a test with Nancy looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+
+    // When
+    var result = browser.Get("/", with =&amp;gt; {
+        with.HttpRequest();
+    });
+
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the &lt;code&gt;ConfigurableBootstrapper&lt;/code&gt;.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;In my scenario I was testing that when a route got called something on an interface was called with an instance of an object.&lt;/p&gt;
+
+&lt;p&gt;I had the object available in the test, I passed it to my fake interface and asserted that the call happened.&lt;/p&gt;
+
+&lt;p&gt;Here's an example of what the route and test might look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class ApiModule : NancyModule
+{
+    public ApiModule(IScheduleRepository scheduleRepository)
+        : base("/api/schedules")
+    {
+        Post["/"] = parameters =&amp;gt;
+        {
+            var result = this.BindAndValidate&amp;lt;Schedule&amp;gt;();
+
+            if (!ModelValidationResult.IsValid)
+            {
+                return HttpStatusCode.UnprocessableEntity;
+            }
+
+            var conflict = scheduleRepository.CheckForConflict(result);
+
+            return HttpStatusCode.Created;
+        };
+    }
+}
+
+[Fact]
+public void Creating_Schedule_Entry_Should_Check_For_Conflicts()
+{
+    //Given
+    var fakeScheduleRepository = A.Fake&amp;lt;IScheduleRepository&amp;gt;();
+    var model = GetModel();
+
+    var browser = new Browser(GetBootstrapper(scheduleRepository:fakeScheduleRepository));
+
+    //When
+    var result = browser.Post("/api/schedules", with =&amp;gt;
+    {
+        with.HttpRequest();
+        with.JsonBody(model);
+    });
+
+    //Then
+    A.CallTo(() =&amp;gt; fakeScheduleRepository.CheckForConflict(model)).MustHaveHappened();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The test is using &lt;a href="http://xunit.codeplex.com/"&gt;xUnit&lt;/a&gt; and &lt;a href="https://github.com/FakeItEasy/FakeItEasy"&gt;FakeItEasy&lt;/a&gt; for creating fakes/mocks or whatever you choose to call them and the test will pass if the call to &lt;code&gt;fakeScheduleRepository.CheckForConflict&lt;/code&gt; was called with the model object.&lt;/p&gt;
+
+&lt;h2&gt;The test fails!&lt;/h2&gt;
+
+&lt;p&gt;The reason for the test failing is because...? That's right, the object that is passed into the call on IScheduleRepository in the route is different to the one in the test.&lt;/p&gt;
+
+&lt;p&gt;We could override Equals on our model object but that's not a great approach, we could hope that if we create an &lt;code&gt;IEqualityComparer&amp;lt;Schedule&amp;gt;&lt;/code&gt; we could pass that in somewhere but from what I've seen that's not possible so how do we get our test to pass?&lt;/p&gt;
+
+&lt;p&gt;FakeItEasy has a nice fluent API that allows you to do the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Creating_Schedule_Entry_Should_Check_For_Conflicts()
+{
+    //Given
+    var fakeScheduleRepository = A.Fake&amp;lt;IScheduleRepository&amp;gt;();
+    var model = GetModel();
+
+    var browser = new Browser(GetBootstrapper(scheduleRepository:fakeScheduleRepository));
+
+    //When
+    var result = browser.Post("/api/schedules", with =&amp;gt;
+    {
+        with.HttpRequest();
+        with.JsonBody(model);
+    });
+
+    //Then
+    A.CallTo(() =&amp;gt; fakeScheduleRepository.CheckForConflict(A&amp;lt;Schedule&amp;gt;.That.Matches(x =&amp;gt; BodyModel(x)))).MustHaveHappened();
+}
+
+private bool BodyModel(CreateKeywordSchedule match)
+{
+    return match.DateFrom == new DateTime(2013, 01, 01, 12, 00, 00) &amp;amp;&amp;amp;
+           match.DateTo == new DateTime(2013, 01, 02, 12, 00, 00);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Spot the difference? So instead of passing our original model object in we told FakeItEasy to expect a type of Schedule that matches an an object that is of type Schedule.  We wrote a &lt;code&gt;Func&amp;lt;Schedule,bool&amp;gt;&lt;/code&gt; to determine what a match is when comparing objects.&lt;/p&gt;
+
+&lt;p&gt;So when the test runs and &lt;code&gt;fakeScheduleRepository.CheckForConflict(model)&lt;/code&gt; is executed FakeItEasy will assert that the argument passed into &lt;code&gt;fakeScheduleRepository.CheckForConflict()&lt;/code&gt; matches the property values we decided to match on in our BodyModel method.  &lt;/p&gt;
+
+&lt;p&gt;This way if the model we send into the route has the property values that match those we have defined in BodyModel we can pass our test.&lt;/p&gt;
+
+&lt;p&gt;Its a much neater way without having to write &lt;code&gt;IEqualityComparer&lt;/code&gt; or anything over the top and hope you found this useful.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/08/24/async-route-handling-with-nancy/</guid><link>http://blog.jonathanchannon.com/2013/08/24/async-route-handling-with-nancy/</link><title>Async Route Handling with Nancy</title><description>&lt;p&gt;I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. &lt;/p&gt;
+
+&lt;p&gt;The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. &lt;/p&gt;
+
+&lt;p&gt;It could also be argued that only "use asynchronicity in a web framework if you expect high traffic in your web application". If you only have 10 requests on a small site you're not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.&lt;/p&gt;
+
+</description><pubDate>Fri, 23 Aug 2013 23:00:00 Z</pubDate><a10:updated>2013-08-23T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. &lt;/p&gt;
+
+&lt;p&gt;The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. &lt;/p&gt;
+
+&lt;p&gt;It could also be argued that only "use asynchronicity in a web framework if you expect high traffic in your web application". If you only have 10 requests on a small site you're not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;h2&gt;Using Async with Nancy&lt;/h2&gt;
+
+&lt;p&gt;With the introduction of &lt;code&gt;async/await&lt;/code&gt; in .NET 4.5 the way to do asynchronous execution simplified the previous approaches in .NET.  Having asynchronous execution within a web framework these days seems to be a "must have" so the Nancy team got their freak on (mainly &lt;a href="http://twitter.com/grumpydev"&gt;@grumpydev&lt;/a&gt;) and enabled async/await within Nancy.  Its codebase has been kept backward compatible with .NET 4.0 but has been enabled to use the .NET 4.5 &lt;code&gt;async/await&lt;/code&gt;, pretty impressive! In fact it uses its own version of &lt;code&gt;ContinueWith&lt;/code&gt; as the default one was considered not quick enough along with other &lt;a href="http://msdn.microsoft.com/en-us/library/dd460717.aspx"&gt;TPL&lt;/a&gt; optimizations.&lt;/p&gt;
+
+&lt;p&gt;Below is the synchronous version of returning "Hello World":&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class SampleModule : Nancy.NancyModule
+{
+    public SampleModule()
+    {
+        Get["/"] = parameters =&amp;gt; "Hello World!";
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we wanted to make this &lt;code&gt;async&lt;/code&gt; (although we wouldn't as there is no I/O and we wouldn't see any benefit) we would change it to look this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class SampleModule : Nancy.NancyModule
+{
+    public SampleModule()
+    {
+        Get["/", true] = async (parameters, ct) =&amp;gt; "Hello World!";
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Simple and elegant hey?!&lt;/p&gt;
+
+&lt;p&gt;So what's going on you say?  Well the boolean of "true" on the request path tells Nancy that the request is marked as asynchronous.  We can then mark the route as &lt;code&gt;async&lt;/code&gt; as you would any &lt;code&gt;async&lt;/code&gt; method and the delegate of the route now takes and additional &lt;code&gt;CancellationToken&lt;/code&gt; along with the captured parameters.  If you wanted you could use named parameters and define your route like so: &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class SampleModule : Nancy.NancyModule
+{
+    public SampleModule()
+    {
+        Get["/", runAsync:true] = async (parameters, ct) =&amp;gt; "Hello World!";
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;CancellationToken&lt;/code&gt; is passed in so you can check the &lt;code&gt;ct.IsCancellationRequested&lt;/code&gt; property to determine if you want to cooperatively cancel processing in your route handler.  This property may be set for example if there is an internal error or if a piece of middleware decides to cancel the request, or the host is shutting down. If you didn't know Nancy is OWIN compliant and has been pretty much since the OWIN specification came out.&lt;/p&gt;
+
+&lt;h2&gt;Demo Time&lt;/h2&gt;
+
+&lt;p&gt;As I stated above, returning "Hello World" from an asynchronous route is pointless so we need something I/O bound to demonstrate a bit better how we would use async/await in an application.&lt;/p&gt;
+
+&lt;p&gt;Lets imagine we are one of those types that love QR codes and we need to generate one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class IndexModule : NancyModule
+{
+    public IndexModule()
+    {
+        Get["/"] = parameters =&amp;gt; View["Index"];
+
+        Post["/", true] = async (x, ct) =&amp;gt;
+        {
+            var link = await GetQrCode(ct);
+            var model = new { QrPath = link };
+            return View["Index", model];
+        };
+    }
+
+    private async Task&amp;lt;string&amp;gt; GetQrCode(CancellationToken ct)
+    {
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("X-Mashape-Authorization", "oEzDRdFudTpsuLtmgewrIGcuj08tK7PI");
+        var response = await client.GetAsync(
+                "https://mutationevent-qr-code-generator.p.mashape.com/generate.php?content=http://www.nancyfx.org&amp;amp;type=url"
+                , ct);
+
+        var stringContent = await response.Content.ReadAsStringAsync();
+        ct.ThrowIfCancellationRequested();
+        dynamic model = JsonObject.Parse(stringContent);
+
+        return model["image_url"];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have a GET that returns a view and then an async POST that &lt;code&gt;await&lt;/code&gt;'s a &lt;code&gt;GetQrCode&lt;/code&gt; method that returns a &lt;code&gt;Task&amp;lt;string&amp;gt;&lt;/code&gt; or &lt;code&gt;string&lt;/code&gt; depending on how you interpret that specific .NET 4.5 behaviour.  At this point the thread can be used to process another request whilst it waits to be notified that &lt;code&gt;GetQrCode&lt;/code&gt; has finished.  &lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;GetQrCode&lt;/code&gt; method uses a &lt;code&gt;HttpClient&lt;/code&gt; to execute an API call to get a QR code which will link to http://www.nancyfx.org.  Our method will then return the location of the QR code image. &lt;/p&gt;
+
+&lt;p&gt;Anything marked with &lt;code&gt;async&lt;/code&gt; needs an &lt;code&gt;await&lt;/code&gt; otherwise it will just execute synchronously.  In our method we execute an asynchronous call (just like our async route) to the API so we &lt;code&gt;await&lt;/code&gt; it and once we do we &lt;code&gt;await&lt;/code&gt; reading the response as &lt;code&gt;string&lt;/code&gt; and then parse the JSON content to a dynamic type.  &lt;/p&gt;
+
+&lt;p&gt;We return a string from the method but the compiler will actually convert that to a &lt;code&gt;Task&amp;lt;string&amp;gt;&lt;/code&gt; for us.  &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;"An await expression does not block the thread on which it is executing. Instead, it causes the compiler to sign up the rest of the async method as a continuation on the awaited task. Control then returns to the caller of the async method. When the task completes, it invokes its continuation, and execution of the async method resumes where it left off."&lt;a href="http://msdn.microsoft.com/en-us/library/vstudio/hh156528.aspx"&gt;MSDN&lt;/a&gt;  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Once the &lt;code&gt;GetQrCode&lt;/code&gt; returns we set up a simple anonymous type with a QrPath property that is set to the result of &lt;code&gt;GetQrCode&lt;/code&gt; and we return our view.  &lt;/p&gt;
+
+&lt;p&gt;In the view we then have some code that determines when to show the QR image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@if (Model != null)
+{
+    &amp;lt;img alt="QR Code" src="Model.QrPath"/&amp;gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can view this code as a running application in my Github repository &lt;a href="https://github.com/jchannon/Nancy.Demo.Async"&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;The Guts of it&lt;/h2&gt;
+
+&lt;p&gt;If you want a bit more of an understanding how &lt;code&gt;async/await&lt;/code&gt; works in Nancy then lets take a look at the code below that is located in the &lt;a href="https://github.com/NancyFx/Nancy/blob/master/src/Nancy/Routing/DefaultRouteInvoker.cs"&gt;DefaultRouteInvoker&lt;/a&gt; class:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public Task&amp;lt;Response&amp;gt; Invoke(Route route, CancellationToken cancellationToken, DynamicDictionary parameters, NancyContext context)
+{
+    var tcs = new TaskCompletionSource&amp;lt;Response&amp;gt;();
+
+    var result = route.Invoke(parameters, cancellationToken);
+
+    result.WhenCompleted(
+       completedTask =&amp;gt;
+        {
+            var returnResult = completedTask.Result;
+            ...
+        }
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our route that we are executing is invoked and as we know from above the captured parameters on the route eg/customer/{id} and a CancellationToken is passed in.  We can then see the customized &lt;code&gt;ContinueWith&lt;/code&gt; known as &lt;code&gt;WhenCompleted&lt;/code&gt; is setup to resolve what our route returns be that a view or data.  So as we know when using async we need to return a &lt;code&gt;Task&amp;lt;T&amp;gt;&lt;/code&gt; (you can return void and have a method marked as &lt;code&gt;async&lt;/code&gt; but those should only be used for fire-and-forget methods like event handlers) and in our routes case it returns a Task&lt;Nancy.Responses.Negotiation.Negotiator&gt;.  The DefaultRouteInvoker then carries on to do its thing getting ready to render a view or serialize our data.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So there's the scope of async/await in Nancy, all the goodies of Nancy still apply now with the addition of asynchronous routes.  If you have read this blog post and not used Nancy before please read &lt;a href="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"&gt;this blog post&lt;/a&gt; which reminds me I need to add "ASYNC ALL THE THINGS" to the list of reasons to use Nancy!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/</guid><link>http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/</link><title>A quick look at Visual Node</title><description>&lt;p&gt;I came across &lt;a href="http://www.visualnode.info/"&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  &lt;/p&gt;
+
+&lt;p&gt;The hipster in me is screaming saying "You should be using Sublime Text and &lt;a href="https://github.com/dannycoates/node-inspector"&gt;node-inspector&lt;/a&gt; for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;
+
+</description><pubDate>Wed, 21 Aug 2013 23:00:00 Z</pubDate><a10:updated>2013-08-21T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I came across &lt;a href="http://www.visualnode.info/"&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  &lt;/p&gt;
+
+&lt;p&gt;The hipster in me is screaming saying "You should be using Sublime Text and &lt;a href="https://github.com/dannycoates/node-inspector"&gt;node-inspector&lt;/a&gt; for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;When I saw Visual Node it appeared to my statically typed side. "Ooooh, proper debugging, this looks interesting".  So I signed up to be kept up to date when they were ready for beta testers and yesterday I got my email saying I could download a private beta version and give it a whirl. So that's what I did.&lt;/p&gt;
+
+&lt;p&gt;I went over to their &lt;a href="http://www.visualnode.info/readme"&gt;README&lt;/a&gt; page which explained how to install it and some of the features.  I installed a VSIX which gives me a project template to choose from when creating a project in Visual Studio(VS).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://www.visualnode.info/images/readme/new-project.png" alt="Project Template" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Selecting this gives you a basic http server app template.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/projectlayout.PNG" alt="Project Layout" /&gt;&lt;/p&gt;
+
+&lt;p&gt;I like that they have tried to bring a &lt;a href="http://www.nuget.org/"&gt;NuGet&lt;/a&gt; style dialog for searching packages in &lt;a href="https://npmjs.org/"&gt;NPM&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://www.visualnode.info/images/readme/package.png" alt="NPM Picture" /&gt;&lt;/p&gt;
+
+&lt;p&gt;This brings a sense of familiarity to Visual Studio users which is great. It orders its results alphabetically. I found the searching a bit slow but I'm not sure if that's down to my internet connection or how NPM handles searching.&lt;/p&gt;
+
+&lt;p&gt;The code in the template is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Load the http module to create an http server.
+var http = require('http');
+
+// Configure our HTTP server to respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.end("Hello World\n");
+});
+
+// Listen on port 8000, IP defaults to 127.0.0.1
+server.listen(8000);
+
+// Put a friendly message on the terminal
+console.log("Server running at http://127.0.0.1:8000/");
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I then pressed F5 to see what happened.&lt;/p&gt;
+
+&lt;p&gt;It fires up a console app and a browser:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/console.png" alt="Console" /&gt;
+&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/helloworldbrowser.PNG" alt="Browser" /&gt;&lt;/p&gt;
+
+&lt;p&gt;I then went back to Visual Studio and put a breakpoint on the &lt;code&gt;response.end("Hello World\n");"&lt;/code&gt; to see what would happen when I refreshed my browser.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/debugging.png" alt="Debugging" /&gt;&lt;/p&gt;
+
+&lt;p&gt;It stopped on the breakpoint and gives me information about the objects in scope etc and let me step into the current line.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/f11.png" alt="F11" /&gt;&lt;/p&gt;
+
+&lt;p&gt;That's a pretty basic hello world style of seeing what Visual Node can do but that static language side of me really likes the look of this and the potential it can bring. I believe &lt;a href="http://www.jetbrains.com/webstorm"&gt;WebStorm&lt;/a&gt; also provides node.js debugging so check that out but for pure familiarity reasons I like the look of this.&lt;/p&gt;
+
+&lt;p&gt;For a better understanding here's a video:&lt;/p&gt;
+
+&lt;iframe width="560" height="315" src="//www.youtube.com/embed/gXGLGVWWwKI" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</guid><link>http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</link><title>Modifying files within Git history</title><description>&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
+
+</description><pubDate>Tue, 02 Jul 2013 23:00:00 Z</pubDate><a10:updated>2013-07-02T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Run this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase --interactive 1185cb0de5d5e5b4c79f83a0c51ed06a5d22d7c4^
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will open Sublime Text and you’ll see lines similar to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pick d3adb33 My Commit message
+pick d5bdb67 Other Commit message
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Change “pick” to “edit” on the commit you want to modify, save and exit&lt;/p&gt;
+
+&lt;p&gt;You can then make the changes to your files and when ready run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit --all --amend
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sublime Text will open again so you can edit the commit message, just save, exit and run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We’re done!&lt;/p&gt;
+
+&lt;p&gt;Your previous commit has been amended and you’re back to where you were with the latest commits ready to be pushed.  &lt;/p&gt;
+</a10:content></item></channel></rss>

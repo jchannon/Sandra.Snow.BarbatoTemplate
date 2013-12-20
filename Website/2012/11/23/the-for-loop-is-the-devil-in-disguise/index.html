@@ -1,0 +1,348 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2013-12-20T13:07:36.1801690+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - The For Loop is the devil in disguise
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012/11/23/the-for-loop-is-the-devil-in-disguise/">The For Loop is the devil in disguise</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 23, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/23/the-for-loop-is-the-devil-in-disguise/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.</p>
+
+<p>I have only ever used it in the traditional sense of:</p>
+
+<pre><code>for(int i = 0; i &lt; 10; i++)
+{
+
+}
+</code></pre>
+
+<p>I looked into some more and thought I’d show anybody else who may not have known about this innocent little thing in the C# language. It may exist in other languages but I am explicitly talking about C#.</p>
+
+<pre><code>for (; ; )
+{
+  Console.WriteLine("Hi");
+}
+</code></pre>
+
+<p>For some reason this compiles and executes! Who knew? Smarter people than me obviously. What do you expect it to output?</p>
+
+<p>The answer is it outputs “Hi” forever as there is nothing to determine when the loop should end however there is nothing to determine when it should start either.</p>
+
+<!--excerpt-->
+
+<p>I continued to investigate what other weird syntax the for loop would take.</p>
+
+<pre><code>for (int i = 3; ; )
+{
+  Console.WriteLine("Number " + i);
+}
+</code></pre>
+
+<p>This will output “Number 3″ forever.</p>
+
+<pre><code>for (int i = 0; ; )
+{
+  Console.WriteLine("Hi");
+}
+</code></pre>
+
+<p>This will output “Hi” forever.</p>
+
+<pre><code>for (int i = 0; ; Console.WriteLine("Hi"))
+{
+
+}
+</code></pre>
+
+<p>This will output “Hi” forever.</p>
+
+<pre><code>for (; ; RunThis())
+{
+
+}
+
+private void RunThis()
+{
+  Console.WriteLine("Hi");
+}
+</code></pre>
+
+<p>This will output “Hi” forever.</p>
+
+<pre><code>for (int i = 0; ; Console.WriteLine("Hi"))
+{
+  Console.WriteLine(" there");
+}
+</code></pre>
+
+<p>This will output “Hi there” forever</p>
+
+<pre><code>for (string s = "Hi"; ; )
+{
+  Console.WriteLine(s);
+}
+</code></pre>
+
+<p>This will output “Hi” forever.</p>
+
+<p>What do you think the below will do?</p>
+
+<pre><code>for (Initialize(); ; )
+{
+
+}
+
+private void Initialize()
+{
+  Console.WriteLine("Initialized");
+}
+</code></pre>
+
+<p>It actually outputs “Initliazed” and sits in an infinite loop.</p>
+
+<p>The below probably does what you expect it to by looping 0-9 and exits yet still something I’d never considered doing in the past.</p>
+
+<pre><code>for (int i = InitializeInt(); i &lt; 10; i++)
+{
+  Console.WriteLine(i);
+}
+
+private static int InitializeInt()
+{
+  return 0;
+}
+</code></pre>
+
+<p>This is a slight deviation on the above but essentially the same just with a Func</p>
+
+<pre><code>Func factory = () =&gt; 0;
+
+for (int i = factory(); i &lt; 10; i++)
+{
+  Console.WriteLine(i);
+}
+</code></pre>
+
+<p>Again the below is possible and something I’d never do but still possible.</p>
+
+<pre><code>for (var val = Init(); val.MyInt &lt; 10; val.MyInt++)
+{
+  Console.WriteLine(val.MyString);
+}
+
+public struct MyStruct
+{
+  public int MyInt { get; set; }
+  public string MyString { get; set; }
+}
+
+private MyStruct Init()
+{
+  return new MyStruct() { MyInt = 0, MyString = "Hi" };
+}
+</code></pre>
+
+<p>What do you think the below will do?</p>
+
+<pre><code>bool ok = true;
+for (; ok; )
+{
+  Console.WriteLine("Hi");
+  ok = false;
+}
+</code></pre>
+
+<p>It will enter the loop once and then exit. It acts as a normal loop just without the initialization of an int i and increasing the value of i on each iteration.</p>
+
+<p>There may be some other syntaxes it will accept but I’ve not found them.</p>
+
+<p>In essence the for loop has no expectations, it will execute with no arguments specified infinitely. In each 3 places of a for loop you can do pretty much what you want, I did find you couldn’t initialize an int and a string like so:</p>
+
+<pre><code>for (string s="Hi", int i = 0; i &lt; 10;i++ )
+{
+
+}
+</code></pre>
+
+<p>Its only really the middle section that determines when the loop should end.</p>
+
+<p>I’d never thought of using the for loop in these ways but it seems its possible for some reason. I’m starting to wonder if I’m not a good programmer for not knowing this or whether its just one of those things that’s odd but available in the language and if places like Google ask you in interview “What does this do? Does it compile?” to try and almost trick you for some reason. I’m sure there would be some problem solving argument for asking but I’m not sure what that proves as if you were a good developer you would never use it anyway.</p>
+
+<p>My constant journey of learning continues.</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/c"><span>c#</span></a>
+     <a href="/category/learning"><span>learning</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2012/11/23/the-for-loop-is-the-devil-in-disguise/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2012/11/23/the-for-loop-is-the-devil-in-disguise/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

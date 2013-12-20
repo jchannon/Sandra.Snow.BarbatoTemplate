@@ -1,0 +1,277 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2013-12-20T13:07:36.1801690+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Returning multiple fake objects with FakeItEasy
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Returning multiple fake objects with FakeItEasy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 20, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  </p>
+
+<p>With <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> this is easy:</p>
+
+<pre><code>A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something())
+</code></pre>
+
+<p>All very nice, but now if I have multiple calls to <code>myInterface</code> I have to execute the above statement 'x' amount of times:</p>
+
+<pre><code>[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&lt;IApplication&gt;();
+  A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(3)).Returns(new Something());
+
+  var result = sut.DoSomething(myInterface);
+
+  Assert.Equal("Super Duper", result);
+}
+</code></pre>
+
+<!--excerpt-->
+
+<p>There is a tidier way to do the above where you can return specific objects and its called <code>ReturnsLazily</code>.  Lets take a look at this:</p>
+
+<pre><code>public class Employee
+{
+    public string Name { get; set; }
+}
+
+public interface IEmployeeRepository
+{
+    Employee GetEmployeeById(int id);
+}
+
+public class App
+{
+    private readonly IEmployeeRepository employeeRepository;
+
+    public App(IEmployeeRepository employeeRepository)
+    {
+        this.employeeRepository = employeeRepository;
+    }
+
+    public string GetNamesAsCsv(int[] ids)
+    {
+        var employees = ids.Select(id =&gt; employeeRepository.GetEmployeeById(id).Name);
+        return string.Join(",", employees);
+    }
+}
+
+public class AppTests
+{
+    [Fact]
+    public void AppReturnsNamesAsCsv()
+    {
+        //Given
+        var employees = new Dictionary&lt;int, Employee&gt;
+        {
+            { 1, new Employee { Name = "Moss"} },
+            { 2, new Employee { Name = "Roy"} },
+        };
+
+        var fakeRepository = A.Fake&lt;IEmployeeRepository&gt;();
+        A.CallTo(() =&gt; fakeRepository.GetEmployeeById(A&lt;int&gt;.Ignored))
+            .ReturnsLazily&lt;Employee, int&gt;(id =&gt; employees[id]);
+
+        var app = new App(fakeRepository);
+
+        //When
+        var result = app.GetNamesAsCsv(employees.Keys.ToArray());
+
+        //Then
+        Assert.Equal("Moss,Roy", result);
+    }
+}
+</code></pre>
+
+<p>We have an <code>Employee</code> object, a <code>IEmployeeRepository</code> which returns an <code>Employee</code> object and an App that returns a CSV.  We then want to test this and make sure we get back a CSV from multiple objects.</p>
+
+<p>So we set our fake setup and say that when <code>GetEmployeeById</code> is called we want to return a specific object.  Our App class will call <code>GetEmployeeById</code> twice with the id of 1 and 2.  This is done by passing in <code>employees.Keys.ToArray()</code> to our GetNamesAsCsv method under test. </p>
+
+<p>When this is called with the id we want to return specific objects <code>.ReturnsLazily&lt;Employee, int&gt;(id =&gt; employees[id]);</code></p>
+
+<p>This says we want to return an Employee and the argument in the repository call is an int.  We can then use that to return a specific object based on that id which is where the <code>Dictionary&lt;int, Employee&gt;</code> comes in handy.  Based on the key it will return either an Employee called Moss or Roy.  Our <code>GetNamesAsCsv</code> will then join Moss &amp; Roy together as a CSV and we can assert that our method works.</p>
+
+<p>Hope that helps someone!</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/fake-it-easy"><span>fake it easy</span></a>
+     <a href="/category/oss"><span>oss</span></a>
+     <a href="/category/unit-testing"><span>unit testing</span></a>
+     <a href="/category/integration-testing"><span>integration testing</span></a>
+     <a href="/category/c"><span>c#</span></a>
+     <a href="/category/.net"><span>.net</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

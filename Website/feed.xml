@@ -1,4 +1,123 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</guid><link>http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</link><title>Using Git to update YouTrack via TeamCity</title><description>&lt;p&gt;This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/</guid><link>http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/</link><title>Using SQL Server with node.js</title><description>&lt;p&gt;I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I'd heard about &lt;a href="http://tjanczuk.github.io/edge/#/"&gt;edge.js&lt;/a&gt; many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I've spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn't like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.  &lt;/p&gt;
+
+&lt;p&gt;I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp;amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.&lt;/p&gt;
+
+</description><pubDate>Fri, 20 Dec 2013 00:00:00 Z</pubDate><a10:updated>2013-12-20T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I'd heard about &lt;a href="http://tjanczuk.github.io/edge/#/"&gt;edge.js&lt;/a&gt; many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I've spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn't like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.  &lt;/p&gt;
+
+&lt;p&gt;I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp;amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Looking at the samples the Github repo gave you could do the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var edge = require('edge');
+
+var getTop10Products = edge.func('sql', function () {/*
+    select top 10 * from Products
+*/});
+
+getTop10Products(null, function (error, result) {
+    if (error) throw error;
+    console.log(result);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thats it, you could call &lt;code&gt;node myscript&lt;/code&gt; and it would log out the values of the result variable.  &lt;/p&gt;
+
+&lt;p&gt;What this did was in fact send the SQL string to a compiled dll which had a class and async method in it that was setup to respond to calls from node js.  This method essentially returned a C# &lt;code&gt;List&amp;lt;object&amp;gt;&lt;/code&gt; that was serialized to JSON so the node.js function could interact with it.  The one issue I saw with it was the actual format of the JSON.  It was a 2 dimentional array, with the first array in the parent array containing the column names and the subsequent arrays containing values from the rows in the SQL result.  &lt;/p&gt;
+
+&lt;h2&gt;Time to roll up your sleeves&lt;/h2&gt;
+
+&lt;p&gt;Whilst I liked the fact that I could now return data from MSSQL with node its format wasnt quite right.  I forked the project on Github and then looked at the way it was executing the SQL and storing it in a &lt;code&gt;List&amp;lt;object&amp;gt;&lt;/code&gt;.  Whilst I kept the &lt;code&gt;List&amp;lt;object&amp;gt;&lt;/code&gt; return type the information inside it differed.  I was now using &lt;code&gt;var dataObject = new ExpandoObject() as IDictionary&amp;lt;string, Object&amp;gt;;&lt;/code&gt; and for each field in the resulting SQL dataset I populated it like so &lt;code&gt;dataObject.Add(record.GetName(i), resultRecord[i]);&lt;/code&gt; ie/ the column name and corresponding value.  So this looped over the sql storing objects in a list and then returning it as JSON as it did before.  What this meant was that the API had now changed so I could refer to the column names as object properties on the node object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;getTop10Products(null, function (error, result) {
+    if (error) throw error;
+    console.log(result[0].ProductName);
+    console.log(result[1].UnitPrice);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Bingo!&lt;/p&gt;
+
+&lt;p&gt;So now just out of curisotiy I wanted to right a sample ExpressJS app to see how I could use this to have a JS file that acted as a C# repository to do all the data access.  I'll let you look into setting express up yourself but what I managed to do was this:&lt;/p&gt;
+
+&lt;h4&gt;server.js&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;var express = require('express');
+var edge = require('edge');
+var index = require('./index.js');
+var db = require('./db.js');
+
+var app = express();
+
+app.get('/', index.home(db));
+
+app.listen(999);
+console.log('Listening on port 999')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;db.js&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;var edge = require('edge');
+
+exports.getProducts = edge.func('sql', function() {/*
+                    select top 10 * from Products 
+                 */});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;index.js&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;exports.home = function(db) {
+    return function(req, res) {
+        db.getProducts(null, function(error, result) {
+            if (error) throw error;
+            var data = {};
+            data.all = result;
+            data.Item1Name = result[0].ProductName;
+            data.Item2ReorderLevel = result[1].ReorderLevel;
+            res.send(data);
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I fired up a browser and pointed it at http://localhost:999 and it returned showed me my 10 products, then my first item's product name and second item's re-order level. Consider me pleased!&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I know some people will think using MSSQL for a node app seems odd but if you want to spike something up and/or only have access to a MSSQL db for whatever reason you can now do it very easily and actually quite elegantly.  You execute your SQL and you get back a JSON object that represents your data, same as any other SQL/NOSQL database.  Give it a whirl and see how you get on!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/</guid><link>http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/</link><title>Octopus XML Transformation in Services</title><description>&lt;p&gt;We use &lt;a href="http://octopusdeploy.com/"&gt;Octopus Deploy&lt;/a&gt; at work and its a superb tool for deploying your applications whether they be websites or *.exes.&lt;/p&gt;
+
+&lt;p&gt;One of the great things it also provides is the ability to use &lt;a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx"&gt;Microsoft's Transformation&lt;/a&gt; process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn't mention the steps needed to get this working so read on!  &lt;/p&gt;
+
+&lt;p&gt;Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.&lt;/p&gt;
+
+</description><pubDate>Mon, 25 Nov 2013 00:00:00 Z</pubDate><a10:updated>2013-11-25T00:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;We use &lt;a href="http://octopusdeploy.com/"&gt;Octopus Deploy&lt;/a&gt; at work and its a superb tool for deploying your applications whether they be websites or *.exes.&lt;/p&gt;
+
+&lt;p&gt;One of the great things it also provides is the ability to use &lt;a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx"&gt;Microsoft's Transformation&lt;/a&gt; process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn't mention the steps needed to get this working so read on!  &lt;/p&gt;
+
+&lt;p&gt;Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;In a console application you have an app.config and maybe a app.Release.config if you create one.  Deploying this via Octopus won't invoke the XML transformation.&lt;/p&gt;
+
+&lt;p&gt;The trick is to rename the app.Release.config to be the name of the final config file produced by the build along with the 'exe' extension in it and to make sure in Visual Studio you set the build to Copy Always on the MyApp.exe.Release.config file.&lt;/p&gt;
+
+&lt;p&gt;So for example if your project is called MyApp and you have an app.config and app.Release.config, open Windows Explorer and rename it to MyApp.exe.Release.config.  Visual Studio won't allow you to rename these files that are dependent on another so you now have to open up MyApp.csproj and alter the references from app.Release.config to MyApp.exe.Release.config&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;Content Include="App.config" /&amp;gt;
+&amp;lt;Content Include="MyApp.exe.Release.config" &amp;gt;
+    &amp;lt;DependentUpon&amp;gt;App.Config&amp;lt;/DependentUpon&amp;gt;
+&amp;lt;/Content&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Go into VS, Reload All when it prompts you and set the Copy to Output Directory value to Copy Always&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/E8Kbezh.jpg" alt="VS Property Window" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now when you deploy Octopus should run the transformation and replace connection strings etc as you would expect.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</guid><link>http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/</link><title>Using Git to update YouTrack via TeamCity</title><description>&lt;p&gt;This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.&lt;/p&gt;
 
 &lt;p&gt;YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.&lt;/p&gt;
 
@@ -744,128 +863,4 @@ private bool BodyModel(CreateKeywordSchedule match)
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;So there's the scope of async/await in Nancy, all the goodies of Nancy still apply now with the addition of asynchronous routes.  If you have read this blog post and not used Nancy before please read &lt;a href="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"&gt;this blog post&lt;/a&gt; which reminds me I need to add "ASYNC ALL THE THINGS" to the list of reasons to use Nancy!&lt;/p&gt;
-</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/</guid><link>http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/</link><title>A quick look at Visual Node</title><description>&lt;p&gt;I came across &lt;a href="http://www.visualnode.info/"&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  &lt;/p&gt;
-
-&lt;p&gt;The hipster in me is screaming saying "You should be using Sublime Text and &lt;a href="https://github.com/dannycoates/node-inspector"&gt;node-inspector&lt;/a&gt; for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;
-
-</description><pubDate>Wed, 21 Aug 2013 23:00:00 Z</pubDate><a10:updated>2013-08-21T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I came across &lt;a href="http://www.visualnode.info/"&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  &lt;/p&gt;
-
-&lt;p&gt;The hipster in me is screaming saying "You should be using Sublime Text and &lt;a href="https://github.com/dannycoates/node-inspector"&gt;node-inspector&lt;/a&gt; for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;
-
-&lt;!--excerpt--&gt;
-
-&lt;p&gt;When I saw Visual Node it appeared to my statically typed side. "Ooooh, proper debugging, this looks interesting".  So I signed up to be kept up to date when they were ready for beta testers and yesterday I got my email saying I could download a private beta version and give it a whirl. So that's what I did.&lt;/p&gt;
-
-&lt;p&gt;I went over to their &lt;a href="http://www.visualnode.info/readme"&gt;README&lt;/a&gt; page which explained how to install it and some of the features.  I installed a VSIX which gives me a project template to choose from when creating a project in Visual Studio(VS).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://www.visualnode.info/images/readme/new-project.png" alt="Project Template" /&gt;&lt;/p&gt;
-
-&lt;p&gt;Selecting this gives you a basic http server app template.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/projectlayout.PNG" alt="Project Layout" /&gt;&lt;/p&gt;
-
-&lt;p&gt;I like that they have tried to bring a &lt;a href="http://www.nuget.org/"&gt;NuGet&lt;/a&gt; style dialog for searching packages in &lt;a href="https://npmjs.org/"&gt;NPM&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://www.visualnode.info/images/readme/package.png" alt="NPM Picture" /&gt;&lt;/p&gt;
-
-&lt;p&gt;This brings a sense of familiarity to Visual Studio users which is great. It orders its results alphabetically. I found the searching a bit slow but I'm not sure if that's down to my internet connection or how NPM handles searching.&lt;/p&gt;
-
-&lt;p&gt;The code in the template is:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// Load the http module to create an http server.
-var http = require('http');
-
-// Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function (request, response) {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Hello World\n");
-});
-
-// Listen on port 8000, IP defaults to 127.0.0.1
-server.listen(8000);
-
-// Put a friendly message on the terminal
-console.log("Server running at http://127.0.0.1:8000/");
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I then pressed F5 to see what happened.&lt;/p&gt;
-
-&lt;p&gt;It fires up a console app and a browser:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/console.png" alt="Console" /&gt;
-&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/helloworldbrowser.PNG" alt="Browser" /&gt;&lt;/p&gt;
-
-&lt;p&gt;I then went back to Visual Studio and put a breakpoint on the &lt;code&gt;response.end("Hello World\n");"&lt;/code&gt; to see what would happen when I refreshed my browser.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/debugging.png" alt="Debugging" /&gt;&lt;/p&gt;
-
-&lt;p&gt;It stopped on the breakpoint and gives me information about the objects in scope etc and let me step into the current line.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://blog.jonathanchannon.com/images/blogpostimages/f11.png" alt="F11" /&gt;&lt;/p&gt;
-
-&lt;p&gt;That's a pretty basic hello world style of seeing what Visual Node can do but that static language side of me really likes the look of this and the potential it can bring. I believe &lt;a href="http://www.jetbrains.com/webstorm"&gt;WebStorm&lt;/a&gt; also provides node.js debugging so check that out but for pure familiarity reasons I like the look of this.&lt;/p&gt;
-
-&lt;p&gt;For a better understanding here's a video:&lt;/p&gt;
-
-&lt;iframe width="560" height="315" src="//www.youtube.com/embed/gXGLGVWWwKI" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</guid><link>http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/</link><title>Modifying files within Git history</title><description>&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
-
-&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
-
-&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
-
-</description><pubDate>Tue, 02 Jul 2013 23:00:00 Z</pubDate><a10:updated>2013-07-02T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
-
-&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
-
-&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;
-
-&lt;!--excerpt--&gt;
-
-&lt;p&gt;Run this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git rebase --interactive 1185cb0de5d5e5b4c79f83a0c51ed06a5d22d7c4^
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will open Sublime Text and you’ll see lines similar to:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pick d3adb33 My Commit message
-pick d5bdb67 Other Commit message
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Change “pick” to “edit” on the commit you want to modify, save and exit&lt;/p&gt;
-
-&lt;p&gt;You can then make the changes to your files and when ready run:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git commit --all --amend
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sublime Text will open again so you can edit the commit message, just save, exit and run:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git rebase --continue
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We’re done!&lt;/p&gt;
-
-&lt;p&gt;Your previous commit has been amended and you’re back to where you were with the latest commits ready to be pushed.  &lt;/p&gt;
 </a10:content></item></channel></rss>

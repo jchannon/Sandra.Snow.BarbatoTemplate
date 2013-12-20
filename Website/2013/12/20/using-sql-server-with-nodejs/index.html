@@ -13,7 +13,7 @@
     <meta http-equiv="last-modified" content="2013-12-20T13:18:26.8987909+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>
-    Jonathan Channon Blog - Easily publish a NuGet package
+    Jonathan Channon Blog - Using SQL Server with node.js
 </title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" media="screen" rel="stylesheet">
@@ -69,48 +69,107 @@
 <div class="post-item boxed post-detail">
     <span class="post-label label-quotes"></span>           
     <div class="post-title">
-      <h1><a href="/2012/12/07/easily-publish-a-nuget-package/">Easily publish a NuGet package</a></h1>
+      <h1><a href="/2013/12/20/using-sql-server-with-nodejs/">Using SQL Server with node.js</a></h1>
     </div>
     <div class="post-meta-top">
-        <span class="post-date">December 07, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <span class="post-date">December 20, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
         <!-- <span class="link-comments">20 comments</span> -->
-        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/12/07/easily-publish-a-nuget-package/"></div>
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/"></div>
     </div>
     <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
     <div class="post-descr entry">
-        <p>I recently published <a href="http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/" title="ASP.NET Web API Testing">WebAPI.Testing</a> on <a href="http://nuget.org/packages/WebAPI.Testing">Nuget</a> but found it a bit tricky to build a package ready for NuGet.</p>
+        <p>I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I'd heard about <a href="http://tjanczuk.github.io/edge/#/">edge.js</a> many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I've spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn't like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.  </p>
 
-<p>There is <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package">documentation </a>about how to do it but I found it hard to follow so I thought I’d document how I finally got my package ready.</p>
-
-<p>The easiest way I thought was to have something built into Visual Studio. I spoke to <a href="https://twitter.com/davidfowl">David Fowler</a> and he told me you can edit your *.csproj file and add <code>&lt;BuildPackage&gt;true&lt;/BuildPackage&gt;</code> to it.</p>
-
-<p>When you build your project a *.nupkg is created ready for publishing with NuGet.</p>
+<p>I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.</p>
 
 <!--excerpt-->
 
-<p>However if you have no AssemblyInfo.cs or *.nuspec file then that package won’t contain anything that useful about your package.</p>
+<p>Looking at the samples the Github repo gave you could do the following:</p>
 
-<p>So the easiest thing to do is amend your AssemblyInfo.cs file <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#From_a_project">with information about your package</a> if you have an AssemblyInfo.cs file. If you don’t have one its not a problem.</p>
+<pre><code>var edge = require('edge');
 
-<p>Build your project, open the *.nupkg file that was created with <a href="http://docs.nuget.org/docs/creating-packages/using-a-gui-to-build-packages">Nuget Package Explorer</a> and edit the metadata adding any extra information you want about your project.</p>
+var getTop10Products = edge.func('sql', function () {/*
+    select top 10 * from Products
+*/});
 
-<p><strong>Note:</strong> If your solution has NuGet restore turned on the build will pick up the dependencies required for your project. Cool eh!</p>
+getTop10Products(null, function (error, result) {
+    if (error) throw error;
+    console.log(result);
+});
+</code></pre>
 
-<p>Click File – Save Metadata As, and save the *.nuspec file into the same place as your *.csproj file.</p>
+<p>Thats it, you could call <code>node myscript</code> and it would log out the values of the result variable.  </p>
 
-<p>Go to Visual Studio and include this *.nuspec file in your project. Open it and remove the <code>&lt;files&gt;&lt;/files&gt;</code> node unless you are including other specific files with your package. I found it created a node that pointed to /lib/net45/myProject.dll which was unnecessary and resulted in my project not compiling.</p>
+<p>What this did was in fact send the SQL string to a compiled dll which had a class and async method in it that was setup to respond to calls from node js.  This method essentially returned a C# <code>List&lt;object&gt;</code> that was serialized to JSON so the node.js function could interact with it.  The one issue I saw with it was the actual format of the JSON.  It was a 2 dimentional array, with the first array in the parent array containing the column names and the subsequent arrays containing values from the rows in the SQL result.  </p>
 
-<p>In the future you can edit this *.nuspec file for example when you have a new version and when you build your project it will create a nice new *.nupkg file based on the information provided in the *.nuspec file.</p>
+<h2>Time to roll up your sleeves</h2>
 
-<p>Then go to <a href="http://nuget.org/">nuget.org</a> and register/logon and upload your *.nupkg file</p>
+<p>Whilst I liked the fact that I could now return data from MSSQL with node its format wasnt quite right.  I forked the project on Github and then looked at the way it was executing the SQL and storing it in a <code>List&lt;object&gt;</code>.  Whilst I kept the <code>List&lt;object&gt;</code> return type the information inside it differed.  I was now using <code>var dataObject = new ExpandoObject() as IDictionary&lt;string, Object&gt;;</code> and for each field in the resulting SQL dataset I populated it like so <code>dataObject.Add(record.GetName(i), resultRecord[i]);</code> ie/ the column name and corresponding value.  So this looped over the sql storing objects in a list and then returning it as JSON as it did before.  What this meant was that the API had now changed so I could refer to the column names as object properties on the node object.</p>
+
+<pre><code>getTop10Products(null, function (error, result) {
+    if (error) throw error;
+    console.log(result[0].ProductName);
+    console.log(result[1].UnitPrice);
+});
+</code></pre>
+
+<p>Bingo!</p>
+
+<p>So now just out of curisotiy I wanted to right a sample ExpressJS app to see how I could use this to have a JS file that acted as a C# repository to do all the data access.  I'll let you look into setting express up yourself but what I managed to do was this:</p>
+
+<h4>server.js</h4>
+
+<pre><code>var express = require('express');
+var edge = require('edge');
+var index = require('./index.js');
+var db = require('./db.js');
+
+var app = express();
+
+app.get('/', index.home(db));
+
+app.listen(999);
+console.log('Listening on port 999')
+</code></pre>
+
+<h4>db.js</h4>
+
+<pre><code>var edge = require('edge');
+
+exports.getProducts = edge.func('sql', function() {/*
+                    select top 10 * from Products 
+                 */});
+</code></pre>
+
+<h4>index.js</h4>
+
+<pre><code>exports.home = function(db) {
+    return function(req, res) {
+        db.getProducts(null, function(error, result) {
+            if (error) throw error;
+            var data = {};
+            data.all = result;
+            data.Item1Name = result[0].ProductName;
+            data.Item2ReorderLevel = result[1].ReorderLevel;
+            res.send(data);
+        });
+    }
+}
+</code></pre>
+
+<p>I fired up a browser and pointed it at http://localhost:999 and it returned showed me my 10 products, then my first item's product name and second item's re-order level. Consider me pleased!</p>
+
+<h2>Conclusion</h2>
+
+<p>I know some people will think using MSSQL for a node app seems odd but if you want to spike something up and/or only have access to a MSSQL db for whatever reason you can now do it very easily and actually quite elegantly.  You execute your SQL and you get back a JSON object that represents your data, same as any other SQL/NOSQL database.  Give it a whirl and see how you get on!</p>
 
     </div> 
     <div id="tagcloud">
-     <a href="/category/.net"><span>.net</span></a>
-     <a href="/category/asp.net-web-api"><span>asp.net web api</span></a>
+     <a href="/category/javascript"><span>javascript</span></a>
+     <a href="/category/node.js"><span>node.js</span></a>
+     <a href="/category/sql"><span>sql</span></a>
+     <a href="/category/oss"><span>OSS</span></a>
      <a href="/category/community"><span>community</span></a>
-     <a href="/category/nuget"><span>nuget</span></a>
-     <a href="/category/oss"><span>oss</span></a>
     </div>
     <span itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="Jonathan Channon">
@@ -122,14 +181,14 @@
             reload: true,
             config: function () {
                 //this.page.identifier = '';
-                this.page.url = 'http://blog.jonathanchannon.com/2012/12/07/easily-publish-a-nuget-package/';
+                this.page.url = 'http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/';
                 //this.page.title = '';
             }
         });
     };
 
     var disqus_shortname = 'jonathanchannonblog';
-    var disqus_url = 'http://blog.jonathanchannon.com/2012/12/07/easily-publish-a-nuget-package/';
+    var disqus_url = 'http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

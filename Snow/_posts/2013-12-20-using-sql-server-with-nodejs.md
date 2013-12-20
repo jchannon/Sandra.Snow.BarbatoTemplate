@@ -41,7 +41,7 @@ Bingo!
 
 So now just out of curisotiy I wanted to right a sample ExpressJS app to see how I could use this to have a JS file that acted as a C# repository to do all the data access.  I'll let you look into setting express up yourself but what I managed to do was this:
 
-###server.js
+####server.js
 
 	var express = require('express');
 	var edge = require('edge');
@@ -56,7 +56,7 @@ So now just out of curisotiy I wanted to right a sample ExpressJS app to see how
 	console.log('Listening on port 999')
 
 
-###db.js
+####db.js
 
 	var edge = require('edge');
 
@@ -64,7 +64,7 @@ So now just out of curisotiy I wanted to right a sample ExpressJS app to see how
 					    select top 10 * from Products 
 					 */});
 
-###index.js
+####index.js
 
 	exports.home = function(db) {
 	    return function(req, res) {
@@ -86,6 +86,6 @@ I fired up a browser and pointed it at http://localhost:999 and it returned show
 I know some people will think using MSSQL for a node app seems odd but if you want to spike something up and/or only have access to a MSSQL db for whatever reason you can now do it very easily and actually quite elegantly.  You execute your SQL and you get back a JSON object that represents your data, same as any other SQL/NOSQL database.  Give it a whirl and see how you get on!
 
 
-[1]: http://
+[1]: http://tjanczuk.github.io/edge/#/
 
 

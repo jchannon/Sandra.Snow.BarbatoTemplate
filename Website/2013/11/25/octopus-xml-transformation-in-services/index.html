@@ -12,7 +12,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="last-modified" content="2013-12-20T13:18:26.8987909+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
-        <title>Jonathan Channon Blog</title>
+        <title>
+    Jonathan Channon Blog - Octopus XML Transformation in Services
+</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" media="screen" rel="stylesheet">
     <link href="/css/screen.css" media="screen" rel="stylesheet">
@@ -63,35 +65,80 @@
             <div class="">
                   
 
-    <h1><a href="/category/">Other posts in the "github" category</a></h1>
-  
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2013/07/03/modifying-files-within-git-history/" title="Modifying files within Git history">Modifying files within Git history</a> <small>(July 03, 2013)</small>
-      </div>
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2013/03/04/the-many-approaches-to-entity-framework/" title="The many approaches to Entity Framework">The many approaches to Entity Framework</a> <small>(March 04, 2013)</small>
-      </div>
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2013/01/24/using-angularjsbackbonejs-in-windows-8-javascript-app/" title="Using AngularJS/BackboneJS in Windows 8 JavaScript app">Using AngularJS/BackboneJS in Windows 8 JavaScript app</a> <small>(January 24, 2013)</small>
-      </div>
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2012/11/29/asp-net-web-api-testing/" title="ASP.NET Web API Testing">ASP.NET Web API Testing</a> <small>(November 29, 2012)</small>
-      </div>
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2012/11/18/gitignore-not-working-fixed/" title=".gitignore not working – fixed!">.gitignore not working – fixed!</a> <small>(November 18, 2012)</small>
-      </div>
-      <div class="catboxed" style="position:relative; margin-bottom:20px;">
-        <span class="cat-label"></span>
-        <a href="/2012/11/06/publishing-to-windows-azure-from-github/" title="Publishing to Windows Azure from Github">Publishing to Windows Azure from Github</a> <small>(November 06, 2012)</small>
-      </div>
-  
-  
 
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013/11/25/octopus-xml-transformation-in-services/">Octopus XML Transformation in Services</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 25, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>We use <a href="http://octopusdeploy.com/">Octopus Deploy</a> at work and its a superb tool for deploying your applications whether they be websites or *.exes.</p>
+
+<p>One of the great things it also provides is the ability to use <a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx">Microsoft's Transformation</a> process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn't mention the steps needed to get this working so read on!  </p>
+
+<p>Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.</p>
+
+<!--excerpt-->
+
+<p>In a console application you have an app.config and maybe a app.Release.config if you create one.  Deploying this via Octopus won't invoke the XML transformation.</p>
+
+<p>The trick is to rename the app.Release.config to be the name of the final config file produced by the build along with the 'exe' extension in it and to make sure in Visual Studio you set the build to Copy Always on the MyApp.exe.Release.config file.</p>
+
+<p>So for example if your project is called MyApp and you have an app.config and app.Release.config, open Windows Explorer and rename it to MyApp.exe.Release.config.  Visual Studio won't allow you to rename these files that are dependent on another so you now have to open up MyApp.csproj and alter the references from app.Release.config to MyApp.exe.Release.config</p>
+
+<pre><code>&lt;Content Include="App.config" /&gt;
+&lt;Content Include="MyApp.exe.Release.config" &gt;
+    &lt;DependentUpon&gt;App.Config&lt;/DependentUpon&gt;
+&lt;/Content&gt;
+</code></pre>
+
+<p>Go into VS, Reload All when it prompts you and set the Copy to Output Directory value to Copy Always</p>
+
+<p><img src="http://i.imgur.com/E8Kbezh.jpg" alt="VS Property Window" /></p>
+
+<p>Now when you deploy Octopus should run the transformation and replace connection strings etc as you would expect.</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/octopusdeploy"><span>octopusdeploy</span></a>
+     <a href="/category/.net"><span>.net</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
             </div>
                 <!-- #content -->
          </div>

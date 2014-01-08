@@ -1,0 +1,253 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2014-01-05T09:30:13.2856223+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Unit Testing with SqlException
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014/01/02/unit-testing-with-sqlexception/">Unit Testing with SqlException</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">January 02, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/01/02/unit-testing-with-sqlexception/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:</p>
+
+<pre><code>try
+{
+    myService.DoSomethingThatMightTakeALongTime();
+}
+catch (EntityCommandExecutionException ex)
+{
+    var exception = ex.InnerException as SqlException;
+    if (exception != null)
+    {
+        if (exception.Number == -2)
+        {
+            //Do something special
+        }
+    }
+}
+</code></pre>
+
+<!--excerpt-->
+
+<p>Obviously <code>myService</code> has a interface that can be mocked and I can tell it to throw a <code>EntityCommandExecutionException</code> when <code>DoSomethingThatMightTakeALongTime</code> is called and the constructor for that takes a string and an Exception as an inner exception.  However, you can't create a new instance of SqlException because its a sealed class therefore doing the below is impossible:</p>
+
+<pre><code>var fakeService = A.Fake&lt;IMyService&gt;();
+A.CallTo(() =&gt; fakeService.DoSomethingThatMightTakeALongTime()).Throws(new EntityCommandExecutionException("What a mistaka da maka", new SqlException());
+</code></pre>
+
+<p>You can't create your own exception class and inherit off SqlException to get around it that way either.  You could use <code>System.Runtime.Serialization.FormatterServices.GetUninitializedObject</code> to give you a <code>SqlException</code> but that won't have the <code>Number</code> property assigned to -2.  You could also setup a method in your test class that tries to connect to a non existant db that times out after 1 second but again that won't give you the Number property you may want plus its a lot of ugly and unnecessary code in a unit test project.  </p>
+
+<h2>How did you do it?</h2>
+
+<p>So after browsing all the stackoverflow answers and comments I came up with a solution that worked which I thought I'd share so here it is:</p>
+
+<pre><code>private SqlException GetSqlException()
+{
+    SqlErrorCollection collection = Construct&lt;SqlErrorCollection&gt;();
+    SqlError error = Construct&lt;SqlError&gt;(-2, (byte)2, (byte)3, "server name", "error message", "proc", 100, (uint)1);
+
+    typeof(SqlErrorCollection)
+        .GetMethod("Add", BindingFlags.NonPublic | BindingFlags.Instance)
+        .Invoke(collection, new object[] { error });    
+
+    var e = typeof(SqlException)
+        .GetMethod("CreateException", BindingFlags.NonPublic | BindingFlags.Static, null, CallingConventions.ExplicitThis, new[] { typeof(SqlErrorCollection), typeof(string) }, new ParameterModifier[] { })
+        .Invoke(null, new object[] { collection, "11.0.0" }) as SqlException;
+
+    return e;
+}
+
+private T Construct&lt;T&gt;(params object[] p)
+{
+    return (T)typeof(T).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0].Invoke(p);
+}
+</code></pre>
+
+<p>You can then amend the previous mocking code to look like this:</p>
+
+<pre><code>var fakeService = A.Fake&lt;IMyService&gt;();
+A.CallTo(() =&gt; fakeService.DoSomethingThatMightTakeALongTime()).Throws(new EntityCommandExecutionException("What a mistaka da maka", GetSqlException());
+</code></pre>
+
+<p>As you can see it uses reflection to create instances of all the sealed classes required and it also calls sealed methods to assign properties ie/adding the error instance to the collection instance.  You'll see that the -2 value is the first argument in the parameters used to construct the SqlError object so if you're interested in using the Number property on the exception thats where to change it.</p>
+
+<h2>Conclusion</h2>
+
+<p>This approach works and allows me to test my code but all in all its not particualry elegant and the following gif can sum up what we've learnt from sealed methods and classes and thats they're <em>nasty</em>: </p>
+
+<p><img src="http://i.imgur.com/pR3tklc.gif" alt="Nasty" /></p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/c"><span>c#</span></a>
+     <a href="/category/unit-testing"><span>unit testing</span></a>
+     <a href="/category/.net"><span>.net</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2014/01/02/unit-testing-with-sqlexception/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2014/01/02/unit-testing-with-sqlexception/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

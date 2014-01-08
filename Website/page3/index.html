@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2013-12-20T13:18:26.8987909+00:00" />
+    <meta http-equiv="last-modified" content="2014-01-05T09:30:13.2856223+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -66,264 +66,137 @@
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
-        <h1><a href="/2013/02/05/evaluating-knockoutjs-and-angularjs-part-2/">Evaluating KnockoutJS and AngularJS – Part 2</a></h1>
+        <h1><a href="/2013/08/24/async-route-handling-with-nancy/">Async Route Handling with Nancy</a></h1>
       </div>
       <div class="post-meta-top">
-          <span class="post-date">February 05, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="post-date">August 24, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
           <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-2/"></div>
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/24/async-route-handling-with-nancy/"></div>
       </div>
       <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
       <div class="post-descr entry">
-          <p>In <a href="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/" title="Evaluating KnockoutJS and AngularJS – Part 1">Part 1</a>, I described how I was using the demo tutorial from <a href="http://sammyjs.org/">SammyJS</a> to get a better understanding of <a href="http://angularjs.org/">AngularJS</a> and <a href="http://knockoutjs.com/">KnockoutJS</a>.</p>
+          <p>I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. </p>
 
-<p>In this blog post I will focus on what I found when using KnockoutJS.</p>
+<p>The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. </p>
 
-<p>Again if you just want to get to the code then feel free to take a look here for <a href="https://github.com/jchannon/AngularShopping">Angular</a> and here for <a href="https://github.com/jchannon/KnockoutShopping">Knockout</a>.</p>
-
-<h2>Knockout</h2>
-
-<p>Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank <a href="https://twitter.com/davepermen">David Spörri</a> for answering my newbie JS and Knockout questions.</p>
+<p>It could also be argued that only "use asynchronicity in a web framework if you expect high traffic in your web application". If you only have 10 requests on a small site you're not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.</p>
 
 
       </div>
-      <p><a class="readmore" href="/2013/02/05/evaluating-knockoutjs-and-angularjs-part-2/">Read more...</a></p>            
+      <p><a class="readmore" href="/2013/08/24/async-route-handling-with-nancy/">Read more...</a></p>            
     </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
-        <h1><a href="/2013/01/24/using-angularjsbackbonejs-in-windows-8-javascript-app/">Using AngularJS/BackboneJS in Windows 8 JavaScript app</a></h1>
+        <h1><a href="/2013/08/22/a-quick-look-at-visual-node/">A quick look at Visual Node</a></h1>
       </div>
       <div class="post-meta-top">
-          <span class="post-date">January 24, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="post-date">August 22, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
           <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/01/24/using-angularjsbackbonejs-in-windows-8-javascript-app/"></div>
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/"></div>
       </div>
       <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
       <div class="post-descr entry">
-          <p>To help me expand my JavaScript knowledge as I said I would in my <a href="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/" title="JavaScript is the future…maybe!">previous post</a> I thought I’d write a Windows 8 application using JavaScript.</p>
+          <p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  </p>
 
-<p>After following a few “Hello World” tutorials from Microsoft I thought I’d take a look at the ToDo list demos shown at <a href="http://TodoMVC.com">TodoMVC.com</a>.</p>
-
-<p>This website/Github repository takes the ToDo demo and implements it in all the various JS frameworks and libraries out there. As I said previously its a minefield.</p>
-
-<p>Anyhow, I thought I’d start with Backbone, copy the files, add the references to WinJS and hit F5 and bingo. However, I got the below error:</p>
-
-<p><img src="http://i.stack.imgur.com/DOQl1.png" alt="Unhandled Exception" title="Unhandled Exception" /></p>
+<p>The hipster in me is screaming saying "You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p>
 
 
       </div>
-      <p><a class="readmore" href="/2013/01/24/using-angularjsbackbonejs-in-windows-8-javascript-app/">Read more...</a></p>            
+      <p><a class="readmore" href="/2013/08/22/a-quick-look-at-visual-node/">Read more...</a></p>            
     </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
-        <h1><a href="/2013/01/09/javascript-is-the-future-maybe/">JavaScript is the future…maybe!</a></h1>
+        <h1><a href="/2013/07/03/modifying-files-within-git-history/">Modifying files within Git history</a></h1>
       </div>
       <div class="post-meta-top">
-          <span class="post-date">January 09, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="post-date">July 03, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
           <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/"></div>
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/"></div>
       </div>
       <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
       <div class="post-descr entry">
-          <p>I’m not one for New Years resolutions but I thought it was time I looked at JavaScript more in depth.</p>
+          <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
 
-<p>I looked at <a href="http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/" title="Node.js, Express, Hello World Formula 1 Style">Node.js a while back</a> and found it very interesting and I probably need to go back to it. Over the last month or so there has been a large discussion about async in .Net frameworks and there appears to be a lot of misunderstanding about it (and lets leave it at that, I don’t want to start another flame war) but the thing we can definitely say with <a href="http://nodejs.org/">Node.js</a>, well JavaScript to be fair is that it is perfectly asynchronous and non-blocking.</p>
+<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
 
-<p>As a web developer I have used JavaScript from the early days of Response.Write moving onto frameworks such as <a href="http://script.aculo.us/">script.aculo.us</a> and <a href="http://mootools.net/">MooTools</a> and finally ending up with <a href="http://jquery.com/">jQuery</a> which has come pretty much a standard these days so my JavaScript skills are not completely new.</p>
+<p>For Sublime Text run this in the command line:</p>
 
-<p>However, there has been a large push to use JS more and more for rich user friendly applications with things like <a href="http://knockoutjs.com/">KnockoutJS</a>, <a href="http://angularjs.org/">AngularJS</a> and <a href="http://backbonejs.org/">BackboneJS</a> on the client and Node.js on the server. Microsoft has even taken a prominent role in helping bring Node.js to a Windows environment as it started out on *nix based platforms. They have also started contributing to and including scripts in their Visual Studio project templates for jQuery.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/01/09/javascript-is-the-future-maybe/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/12/19/why-use-nancyfx/">Why use NancyFX?</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">December 19, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?</p>
-
-<p>I believe so and its called <a href="http://nancyfx.org/">NancyFX</a>. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?</p>
-
-<h2>What is Nancy?</h2>
-
-<p>Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.</p>
-
-<h2>Does it implement MVC?</h2>
-
-<p>Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/12/19/why-use-nancyfx/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/12/07/easily-publish-a-nuget-package/">Easily publish a NuGet package</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">December 07, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/12/07/easily-publish-a-nuget-package/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I recently published <a href="http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/" title="ASP.NET Web API Testing">WebAPI.Testing</a> on <a href="http://nuget.org/packages/WebAPI.Testing">Nuget</a> but found it a bit tricky to build a package ready for NuGet.</p>
-
-<p>There is <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package">documentation </a>about how to do it but I found it hard to follow so I thought I’d document how I finally got my package ready.</p>
-
-<p>The easiest way I thought was to have something built into Visual Studio. I spoke to <a href="https://twitter.com/davidfowl">David Fowler</a> and he told me you can edit your *.csproj file and add <code>&lt;BuildPackage&gt;true&lt;/BuildPackage&gt;</code> to it.</p>
-
-<p>When you build your project a *.nupkg is created ready for publishing with NuGet.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/12/07/easily-publish-a-nuget-package/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/11/29/asp-net-web-api-testing/">ASP.NET Web API Testing</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 29, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate <a href="http://nancyfx.org/">NancyFX</a>, <a href="http://www.asp.net/web-api">ASP.NET Web API</a> and <a href="http://www.servicestack.net/">ServiceStack</a>.</p>
-
-<p>Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on <a href="http://github.com/jchannon">my Github page</a>.</p>
-
-<p>When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/11/29/asp-net-web-api-testing/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/11/23/the-for-loop-is-the-devil-in-disguise/">The For Loop is the devil in disguise</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 23, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/23/the-for-loop-is-the-devil-in-disguise/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.</p>
-
-<p>I have only ever used it in the traditional sense of:</p>
-
-<pre><code>for(int i = 0; i &lt; 10; i++)
-{
-
-}
+<pre><code>git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
 </code></pre>
 
-<p>I looked into some more and thought I’d show anybody else who may not have known about this innocent little thing in the C# language. It may exist in other languages but I am explicitly talking about C#.</p>
+<p>Next up is finding the commit id you want to go back to, to edit:</p>
 
-<pre><code>for (; ; )
-{
-  Console.WriteLine("Hi");
-}
+<pre><code>git log
 </code></pre>
 
-<p>For some reason this compiles and executes! Who knew? Smarter people than me obviously. What do you expect it to output?</p>
-
-<p>The answer is it outputs “Hi” forever as there is nothing to determine when the loop should end however there is nothing to determine when it should start either.</p>
+<p>Make a note of the parent commit id of the commit you want to edit.</p>
 
 
       </div>
-      <p><a class="readmore" href="/2012/11/23/the-for-loop-is-the-devil-in-disguise/">Read more...</a></p>            
+      <p><a class="readmore" href="/2013/07/03/modifying-files-within-git-history/">Read more...</a></p>            
     </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
-        <h1><a href="/2012/11/18/gitignore-not-working-fixed/">.gitignore not working – fixed!</a></h1>
+        <h1><a href="/2013/05/29/why-net-should-become-independent/">Why .Net should become independent!</a></h1>
       </div>
       <div class="post-meta-top">
-          <span class="post-date">November 18, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="post-date">May 29, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
           <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/18/gitignore-not-working-fixed/"></div>
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/05/29/why-net-should-become-independent/"></div>
       </div>
       <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
       <div class="post-descr entry">
-          <p>This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.</p>
+          <p>I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in <a href="http://nancyfx.org/">Nancy</a> on my first day and paved the way for Git in the first week).</p>
 
-<h3>New project scenario</h3>
+<p>My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.</p>
 
-<p>You’re all very excited about your new project and you think its about time you committed this to source control. Obviously you’re using <a href="http://git-scm.com/">Git</a> so you initialise a new repository and commit your files. You then setup a remote repository at <a href="http://github.com">Github</a> and it asks you whether you want it create a .gitignore file – you do. So now you have a repository remotely and locally. Easiest thing to do is pull from the remote, setup your remote and push to it. The other scenario might be you’ve committed locally and then realise you need to add a .gitignore file which you do and then commit.</p>
+<p>These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.</p>
+
+<p><strong>Q:</strong> What’s the common denominator here?<br />
+<strong>A:</strong> They are all owned by Microsoft.</p>
+
+<p><strong>Q:</strong> What operating system do these all run on?<br />
+<strong>A:</strong> Microsoft Windows</p>
+
+<p><strong>Q:</strong> What framework and programming language do they run on?<br />
+<strong>A:</strong> Microsoft .Net and C#</p>
+
+<p>Spot a pattern?</p>
+
+<p>So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).</p>
 
 
       </div>
-      <p><a class="readmore" href="/2012/11/18/gitignore-not-working-fixed/">Read more...</a></p>            
+      <p><a class="readmore" href="/2013/05/29/why-net-should-become-independent/">Read more...</a></p>            
     </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
-        <h1><a href="/2012/11/06/publishing-to-windows-azure-from-github/">Publishing to Windows Azure from Github</a></h1>
+        <h1><a href="/2013/04/30/mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a></h1>
       </div>
       <div class="post-meta-top">
-          <span class="post-date">November 06, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <span class="post-date">April 30, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
           <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/06/publishing-to-windows-azure-from-github/"></div>
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/04/30/mocking-httpcontext-with-fake-it-easy/"></div>
       </div>
       <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
       <div class="post-descr entry">
-          <p>Back in <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">July 2012</a> Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/" title="NancyFX, RavenDB, NerdDinner and Me">DinnerParty blog post</a> but have only just looked at implementing it.</p>
+          <p>Lets start with the conclusion first and say “use <a href="http://nancyfx.org">Nancy</a> for your web applications and APIs” as its brilliant!</p>
 
-<h2>Preparation</h2>
+<p>If you want to continue reading lets crack on.</p>
 
-<p>As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on <a href="http://jabbr.net">Jabbr</a>. Luckily <a href="http://twitter.com/davidfowl">David Fowler</a> was online. Why is that lucky? He wrote the Github integration feature of Azure.</p>
+<p>I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, <em>eg. Response.Write(“How will I mock thee?”);</em></p>
 
-<p>To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.</p>
+<p>Having moved over to <a href="http://xunit.codeplex.com/">xUnit</a> and <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.</p>
 
-<p><img src="/images/blogpostimages/deploymenthistory-620x604.png" alt="Deployment History" title="Deployment History" /></p>
-
-<p><em>Deployment History</em></p>
+<p>Doing this is no easy feat with MVC (with Nancy its all <a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application">done for you</a>) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.</p>
 
 
       </div>
-      <p><a class="readmore" href="/2012/11/06/publishing-to-windows-azure-from-github/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/10/25/simple-net-twittergooglefacebook-authentication/">Simple .Net Twitter,Google,Facebook Authentication</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">October 25, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/10/25/simple-net-twittergooglefacebook-authentication/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details <em>again</em>. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as <a href="http://www.lastpass.com">LastPass</a>.)</p>
-
-<h2>Current Social Login Providers</h2>
-
-<p>There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are <a href="http://janrain.com">Janrain</a> and <a href="http://www.dotnetopenauth.net/">DotNetOpenAuth</a>. I’ve not worked with DotNetOpenAuth but I have with Janrain when building <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/">DinnerParty</a>.</p>
-
-<p>The process was reasonably easy but not as simple as it could be.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/10/25/simple-net-twittergooglefacebook-authentication/">Read more...</a></p>            
+      <p><a class="readmore" href="/2013/04/30/mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

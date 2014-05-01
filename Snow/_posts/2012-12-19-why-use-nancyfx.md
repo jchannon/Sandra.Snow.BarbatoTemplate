@@ -27,7 +27,7 @@ That doesn’t mean you can’t apply the MVC pattern to Nancy. You can define V
 	[Fact]
 	public void GetData_WhenRequested_ShouldReturnOKStatusCode()
 	{
-		var browser = [new][2] Browser();
+		var browser = new Browser();
 		var response = browser.Get("/GetData", (with) =>
 		{
 			with.Header("Authorization", "Bearer johnsmith");
@@ -47,7 +47,7 @@ I am unaware of how you would be able to test this in MVC without it being a ful
 	{
 		base.ConfigureApplicationContainer(container);
 	
-		var store = [new][2] EmbeddableDocumentStore()
+		var store = new EmbeddableDocumentStore()
 		{
 			ConnectionStringName = "RavenDB"
 		};
@@ -89,8 +89,8 @@ If for some reason you’re being stubborn and want to use your preferred IOC co
 
 	Get["/"] = parameters => {
 		return Negotiate
-		.WithModel([new][2] RatPack {FirstName = "Nancy "})
-		.WithMediaRangeModel("text/html", [new][2] RatPack {FirstName = "Nancy fancy pants"})
+		.WithModel(new RatPack {FirstName = "Nancy "})
+		.WithMediaRangeModel("text/html", new RatPack {FirstName = "Nancy fancy pants"})
 		.WithView("negotiatedview")
 		.WithHeader("X-Custom", "SomeValue");
 	};

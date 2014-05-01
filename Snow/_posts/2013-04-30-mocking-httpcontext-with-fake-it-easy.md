@@ -33,34 +33,33 @@ I found that there a quite a lot of samples with Moq but nothing for Fake It Eas
 	[Fact]
 	public void Should_contain_fiddly_in_response()
 	{
-	    var sb = new StringBuilder();
-	
-	    var formCollection = new NameValueCollection();
-	    formCollection.Add("MyPostedData","Boo");
-	
-	    var request = A.Fake();
-	    A.CallTo(() => request.HttpMethod).Returns("POST");
-	    A.CallTo(() => request.Headers).Returns(new NameValueCollection());
-	    A.CallTo(() => request.Form).Returns(formCollection);
-	    A.CallTo(() => request.QueryString).Returns(new NameValueCollection());
-	
-	    var response = A.Fake();
-	    A.CallTo(() => response.Write(A.Ignored)).Invokes((string x) => sb.Append(x));
-	
-	    var mockHttpContext = A.Fake();
-	    A.CallTo(() => mockHttpContext.Request).Returns(request);
-	    A.CallTo(() => mockHttpContext.Response).Returns(response);
-	
-	    var controllerContext = new ControllerContext(mockHttpContext, new RouteData(), A.Fake());
-	
-	    var myController = new MyController()
-	        {
-	            ControllerContext = controllerContext
-	        };
-	 
-	    myController.Index();
-	
-	    Assert.Contains("fiddly", sb.ToString());
+		var sb = new StringBuilder();
+
+        var formCollection = new NameValueCollection();
+        formCollection.Add("MyPostedData", "Boo");
+
+        var request = A.Fake<HttpRequestBase>();
+        A.CallTo(() => request.HttpMethod).Returns("POST");
+        A.CallTo(() => request.Headers).Returns(new NameValueCollection());
+        A.CallTo(() => request.Form).Returns(formCollection);
+        A.CallTo(() => request.QueryString).Returns(new NameValueCollection());
+
+        var response = A.Fake<HttpResponseBase>();
+        A.CallTo(() => response.Write(A<string>.Ignored)).Invokes((string x) => sb.Append(x));
+
+        var mockHttpContext = A.Fake<HttpContextBase>();
+        A.CallTo(() => mockHttpContext.Request).Returns(request);
+        A.CallTo(() => mockHttpContext.Response).Returns(response);
+
+        var controllerContext = new ControllerContext(mockHttpContext, new RouteData(), A.Fake<ControllerBase>());
+
+        var myController = GetController();
+        myController.ControllerContext = controllerContext;
+        
+
+        myController.Index();
+
+        Assert.Contains("fiddly", sb.ToString());
 	}
 
 As we are not running this against a live web server we need to mock everything from base controller types to requests, responses and everything in between. My example initiates a bit more than is required ie. querystring and headers but hopefully it demonstrates what’s needed.

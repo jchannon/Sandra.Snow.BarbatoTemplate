@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2014-01-05T09:30:13.2856223+00:00" />
+    <meta http-equiv="last-modified" content="2014-03-28T14:20:39.5931467+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>
     Jonathan Channon Blog - Mocking HttpContext with Fake It Easy
@@ -110,27 +110,26 @@ public void Should_contain_fiddly_in_response()
     var sb = new StringBuilder();
 
     var formCollection = new NameValueCollection();
-    formCollection.Add("MyPostedData","Boo");
+    formCollection.Add("MyPostedData", "Boo");
 
-    var request = A.Fake();
+    var request = A.Fake&lt;HttpRequestBase&gt;();
     A.CallTo(() =&gt; request.HttpMethod).Returns("POST");
     A.CallTo(() =&gt; request.Headers).Returns(new NameValueCollection());
     A.CallTo(() =&gt; request.Form).Returns(formCollection);
     A.CallTo(() =&gt; request.QueryString).Returns(new NameValueCollection());
 
-    var response = A.Fake();
-    A.CallTo(() =&gt; response.Write(A.Ignored)).Invokes((string x) =&gt; sb.Append(x));
+    var response = A.Fake&lt;HttpResponseBase&gt;();
+    A.CallTo(() =&gt; response.Write(A&lt;string&gt;.Ignored)).Invokes((string x) =&gt; sb.Append(x));
 
-    var mockHttpContext = A.Fake();
+    var mockHttpContext = A.Fake&lt;HttpContextBase&gt;();
     A.CallTo(() =&gt; mockHttpContext.Request).Returns(request);
     A.CallTo(() =&gt; mockHttpContext.Response).Returns(response);
 
-    var controllerContext = new ControllerContext(mockHttpContext, new RouteData(), A.Fake());
+    var controllerContext = new ControllerContext(mockHttpContext, new RouteData(), A.Fake&lt;ControllerBase&gt;());
 
-    var myController = new MyController()
-        {
-            ControllerContext = controllerContext
-        };
+    var myController = GetController();
+    myController.ControllerContext = controllerContext;
+
 
     myController.Index();
 

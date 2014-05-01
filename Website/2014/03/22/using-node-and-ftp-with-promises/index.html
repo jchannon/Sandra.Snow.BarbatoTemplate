@@ -1,0 +1,336 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2014-03-28T14:20:39.5931467+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Using NodeJS and FTP with Promises
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014/03/22/using-node-and-ftp-with-promises/">Using NodeJS and FTP with Promises</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">March 22, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/03/22/using-node-and-ftp-with-promises/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I've played with node in the <a href="http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/">past</a> but as of the new year I decided to try and make a more concerted effort to get stuck into node properly.  I decided to go back to the beginning to try and get a better appreciation for the language so read "JavaScript: The Good Parts by Douglas Crockford".  I found that exercise fulfilling and resulted in a few light bulb moments that made some dots join up so I'd recommend reading it if you haven't already.</p>
+
+<h3>Real World App</h3>
+
+<p>As I stated earlier I have already played with node in the past using <a href="http://expressjs.com/">Express</a> and have read quite a bit on node and read many examples but I wanted to write a non-web app as I felt this would give me a better opportunity to get to grips with the language and Node. Using Express allows you to get up and running very quickly without to much head scratching so I felt a standalone script would give me more exposure to things.</p>
+
+<!--excerpt-->
+
+<p>During the previous couple of weeks at work I wrote a console app that downloaded zip file from a FTP server, extract the contents, read data in a XML file that was in the zip, do some string matching and upload the zip to another FTP server.  I figured this would be a good app to replicate in node so off I went.</p>
+
+<p>After a bit of <a href="http://npmjs.org">npm</a> research I found the modules I needed and managed to get to the point of downloading files pretty easily with the below code:</p>
+
+<pre><code>var path = require('path');
+var fs = require('fs');
+var Promise = require('bluebird');
+var Client = require('ftp');
+
+var c = new Client();
+
+var connectionProperties = {
+    host: "myhost",
+    user: "myuser",
+    password: "mypwd"
+};
+
+c.on('ready', function () {
+    console.log('ready');
+    c.list(function (err, list) {
+        if (err) throw err;
+        list.forEach(function (element, index, array) {
+            //Ignore directories
+            if (element.type === 'd') {
+                console.log('ignoring directory ' + element.name);
+                return;
+            }
+            //Ignore non zips
+            if (path.extname(element.name) !== '.zip') {
+                console.log('ignoring file ' + element.name);
+                return;
+            }
+            //Download files
+            c.get(element.name, function (err, stream) {
+                if (err) throw err;
+                stream.once('close', function () {
+                    c.end();
+                });
+                stream.pipe(fs.createWriteStream(element.name));
+            });
+        });
+    });
+});
+
+c.connect(connectionProperties);
+</code></pre>
+
+<p>However, I originally had that code in a function and wanted to call it and then call another function to read the files that I had downloaded but what I found was callback hell.</p>
+
+<h3>Enter Promises</h3>
+
+<p>I needed to know that all the files had downloaded and then I could read the files in a directory ready for zip extraction but I couldn't work out how.  I discovered promises and probably didn't read enough about all the ins and outs of them but I remember <a href="http://twitter.com/gblock">Glenn Block</a> giving a talk about <a href="https://github.com/glennblock/codemash-async">async programming in node</a> so I pestered him on Twitter and he kindly helped and me out and also pointed me towards his code and slides where I decided to use <a href="https://github.com/petkaantonov/bluebird/">Bluebird</a>, the promise library.  Unfortunately I just couldn't get the files downloaded. It would download one file but not the other and closed the streams.</p>
+
+<p>Here is a snippet of what I had (brace yourself)</p>
+
+<pre><code>var processListing = function (directoryItems) {
+    var itemsToDownload = [];
+    directoryItems.forEach(function (element, index, array) {
+        //Ignore directories
+        if (element.type === 'd') {
+            console.log('directory ' + element.name);
+            return;
+        }
+        //Ignore non zips
+        if (path.extname(element.name) !== '.zip') {
+            console.log('ignoring ' + element.name);
+            return;
+        }
+        //Download zip
+        itemsToDownload.push({
+            source: element.name,
+            destination: element.name
+        });
+    });
+    return itemsToDownload;
+};
+
+var processItem = function (object) {
+    return aFtpClient.getAsync(object.source);
+};
+
+var downloadFiles = function () {
+    console.log('downloading files');
+    aFtpClient.
+    listAsync().
+    then(processListing).
+    map(function (object) {
+        return processItem(object).then(function (processResult) {
+            return {
+                input: object,
+                result: processResult
+            };
+        });
+    }).
+    map(function (downloadItem) {
+        downloadItem.result.pipe(fs.createWriteStream(process.cwd() + "/zips/" + downloadItem.input.destination));
+        return new Promise(function (resolve, reject) {
+            downloadItem.result.once("close", function () {
+                console.log('closed');
+                resolve();
+            });
+        });
+    }).done()
+};
+</code></pre>
+
+<p>Not only is that a tad complicated but I could not for the life of me understand what the hell was happening and why it wasn't downloading all the files.  I reached out to <a href="https://twitter.com/PrabirShrestha">@PrabirShrestha</a> who agreed it was a tad over complicated and tried to help but recommended I take a look at Reactive Extensions, maybe I will in the future but at this point my frustration had kicked in and I wanted to give up.  I went through a mixture of emotions from frustration, which led to anger, fuming anger, denial, then apathy.  Although these emotions went by and after a couple of questions on stackoverflow that helped but didn't give the solution I explained the issue to a colleague and we both took a look.  I went through a few iterations with no luck and after a bit more reading I think we were closing in on it individually but I was beaten to it. All hail <a href="http://twitter.com/iamnerdfury">@iamnerdfury</a> who produced this:</p>
+
+<pre><code>var connect = function() {
+    c.connect(connectionProperties);
+    return c.onAsync('ready');
+};
+
+var getList = function() {
+    return c.listAsync();
+};
+
+var zipFiles = function(element) {
+    return element.type !== 'd' &amp;&amp; path.extname(element.name) === '.zip';
+};
+
+var current = Promise.resolve();
+
+var downloadFiles = function(file) {
+    current = current.then(function() {
+        return c.getAsync(file.name)
+    }).then(function(stream) {
+        stream.pipe(fs.createWriteStream(file.name));
+        console.log(file.name + ' downloaded..');
+    });
+    return current;
+};
+
+connect().then(getList).filter(zipFiles).map(downloadFiles).done();
+</code></pre>
+
+<p>I think the previous issues I had was I was returning <code>resolve()</code> after the first file downloaded which is not what you want to do when multiple calls to it are executed as a promise can only resolve once.  I needed to find some way of concatenating a promise somehow for each file that is downloaded. I looked at the <code>all()</code> command but I couldn't get it to fit but @iamnerdfury found that you could do this via creating an instance of a promise by calling resolve and then assign to it on each file that needed to be downloaded.</p>
+
+<p>Now I know the files are downloaded I can chain more functions to read the file system, extract the zip for each one, read the XML and upload to a new server.</p>
+
+<p>I hope this helps someone else because it wound me up something chronic and whilst I get pissed off with JavaScript when things like this happen I will keep at it because I think node is now becoming a serious contender and us developers need to keep a finger in many pies.</p>
+
+<p><em>(If you think there is a way to improve the solution above I'd love to hear it)</em></p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/javascript"><span>javascript</span></a>
+     <a href="/category/nodejs"><span>nodejs</span></a>
+     <a href="/category/promises"><span>promises</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2014/03/22/using-node-and-ftp-with-promises/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2014/03/22/using-node-and-ftp-with-promises/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

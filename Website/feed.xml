@@ -1,4 +1,70 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/05/07/introducing-owin-statelessauth-with-nancy-angular-demo/</guid><link>http://blog.jonathanchannon.com/2014/05/07/introducing-owin-statelessauth-with-nancy-angular-demo/</link><title>Introducing Owin.StatelessAuth with Nancy/Angular demo</title><description>&lt;p&gt;If you're writing an API, current thinking is to provide a token in the &lt;code&gt;Authorization&lt;/code&gt; header for your app to validate when the request comes in.  I have used the &lt;a href="http://www.nuget.org/packages/Nancy.Authentication.Stateless/"&gt;Nancy.Authentication.Stateless&lt;/a&gt; package in the past for my APIs and even have a demo of it &lt;a href="https://github.com/jchannon/Nancy.Demo.StatelessAuth"&gt;here&lt;/a&gt; if you're interested (there are more Nancy demos at &lt;a href="http://samples.nancyfx.org/"&gt;http://samples.nancyfx.org&lt;/a&gt;). This is a great package and does a great job but what if one day you want to use &lt;a href="http://www.asp.net/signalr"&gt;SignalR&lt;/a&gt; v2 that uses &lt;a href="http://owin.org/"&gt;OWIN&lt;/a&gt; and you want to validate not just requests to your Nancy app but also the SignalR requests?  You're going to need to validate requests as they come in before they get to SignalR or Nancy.&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/</guid><link>http://blog.jonathanchannon.com/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/</link><title>Modifying the bash prompt and adding Git completion to terminal</title><description>&lt;p&gt;At work we use Git and I use &lt;a href="http://sourceforge.net/projects/console/files/"&gt;Console2&lt;/a&gt; to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.&lt;/p&gt;
+
+&lt;p&gt;Fire up your terminal and type in this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will download a git completion file into your home folder to a hidden file called git-completion.bash.&lt;/p&gt;
+
+&lt;p&gt;If the file ~/.bash_profile does not already exist create it with the following command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open it and paste this in:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now if you type a git command and press tab, BOOM!, you have auto complete for Git!&lt;/p&gt;
+
+</description><pubDate>Thu, 05 Jun 2014 23:00:00 Z</pubDate><a10:updated>2014-06-05T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;At work we use Git and I use &lt;a href="http://sourceforge.net/projects/console/files/"&gt;Console2&lt;/a&gt; to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.&lt;/p&gt;
+
+&lt;p&gt;Fire up your terminal and type in this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will download a git completion file into your home folder to a hidden file called git-completion.bash.&lt;/p&gt;
+
+&lt;p&gt;If the file ~/.bash_profile does not already exist create it with the following command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open it and paste this in:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now if you type a git command and press tab, BOOM!, you have auto complete for Git!&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Also by default if you're in a directory that has a git repository inside it will not show you the branch you're on.  Again in Console2 in Windows it does however we can get the same functionality.&lt;/p&gt;
+
+&lt;p&gt;Open the .bash_profile and paste the below in, save and reopen your terminal and bingo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Git branch in prompt.
+parse_git_branch() {
+    git branch 2&amp;gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A few days later whilst I was using Console2 I wanted to have the date/time in my prompt so I know when I last used the git command.  If you look at the code above you'll see the PS1 variable which controls what you prompt will look like.  The variables in there eg\ &lt;code&gt;\W&lt;/code&gt; all mean different things. Here's a &lt;a href="http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html"&gt;link&lt;/a&gt; to explain them.&lt;/p&gt;
+
+&lt;p&gt;So in Console to I executed &lt;code&gt;echo $PS1&lt;/code&gt; which showed me my current settings. I used the above link to help me and I added the datetime with a color. &lt;/p&gt;
+
+&lt;p&gt;Before :  &lt;code&gt;\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\ \[\033[0m\]$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;After :  &lt;code&gt;\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\[\033[31m\]\t \[\033[0m\]$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now if this is all a bit much for you I was told about &lt;a href="http://www.iterm2.com/#/section/home"&gt;iTerm2&lt;/a&gt;, a OSX terminal replacement and &lt;a href="https://github.com/robbyrussell/oh-my-zsh"&gt;Oh My Zsh&lt;/a&gt; a way to configure your terminal that provides lots of plugins and themes.&lt;/p&gt;
+
+&lt;p&gt;Hope this is helpful for someone.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/05/07/introducing-owin-statelessauth-with-nancy-angular-demo/</guid><link>http://blog.jonathanchannon.com/2014/05/07/introducing-owin-statelessauth-with-nancy-angular-demo/</link><title>Introducing Owin.StatelessAuth with Nancy/Angular demo</title><description>&lt;p&gt;If you're writing an API, current thinking is to provide a token in the &lt;code&gt;Authorization&lt;/code&gt; header for your app to validate when the request comes in.  I have used the &lt;a href="http://www.nuget.org/packages/Nancy.Authentication.Stateless/"&gt;Nancy.Authentication.Stateless&lt;/a&gt; package in the past for my APIs and even have a demo of it &lt;a href="https://github.com/jchannon/Nancy.Demo.StatelessAuth"&gt;here&lt;/a&gt; if you're interested (there are more Nancy demos at &lt;a href="http://samples.nancyfx.org/"&gt;http://samples.nancyfx.org&lt;/a&gt;). This is a great package and does a great job but what if one day you want to use &lt;a href="http://www.asp.net/signalr"&gt;SignalR&lt;/a&gt; v2 that uses &lt;a href="http://owin.org/"&gt;OWIN&lt;/a&gt; and you want to validate not just requests to your Nancy app but also the SignalR requests?  You're going to need to validate requests as they come in before they get to SignalR or Nancy.&lt;/p&gt;
 
 &lt;p&gt;For those of you who are not quite up to date or unsure what OWIN is let me try and give you the tl:dr, no doubt others may say its something slightly different.  Imagine you are asked to create a ASP.Net MVC 3 app (ignore the fact that that person needs a slap) so you fire up Visual Studio and create the app.  So what has it done? Its created an app that runs on IIS and all requests come straight into your app.   &lt;/p&gt;
 
@@ -1000,60 +1066,4 @@ public class AppTests
 &lt;p&gt;This says we want to return an Employee and the argument in the repository call is an int.  We can then use that to return a specific object based on that id which is where the &lt;code&gt;Dictionary&amp;lt;int, Employee&amp;gt;&lt;/code&gt; comes in handy.  Based on the key it will return either an Employee called Moss or Roy.  Our &lt;code&gt;GetNamesAsCsv&lt;/code&gt; will then join Moss &amp;amp; Roy together as a CSV and we can assert that our method works.&lt;/p&gt;
 
 &lt;p&gt;Hope that helps someone!&lt;/p&gt;
-</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/</guid><link>http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/</link><title>Enabling CORS in IISExpress</title><description>&lt;p&gt;I was playing around with &lt;a href="https://github.com/wordnik/swagger-ui"&gt;swagger-ui&lt;/a&gt; and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.&lt;/p&gt;
-
-&lt;p&gt;I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.&lt;/p&gt;
-
-&lt;p&gt;The solution is to go to &lt;code&gt;C:\Program Files (x86)\IIS Express\AppServer&lt;/code&gt; and open the &lt;code&gt;applicationhost.config&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;p&gt;Search for &lt;code&gt;httpProtocol&lt;/code&gt; and you should see this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;httpProtocol&amp;gt;
-    &amp;lt;customHeaders&amp;gt;
-        &amp;lt;clear /&amp;gt;
-        &amp;lt;add name="X-Powered-By" value="ASP.NET" /&amp;gt;
-    &amp;lt;/customHeaders&amp;gt;
-    &amp;lt;redirectHeaders&amp;gt;
-        &amp;lt;clear /&amp;gt;
-    &amp;lt;/redirectHeaders&amp;gt;
-&amp;lt;/httpProtocol&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now add this to the &lt;code&gt;customHeaders&lt;/code&gt; node:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;add name="Access-Control-Allow-Origin" value="*" /&amp;gt;
-&amp;lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.&lt;/p&gt;
-
-&lt;p&gt;Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress&lt;/p&gt;
-</description><pubDate>Sun, 15 Sep 2013 23:00:00 Z</pubDate><a10:updated>2013-09-15T23:00:00Z</a10:updated><a10:content type="text">&lt;p&gt;I was playing around with &lt;a href="https://github.com/wordnik/swagger-ui"&gt;swagger-ui&lt;/a&gt; and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.&lt;/p&gt;
-
-&lt;p&gt;I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.&lt;/p&gt;
-
-&lt;p&gt;The solution is to go to &lt;code&gt;C:\Program Files (x86)\IIS Express\AppServer&lt;/code&gt; and open the &lt;code&gt;applicationhost.config&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;p&gt;Search for &lt;code&gt;httpProtocol&lt;/code&gt; and you should see this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;httpProtocol&amp;gt;
-    &amp;lt;customHeaders&amp;gt;
-        &amp;lt;clear /&amp;gt;
-        &amp;lt;add name="X-Powered-By" value="ASP.NET" /&amp;gt;
-    &amp;lt;/customHeaders&amp;gt;
-    &amp;lt;redirectHeaders&amp;gt;
-        &amp;lt;clear /&amp;gt;
-    &amp;lt;/redirectHeaders&amp;gt;
-&amp;lt;/httpProtocol&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now add this to the &lt;code&gt;customHeaders&lt;/code&gt; node:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;add name="Access-Control-Allow-Origin" value="*" /&amp;gt;
-&amp;lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.&lt;/p&gt;
-
-&lt;p&gt;Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress&lt;/p&gt;
 </a10:content></item></channel></rss>

@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2014-05-08T09:17:26.1489878+01:00" />
+    <meta http-equiv="last-modified" content="2014-06-06T07:26:13.2875716+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,38 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/07/03/modifying-files-within-git-history/">Modifying files within Git history</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">July 03, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
+
+<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
+
+<p>For Sublime Text run this in the command line:</p>
+
+<pre><code>git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
+</code></pre>
+
+<p>Next up is finding the commit id you want to go back to, to edit:</p>
+
+<pre><code>git log
+</code></pre>
+
+<p>Make a note of the parent commit id of the commit you want to edit.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/07/03/modifying-files-within-git-history/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -184,31 +216,6 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
 
       </div>
       <p><a class="readmore" href="/2013/04/08/using-a-markdown-viewengine-with-nancy/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/04/08/using-datetime-in-c-and-sql/">Using DateTime in C# and SQL</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">April 08, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/04/08/using-datetime-in-c-and-sql/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.</p>
-
-<p>Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
-<code>myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)</code></p>
-
-<p>In every central place where you update/insert DateTime values on your objects you will need the above.</p>
-
-<p>When you display any DateTime information it must display as a local datetime value. You can do this by using     <code>myObject.ExpiryDate.ToLocalTime()</code></p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/04/08/using-datetime-in-c-and-sql/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

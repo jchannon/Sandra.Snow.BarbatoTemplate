@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2014-06-06T07:26:13.2875716+01:00" />
+    <meta http-equiv="last-modified" content="2014-06-15T14:22:14.9541115+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,45 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Returning multiple fake objects with FakeItEasy</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 20, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  </p>
+
+<p>With <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> this is easy:</p>
+
+<pre><code>A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something())
+</code></pre>
+
+<p>All very nice, but now if I have multiple calls to <code>myInterface</code> I have to execute the above statement 'x' amount of times:</p>
+
+<pre><code>[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&lt;IApplication&gt;();
+  A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(3)).Returns(new Something());
+
+  var result = sut.DoSomething(myInterface);
+
+  Assert.Equal("Super Duper", result);
+}
+</code></pre>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -193,26 +232,6 @@ public void Should_return_status_ok_when_route_exists()
 
       </div>
       <p><a class="readmore" href="/2013/08/24/async-route-handling-with-nancy/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/08/22/a-quick-look-at-visual-node/">A quick look at Visual Node</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">August 22, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  </p>
-
-<p>The hipster in me is screaming saying "You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/08/22/a-quick-look-at-visual-node/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

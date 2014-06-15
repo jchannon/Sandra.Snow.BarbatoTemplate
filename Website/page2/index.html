@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2014-06-06T07:26:13.2875716+01:00" />
+    <meta http-equiv="last-modified" content="2014-06-15T14:22:14.9541115+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,26 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/12/20/using-sql-server-with-nodejs/">Using SQL Server with node.js</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">December 20, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/12/20/using-sql-server-with-nodejs/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I'd heard about <a href="http://tjanczuk.github.io/edge/#/">edge.js</a> many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I've spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn't like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.  </p>
+
+<p>I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/12/20/using-sql-server-with-nodejs/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -178,45 +198,6 @@ title: Setting up a ServiceStack Service
 
       </div>
       <p><a class="readmore" href="/2013/10/01/blogging-with-markdown-and-git/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Returning multiple fake objects with FakeItEasy</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">September 20, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  </p>
-
-<p>With <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> this is easy:</p>
-
-<pre><code>A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something())
-</code></pre>
-
-<p>All very nice, but now if I have multiple calls to <code>myInterface</code> I have to execute the above statement 'x' amount of times:</p>
-
-<pre><code>[Fact]
-public void Should_Do_Something()
-{
-  var myInterface = A.Fake&lt;IApplication&gt;();
-  A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something());
-  A.CallTo(() =&gt; myInterface.GetSomething(2)).Returns(new Something());
-  A.CallTo(() =&gt; myInterface.GetSomething(3)).Returns(new Something());
-
-  var result = sut.DoSomething(myInterface);
-
-  Assert.Equal("Super Duper", result);
-}
-</code></pre>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

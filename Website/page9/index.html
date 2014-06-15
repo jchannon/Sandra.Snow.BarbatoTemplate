@@ -12,9 +12,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="last-modified" content="2014-06-15T14:22:14.9541115+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
-        <title>
-    Jonathan Channon Blog - Running Mocha tests within Sublime Text
-</title>
+        <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" media="screen" rel="stylesheet">
     <link href="/css/screen.css" media="screen" rel="stylesheet">
@@ -65,103 +63,37 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2012/09/17/ive-started-blogging-why/">I’ve started blogging. Why?</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 17, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?</p>
 
-<div class="post-item boxed post-detail">
-    <span class="post-label label-quotes"></span>           
-    <div class="post-title">
-      <h1><a href="/2013/10/21/running-mocha-tests-with-sublime-text/">Running Mocha tests within Sublime Text</a></h1>
+<p>I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an <a href="http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/">article</a> by <a href="http://twitter.com/buildstarted">Ben Dornis</a> titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2012/09/17/ive-started-blogging-why/">Read more...</a></p>            
     </div>
-    <div class="post-meta-top">
-        <span class="post-date">October 21, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-        <!-- <span class="link-comments">20 comments</span> -->
-        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/"></div>
-    </div>
-    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-    <div class="post-descr entry">
-        <p>I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.</p>
+  <!-- Pagination links -->
+  <div class="text-center">
 
-<p>In a bid to expand my mind I'm working on a little project that is made up of JS entirely so I've dug out <a href="http://sublimetext.com">Sublime Text</a>. It has lots of plugins that are very handy, especially <a href="https://github.com/victorporof/Sublime-HTMLPrettify">Sublime-HTMLPrettify</a> which will tidy your HTML, CSS &amp; JS for you.</p>
 
-<p>When writing tests for JS there are many libraries you can use but I've chosen <a href="http://visionmedia.github.io/mocha/">Mocha</a> for now.  The one thing I couldn't work out was to run my tests within Sublime Text until now.</p>
+        <a href="/page8">Previous Page</a>  
 
-<h3>Build System</h3>
 
-<p>Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via <kbd>cmd</kbd>+<kbd>B</kbd>.</p>
 
-<p>To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:</p>
+  </div>
 
-<!--excerpt-->
 
-<pre><code>{
-    "cmd": ["make"],
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
-    "working_dir": "${project_path:${folder:${file_path}}}",
-    "selector": "source.makefile",
-    "shell": true,
-    "variants": [{
-        "name": "Clean",
-        "cmd": ["make", "clean"]
-    }]
-}
-</code></pre>
-
-<p>Click Save and call it Mocha</p>
-
-<p>Now when you have a project go to Tools - Build System and select Mocha</p>
-
-<h3>Make file</h3>
-
-<p>A Make file is a script that allows you to execute various commands and its what our build system looks for when we tell Sublime to build our project. We need a file called <code>makefile</code> in the root of our project.  Inside that <code>makefile</code> we can invoke Mocha to run our tests.</p>
-
-<p>Place this in your <code>makefile</code>:</p>
-
-<pre><code>test:
-    mocha --recursive --reporter spec moviebucketlist.tests/*.js
-.PHONY: test
-</code></pre>
-
-<p>Now when you invoke the build system via <kbd>cmd</kbd>+<kbd>B</kbd> in Sublime it will execute Mocha and give you the results in the console of Sublime.  Mocha by default will look for a folder called <code>test</code> and execute the tests inside it. If you have a different folder name you can append the folder name and wildcard to js files like I have done above.</p>
-
-<p>Happy Coding!</p>
-
-    </div> 
-    <div id="tagcloud">
-     <a href="/category/javascript"><span>javascript</span></a>
-     <a href="/category/mocha"><span>mocha</span></a>
-     <a href="/category/oss"><span>oss</span></a>
-     <a href="/category/sublime-text-2"><span>sublime text 2</span></a>
-     <a href="/category/unit-testing"><span>unit testing</span></a>
-    </div>
-    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="Jonathan Channon">
-    </span>
-    <div id="disqus_thread"></div>
-<script>
-    var reset_disqus = function(){
-        DISQUS.reset({
-            reload: true,
-            config: function () {
-                //this.page.identifier = '';
-                this.page.url = 'http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/';
-                //this.page.title = '';
-            }
-        });
-    };
-
-    var disqus_shortname = 'jonathanchannonblog';
-    var disqus_url = 'http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/';
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    window.addEventListener('orientationchange', reset_disqus);
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
             </div>
                 <!-- #content -->
          </div>

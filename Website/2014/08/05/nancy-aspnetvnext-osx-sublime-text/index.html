@@ -1,0 +1,273 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2014-08-05T18:01:06.7831786+01:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Nancy, ASP.Net vNext, OSX and Sublime Text
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014/08/05/nancy-aspnetvnext-osx-sublime-text/">Nancy, ASP.Net vNext, OSX and Sublime Text</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">August 05, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against <a href="http://www.mono-project.com/Main_Page">Mono</a>.  Along with this MS are developing a web server that is cross platform and goes by the name of <a href="https://github.com/aspnet/KestrelHttpServer">Kestrel</a>.  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is <a href="http://www.sublimetext.com/3">Sublime Text</a>.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.</p>
+
+<p>At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I've gone through the pain of setting it up so hopefully this blog post should make it easier for you</p>
+
+<p>There is a <a href="http://mono-project.com/Compiling_Mono_on_OSX">guide</a> on Mono's website on how to compile but I found some issues with it.  I'm running on OSX Mavericks so I'm not sure if that resulted in issues but here's my guide to get it compiling.</p>
+
+<p><!--excerpt-->
+Download 3.4.0 from <a href="http://www.go-mono.com/mono-downloads/download.html">here</a> and install with the PKG installer because when compiling the latest Mono source it needs a compiler on the machine.</p>
+
+<p>Install <a href="http://brew.sh/">Homebrew</a> and install the dependencies as shown in Mono's guide. The guide discusses compiling these dependencies but it conflicted with something already on the system.</p>
+
+<pre><code>brew install autoconf
+brew install automake
+brew install libtool
+</code></pre>
+
+<p><strong>NOTE:</strong> You could install Mono using Homebrew if you wish but I didn't realise this until afterwards</p>
+
+<p>Copy the below and put it in a <code>mymonoinstall.sh</code> file. Make <strong>$PREFIX</strong> to be a folder on your system, I used <code>/Users/jonathanchannon/mono</code></p>
+
+<pre><code>PATH=$PREFIX/bin:$PATH
+git clone https://github.com/mono/mono.git
+cd mono
+CC='cc -m32' ./autogen.sh --prefix=$PREFIX --disable-nls --build=i386-apple-darwin11.2.0
+sudo make
+sudo make install
+</code></pre>
+
+<p>Execute this by typing <code>mymonoinstall.sh</code> in a terminal under the folder where the file is. This may take some time based on your internet connection and power of your machine but once done you should be able to run <code>mono --version</code> and hopefully see something greater than 3.4.0.</p>
+
+<p>Now we have Mono installed we're ready to start coding so download <a href="http://www.sublimetext.com/3">Sublime Text 3</a> and install it.  Once installed we need to install the ASP.Net vNext tools using the following instructions:</p>
+
+<pre><code>brew tap aspnet/k
+brew install kvm
+</code></pre>
+
+<p>Create a <code>.profile</code> file in your home directory and enter <code>source kvm.sh</code>. This is so the system knows what the kvm command is when its typed into the console.</p>
+
+<p>We now need to install the <a href="https://github.com/ligershark/Kulture">Kulture</a> Sublime plugin that will enable us to run ASP.Net vNext from Sublime.  In Sublime open the console <code>View -&gt; Show Console</code> and paste in the below</p>
+
+<pre><code>import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+</code></pre>
+
+<p><strong>NOTE: These instructions are for Sublime Text 3. At the time of writing Kulture is only supported on version 3 so if you have version 2 you're out of luck I'm afraid</strong></p>
+
+<p>This will install a package manager for Sublime, you can never have too many package managers eh!</p>
+
+<p><code>Bring up the Command Palette in Sublime (Cmd + Shift + P)</code></p>
+
+<p><code>Select Package Control: Install Package</code></p>
+
+<p><code>Select Kulture when the list appears.</code></p>
+
+<p>So now we have the ability to run, restore and build our ASP.Net vNext apps in Sublime we're ready to create a Nancy app.  Now you could create 4 files manually and build and run them but we might as well install another package manager that will create a Nancy app for us!  I've made a <a href="http://yeoman.io/">Yeoman</a> plugin which <a href="https://www.npmjs.org/package/generator-nancy">creates a Hello World app</a> in Nancy for ASP.Net vNext which can be opened in Sublime.</p>
+
+<p>Go and install <a href="http://nodejs.org/">Node.js</a> and then open up a terminal and type:</p>
+
+<pre><code>npm install -g yo
+npm install -g generator-nancy
+</code></pre>
+
+<p>Go to a folder in your terminal and type <code>yo nancy</code>, it will ask you what you want to call your app, you can type something in or accept the default and it will create the files needed to create the app.  It will also do a NuGet restore for all the dependencies the app has.  In Sublime go to <code>File -&gt; Open Folder</code> and select the folder with your app in.</p>
+
+<p><code>Go to Tools -&gt; Build System and select ASP.Net</code></p>
+
+<p><code>Type Cmd + B</code></p>
+
+<p><code>You should see the build output in the Sublime console</code></p>
+
+<p><code>Bring up the Command Palette in Sublime (Cmd + Shift + P)</code></p>
+
+<p><code>Type 'K' and select Run K commands</code></p>
+
+<p><code>Select Kestrel and a terminal window will open and you should see 'Started'</code></p>
+
+<p><code>Open a browser and go to http://localhost:5000 and you should see 'Hello World' from your Nancy app</code></p>
+
+<p>There we have it, a Nancy ASP.Net vNext building and running from Sublime Text.  Here's a video to prove it works!</p>
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/qZDRhNw_TPI" frameborder="0" allowfullscreen></iframe>
+
+<p><strong>Tip</strong> : Put a syntax error in your code and build your app and see the error reported in the Sublime console.  Double click that error line and watch it open the offending file!</p>
+
+<p>For bonus points you can have a play with <a href="https://t.co/FOBxbPUbrT">this plugin</a> that aims to give C# intellisense in Sublime!</p>
+
+<p>Have fun!</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/community"><span>community</span></a>
+     <a href="/category/nancyfx"><span>nancyfx</span></a>
+     <a href="/category/oss"><span>oss</span></a>
+     <a href="/category/osx"><span>osx</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

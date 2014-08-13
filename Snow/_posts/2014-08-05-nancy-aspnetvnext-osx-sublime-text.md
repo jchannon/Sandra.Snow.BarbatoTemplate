@@ -5,6 +5,8 @@ category: nancyfx,oss,.net,community,osx
 ---
 One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against [Mono][2].  Along with this MS are developing a web server that is cross platform and goes by the name of [Kestrel][5].  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is [Sublime Text][4].  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.
 
+**UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. [Skip to nnext section][14]**
+
 At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I've gone through the pain of setting it up so hopefully this blog post should make it easier for you
 
 There is a [guide][6] on Mono's website on how to compile but I found some issues with it.  I'm running on OSX Mavericks so I'm not sure if that resulted in issues but here's my guide to get it compiling.
@@ -31,6 +33,7 @@ Copy the below and put it in a `mymonoinstall.sh` file. Make **$PREFIX** to be a
 
 Execute this by typing `mymonoinstall.sh` in a terminal under the folder where the file is. This may take some time based on your internet connection and power of your machine but once done you should be able to run `mono --version` and hopefully see something greater than 3.4.0.
 
+<a name="vnext"></a> 
 Now we have Mono installed we're ready to start coding so download [Sublime Text 3][4] and install it.  Once installed we need to install the ASP.Net vNext tools using the following instructions:
 
     brew tap aspnet/k
@@ -99,5 +102,6 @@ Have fun!
   [9]: https://github.com/ligershark/Kulture
   [10]: http://nodejs.org/
   [11]: http://yeoman.io/
-  [12]: https://t.co/FOBxbPUbrT
+  [12]: https://github.com/moonrabbit/OmniSharpSublime
+  [14]: #vnext
   [15]: https://www.npmjs.org/package/generator-nancy

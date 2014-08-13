@@ -1,10 +1,14 @@
 <rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</guid><link>http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</link><a10:author><a10:name /></a10:author><category>.net</category><category>community</category><category>nancyfx</category><category>oss</category><category>osx</category><title>Nancy, ASP.Net vNext, OSX and Sublime Text</title><description>&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href="http://www.mono-project.com/Main_Page"&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href="https://github.com/aspnet/KestrelHttpServer"&gt;Kestrel&lt;/a&gt;.  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. &lt;a href="http://blog.jonathanchannon.com/#vnext"&gt;Skip to nnext section&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I've gone through the pain of setting it up so hopefully this blog post should make it easier for you&lt;/p&gt;
 
 &lt;p&gt;There is a &lt;a href="http://mono-project.com/Compiling_Mono_on_OSX"&gt;guide&lt;/a&gt; on Mono's website on how to compile but I found some issues with it.  I'm running on OSX Mavericks so I'm not sure if that resulted in issues but here's my guide to get it compiling.&lt;/p&gt;
 
 &lt;p&gt;</description><pubDate>Mon, 04 Aug 2014 23:00:00 Z</pubDate><a10:updated>2014-08-04T23:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href="http://www.mono-project.com/Main_Page"&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href="https://github.com/aspnet/KestrelHttpServer"&gt;Kestrel&lt;/a&gt;.  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. &lt;a href="http://blog.jonathanchannon.com/#vnext"&gt;Skip to nnext section&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I've gone through the pain of setting it up so hopefully this blog post should make it easier for you&lt;/p&gt;
 
@@ -34,7 +38,8 @@ sudo make install
 
 &lt;p&gt;Execute this by typing &lt;code&gt;mymonoinstall.sh&lt;/code&gt; in a terminal under the folder where the file is. This may take some time based on your internet connection and power of your machine but once done you should be able to run &lt;code&gt;mono --version&lt;/code&gt; and hopefully see something greater than 3.4.0.&lt;/p&gt;
 
-&lt;p&gt;Now we have Mono installed we're ready to start coding so download &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text 3&lt;/a&gt; and install it.  Once installed we need to install the ASP.Net vNext tools using the following instructions:&lt;/p&gt;
+&lt;p&gt;&lt;a name="vnext"&gt;&lt;/a&gt; 
+Now we have Mono installed we're ready to start coding so download &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text 3&lt;/a&gt; and install it.  Once installed we need to install the ASP.Net vNext tools using the following instructions:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;brew tap aspnet/k
 brew install kvm
@@ -87,7 +92,7 @@ npm install -g generator-nancy
 
 &lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt; : Put a syntax error in your code and build your app and see the error reported in the Sublime console.  Double click that error line and watch it open the offending file!&lt;/p&gt;
 
-&lt;p&gt;For bonus points you can have a play with &lt;a href="https://t.co/FOBxbPUbrT"&gt;this plugin&lt;/a&gt; that aims to give C# intellisense in Sublime!&lt;/p&gt;
+&lt;p&gt;For bonus points you can have a play with &lt;a href="https://github.com/moonrabbit/OmniSharpSublime"&gt;this plugin&lt;/a&gt; that aims to give C# intellisense in Sublime!&lt;/p&gt;
 
 &lt;p&gt;Have fun!&lt;/p&gt;
 </a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/06/14/nancy-aspnet-vnext-vs2014-azure/</guid><link>http://blog.jonathanchannon.com/2014/06/14/nancy-aspnet-vnext-vs2014-azure/</link><a10:author><a10:name /></a10:author><category>.net</category><category>community</category><category>nancyfx</category><category>oss</category><category>owin</category><title>Nancy, ASP.Net vNext, VS2014 &amp; Azure</title><description>&lt;p&gt;By now we know of Microsoft's plans for the next version of ASP.Net and they've turned it on its head and from the looks of it, its goooooood!&lt;/p&gt;

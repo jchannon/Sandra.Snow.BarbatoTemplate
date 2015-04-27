@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2014-11-25T12:01:28.7143739+00:00" />
+    <meta http-equiv="last-modified" content="2015-04-27T10:02:08.6526754+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,43 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/">Modifying the bash prompt and adding Git completion to terminal</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">June 06, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>At work we use Git and I use <a href="http://sourceforge.net/projects/console/files/">Console2</a> to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.</p>
+
+<p>Fire up your terminal and type in this command:</p>
+
+<pre><code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+</code></pre>
+
+<p>This will download a git completion file into your home folder to a hidden file called git-completion.bash.</p>
+
+<p>If the file ~/.bash_profile does not already exist create it with the following command.</p>
+
+<pre><code>touch ~/.bash_profile
+</code></pre>
+
+<p>Now open it and paste this in:</p>
+
+<pre><code>if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+</code></pre>
+
+<p>Now if you type a git command and press tab, BOOM!, you have auto complete for Git!</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -159,28 +196,6 @@ catch (EntityCommandExecutionException ex)
 
       </div>
       <p><a class="readmore" href="/2013/12/20/using-sql-server-with-nodejs/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/11/25/octopus-xml-transformation-in-services/">Octopus XML Transformation in Services</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 25, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>We use <a href="http://octopusdeploy.com/">Octopus Deploy</a> at work and its a superb tool for deploying your applications whether they be websites or *.exes.</p>
-
-<p>One of the great things it also provides is the ability to use <a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx">Microsoft's Transformation</a> process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn't mention the steps needed to get this working so read on!  </p>
-
-<p>Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/11/25/octopus-xml-transformation-in-services/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

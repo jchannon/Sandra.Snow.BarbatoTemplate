@@ -1,0 +1,260 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2014-11-25T12:01:28.7143739+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Running Gulp in Visual &amp; Xamarin Studio
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014/11/24/running-gulp-in-visual-xamarin-studio/">Running Gulp in Visual &amp; Xamarin Studio</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 24, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don't really care and you just want the code!</p>
+
+<p><img src="http://i.imgur.com/iYjnPK0.png" alt="Show the code" /></p>
+
+<!--excerpt-->
+
+<p>Where I work we are moving to a Linux stack with .Net using Nancy &amp; Postgres on the backend.  At the moment we have developers working in Windows and others on OSX using Visual Studio and Xamarin Studio respectively.  At the moment when we want to run the whole app, we build our project, drop to the command line and run gulp for the frontend stuff.  In Visual Studio we already have a post build event to copy the static assets to the bin directory (we have a self host and a IIS host) but in Xamarin Studio we don't so if that bin directory gets nuked we have to copy assets across VMs and its one big PITA.</p>
+
+<p>So here's the code:</p>
+
+<pre><code>&lt;PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Debug"&gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify false --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+&lt;/PostBuildEvent&gt;
+&lt;PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Release"&gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify true --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+&lt;/PostBuildEvent&gt;
+&lt;PostBuildEvent Condition=" '$(OS)' == 'Windows_NT'  "&gt;  
+  if $(ConfigurationName) == Debug  (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify false --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+  ) else (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify true --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+  )
+
+&lt;/PostBuildEvent&gt;
+</code></pre>
+
+<h2>Idiosyncrasies</h2>
+
+<p>So you can probably see some weird things going on there so I'll explain:</p>
+
+<h3>Separate Build Events for Non-Windows</h3>
+
+<p>I have a separate post build event for debug and release for non windows builds, I like that, seems correct to keep them separate. However, for Windows builds I have an <code>if</code> statement.  I did get separate build events firing but then when it hit the <code>npm install</code> line it just wouldn't work for some reason.</p>
+
+<h3>Export PATH for Non-Windows</h3>
+
+<p>I spent a long time trying to get gulp running on OSX. I tried it via executable shell scripts and in a post build event but it just wouldn't work but yet in the terminal all was fine.  I'm not sure if <code>xbuild</code> gets executed as a different user or with limited privielges but I was stumped until <a href="http://twitter.com/yantrio">@yantrio</a> pointed me in the direction of exporting the <code>PATH</code>.  As <code>Gulp</code> sits in <code>/usr/local/bin</code> I had to expose it to the post build event</p>
+
+<h3>Changing directory</h3>
+
+<p>In the post build events I change directory to the folder where the gulp file is located.  I did play quickly on doing it without changing directory but there were some disadvantages so I just went with this approach.  On Windows you'll see that I change directory after each command is executed.  For some reason when executed on Windows when the commands are run the current working directory is changed so you have to change it back to folder where you want to run gulp from.  On OSX &amp; Linux you can set it once and all is fine.</p>
+
+<h2>Conclusion</h2>
+
+<p>So there you have it.  You're asking why not use the <a href="https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708">Visual Studio 2013</a> extension that enables running gulp from VS?  That would only work for those developers using Visual Studio and we have developers using Xamarin Studio so we wanted an across the board solution for all developers.  I know VS 2015 will have Gulp runners baked into it but I'm not sure of Xamarin Studio plans.  If you use this and get it working without a <code>if</code> statement for Windows let me know. </p>
+
+<p>Also check out <a href="http://omnisharp.net">OmniSharp</a> a little project I've been working on!</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/gulp"><span>gulp</span></a>
+     <a href="/category/javascript"><span>javascript</span></a>
+     <a href="/category/visual-studio"><span>visual studio</span></a>
+     <a href="/category/xamarin-studio"><span>xamarin studio</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

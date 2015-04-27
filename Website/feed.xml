@@ -1,4 +1,325 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</guid><link>http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</link><a10:author><a10:name /></a10:author><category>.net</category><category>community</category><category>nancyfx</category><category>oss</category><category>osx</category><title>Nancy, ASP.Net vNext, OSX and Sublime Text</title><description>&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href="http://www.mono-project.com/Main_Page"&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href="https://github.com/aspnet/KestrelHttpServer"&gt;Kestrel&lt;/a&gt;.  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/</guid><link>http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/</link><a10:author><a10:name /></a10:author><category>.net</category><category>gulp</category><category>javascript</category><category>visual studio</category><category>xamarin studio</category><title>Running Gulp in Visual &amp; Xamarin Studio</title><description>&lt;p&gt;I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don't really care and you just want the code!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/iYjnPK0.png" alt="Show the code" /&gt;&lt;/p&gt;
+
+</description><pubDate>Mon, 24 Nov 2014 00:00:00 Z</pubDate><a10:updated>2014-11-24T00:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don't really care and you just want the code!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/iYjnPK0.png" alt="Show the code" /&gt;&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;Where I work we are moving to a Linux stack with .Net using Nancy &amp;amp; Postgres on the backend.  At the moment we have developers working in Windows and others on OSX using Visual Studio and Xamarin Studio respectively.  At the moment when we want to run the whole app, we build our project, drop to the command line and run gulp for the frontend stuff.  In Visual Studio we already have a post build event to copy the static assets to the bin directory (we have a self host and a IIS host) but in Xamarin Studio we don't so if that bin directory gets nuked we have to copy assets across VMs and its one big PITA.&lt;/p&gt;
+
+&lt;p&gt;So here's the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Debug"&amp;gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify false --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+&amp;lt;/PostBuildEvent&amp;gt;
+&amp;lt;PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Release"&amp;gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify true --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+&amp;lt;/PostBuildEvent&amp;gt;
+&amp;lt;PostBuildEvent Condition=" '$(OS)' == 'Windows_NT'  "&amp;gt;  
+  if $(ConfigurationName) == Debug  (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify false --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+  ) else (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify true --bincopy true --copyto "../MyApp.Hosting.Self/bin/debug/static/"
+  )
+
+&amp;lt;/PostBuildEvent&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Idiosyncrasies&lt;/h2&gt;
+
+&lt;p&gt;So you can probably see some weird things going on there so I'll explain:&lt;/p&gt;
+
+&lt;h3&gt;Separate Build Events for Non-Windows&lt;/h3&gt;
+
+&lt;p&gt;I have a separate post build event for debug and release for non windows builds, I like that, seems correct to keep them separate. However, for Windows builds I have an &lt;code&gt;if&lt;/code&gt; statement.  I did get separate build events firing but then when it hit the &lt;code&gt;npm install&lt;/code&gt; line it just wouldn't work for some reason.&lt;/p&gt;
+
+&lt;h3&gt;Export PATH for Non-Windows&lt;/h3&gt;
+
+&lt;p&gt;I spent a long time trying to get gulp running on OSX. I tried it via executable shell scripts and in a post build event but it just wouldn't work but yet in the terminal all was fine.  I'm not sure if &lt;code&gt;xbuild&lt;/code&gt; gets executed as a different user or with limited privielges but I was stumped until &lt;a href="http://twitter.com/yantrio"&gt;@yantrio&lt;/a&gt; pointed me in the direction of exporting the &lt;code&gt;PATH&lt;/code&gt;.  As &lt;code&gt;Gulp&lt;/code&gt; sits in &lt;code&gt;/usr/local/bin&lt;/code&gt; I had to expose it to the post build event&lt;/p&gt;
+
+&lt;h3&gt;Changing directory&lt;/h3&gt;
+
+&lt;p&gt;In the post build events I change directory to the folder where the gulp file is located.  I did play quickly on doing it without changing directory but there were some disadvantages so I just went with this approach.  On Windows you'll see that I change directory after each command is executed.  For some reason when executed on Windows when the commands are run the current working directory is changed so you have to change it back to folder where you want to run gulp from.  On OSX &amp;amp; Linux you can set it once and all is fine.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So there you have it.  You're asking why not use the &lt;a href="https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708"&gt;Visual Studio 2013&lt;/a&gt; extension that enables running gulp from VS?  That would only work for those developers using Visual Studio and we have developers using Xamarin Studio so we wanted an across the board solution for all developers.  I know VS 2015 will have Gulp runners baked into it but I'm not sure of Xamarin Studio plans.  If you use this and get it working without a &lt;code&gt;if&lt;/code&gt; statement for Windows let me know. &lt;/p&gt;
+
+&lt;p&gt;Also check out &lt;a href="http://omnisharp.net"&gt;OmniSharp&lt;/a&gt; a little project I've been working on!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/11/12/csharp-first-class-citizen-sublime-text/</guid><link>http://blog.jonathanchannon.com/2014/11/12/csharp-first-class-citizen-sublime-text/</link><a10:author><a10:name /></a10:author><category>.net</category><category>c#</category><category>community</category><category>oss</category><category>sublimetext</category><title>Microsoft Endorsing C# as a First Class Citizen in Sublime Text</title><description>&lt;p&gt;At the end of my last &lt;a href="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/"&gt;post&lt;/a&gt; on using ASP.Net vNext with Sublime Text I briefly mentioned a &lt;a href="https://github.com/OmniSharp/omnisharp-sublime"&gt;plugin&lt;/a&gt; that aimed at giving intellisense for C# within the editor.  Well 2 months later and I'm happy to announce that intellisense works and I've added a slew of other features that will hopefully make you feel at home away from Visual Studio.&lt;/p&gt;
+
+&lt;p&gt;I discovered the plugin thanks to &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn't have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn't expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don't really want to get into that debate here but all I'll say is, it's nice to have other editor options and with Microsoft's mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but "options" people, "options").&lt;/p&gt;
+
+</description><pubDate>Wed, 12 Nov 2014 00:00:00 Z</pubDate><a10:updated>2014-11-12T00:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;At the end of my last &lt;a href="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/"&gt;post&lt;/a&gt; on using ASP.Net vNext with Sublime Text I briefly mentioned a &lt;a href="https://github.com/OmniSharp/omnisharp-sublime"&gt;plugin&lt;/a&gt; that aimed at giving intellisense for C# within the editor.  Well 2 months later and I'm happy to announce that intellisense works and I've added a slew of other features that will hopefully make you feel at home away from Visual Studio.&lt;/p&gt;
+
+&lt;p&gt;I discovered the plugin thanks to &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn't have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn't expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don't really want to get into that debate here but all I'll say is, it's nice to have other editor options and with Microsoft's mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but "options" people, "options").&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;h2&gt;How does it work?&lt;/h2&gt;
+
+&lt;p&gt;I should really introduce &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt;.  Jason is the author of a library called &lt;a href="https://github.com/OmniSharp/omnisharp-server"&gt;OmniSharpServer&lt;/a&gt; which is a -  &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;HTTP wrapper around NRefactory allowing C# editor plugins to be written in any language.&lt;/p&gt;
+  
+  &lt;p&gt;NRefactory is the C# analysis library used in the SharpDevelop and MonoDevelop IDEs. It allows applications to easily analyze both syntax and semantics of C# programs. It is quite similar to Microsoft's Roslyn project; except that it is not a full compiler – NRefactory only analyzes C# code, it does not generate IL code.  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In simple terms OmniSharpServer is a local web server (written in &lt;a href="http://www.nancyfx.org"&gt;Nancy&lt;/a&gt;) that accepts requests to various different endpoints which returns results about the code you sent to it.  For example, in Sublime Text when you have a string variable and you type &lt;code&gt;.&lt;/code&gt; after the variable a request is sent to OmniSharpServer with a specific payload and the response contains all the possible completions for that variable.  &lt;/p&gt;
+
+&lt;p&gt;The editor plugin is responsible for initiating the requests and dealing with the response in order to provide the user a rich user experience for editing C# and this is hopefully what I have done with &lt;a href="https://github.com/OmniSharp/omnisharp-sublime"&gt;OmniSharpSublime&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;For Mac &amp;amp; Linux users you will need Mono installed.&lt;/p&gt;
+
+&lt;p&gt;For Windows users you will need Python installed and in your PATH.&lt;/p&gt;
+
+&lt;p&gt;Well versed users in Sublime know there is a package manager that allows you to easily install plugins.  In the package manager if you search for OmniSharp you will see the plugin avaiable for install.  Install and away you go!  Please note that I would not consider the plugin a stable release, its close but not quite there yet.&lt;/p&gt;
+
+&lt;p&gt;As I mentioned earlier you can use OmniSharpSublime with a traditional C# solution or with an ASP.Net vNext project (that does not require a solution file) however, you will need a &lt;code&gt;sublime-project&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Let's assume you already have a solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Go to "File -&amp;gt; Open" and select the folder with your solution in it.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Go to "Project -&amp;gt; Save Project As" and save a YOURPROJECTNAME.sublime-project in the same location as your *.sln&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Open your YOURPROJECTNAME.sublime-project file that should now appear in the sidebar on the left&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Enter the location to the *.sln file like below&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Your &lt;code&gt;.sublime.project&lt;/code&gt; file should look like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "."
+        }
+    ],
+    "solution_file": "./testconsoleprj.sln"
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once the &lt;code&gt;YOURPROJECT.sublime-project&lt;/code&gt; is set up and saved follow the below:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Close Sublime (YMMV but this seems to be the best way to open the YOURPROJECTNAME.sublime-project)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Open Sublime&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Click "Project -&amp;gt; Open Project", and select your YOURPROJECTNAME.sublime-project file&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now with the &lt;code&gt;sublime.project&lt;/code&gt; open you should be ready to edit your &lt;code&gt;*.cs&lt;/code&gt; files.&lt;/p&gt;
+
+&lt;p&gt;There is one last "nice touch" to add to Sublime before you edit your files.  Sublime allows syntax specific settings so for C# it would be great if we could invoke intellisense when we type a full stop.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Click "Sublime Text -&amp;gt; Preferences -&amp;gt; Settings - More -&amp;gt; Syntax Specific - User"&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Paste in the below code and save&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    "auto_complete": true,
+    "auto_complete_selector": "source - comment",
+    "auto_complete_triggers": [ {"selector": "source.cs", "characters": ".&amp;lt;"} ],
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you're ready to rock!&lt;/p&gt;
+
+&lt;h2&gt;Features&lt;/h2&gt;
+
+&lt;p&gt;Below I will highlight some of the cool features of &lt;a href="https://github.com/OmniSharp/omnisharp-sublime"&gt;OmniSharpSublime&lt;/a&gt; by the power of animated gifs (hope you have a decent internet connection, sorry!)&lt;/p&gt;
+
+&lt;h3&gt;Intellisense&lt;/h3&gt;
+
+&lt;p&gt;This is probably one of the most important features that springs to mind when editing a C# file in a text editor. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/IkirwAE.gif" alt="Intellisense" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Go To Definition&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/ZClA8qG.gif" alt="Go to definition" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Rename&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/6ByBw5R.gif" alt="Rename" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Find Usages&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/yUGl59t.gif" alt="Find Usages" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Go To Implementation&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/3Ypv6H8.gif" alt="Go to Implementation" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Format Document&lt;/h3&gt;
+
+&lt;p&gt;Checkout the key binding!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/kkkUiRZ.gif" alt="Format Document" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Override&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/EntuVe1.gif" alt="Override" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Add Reference&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/nWZndb0.gif" alt="Add Reference" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Syntax Errors&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/Ka4tHk6.gif" alt="Syntax Errors" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Semantic Errors&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/ljEfdfv.gif" alt="Semantic Errors" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Code Issues&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/qRN9ydy.gif" alt="Code Issues" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Fix Code Issues&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/xWD8qwn.gif" alt="Fix Code Issues" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Fix Using Statements&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/7fmRFqm.gif" alt="Fix Usings" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Code Actions&lt;/h3&gt;
+
+&lt;p&gt;Checkout the key binding for Resharper lovers!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/16UsVBf.gif" alt="Code Actions" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Add New C# File&lt;/h3&gt;
+
+&lt;p&gt;There is also add new C# interface and you can add &lt;a href="http://omnisharp-sublime.readthedocs.org/en/latest/filetemplates/"&gt;your own templates&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/0S5T48f.gif" alt="Add new c# file" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Type Lookup&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/5Wu44i5.gif" alt="Type Lookup" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Build Solution&lt;/h3&gt;
+
+&lt;p&gt;You can press F4 &amp;amp; Shift+F4 to cycle through the errors reported!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/g6Adivm.gif" alt="Build" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Unit Tests&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/gSuTami.gif" alt="Unit Tests" /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Add/Remove from Project&lt;/h3&gt;
+
+&lt;p&gt;If you create an empty chsarp file or paste a file into the folder, if you open it up and simple save the file it will be added to the &lt;code&gt;*csproj&lt;/code&gt; file. You can also right click a file and choose &lt;code&gt;Remove from Project&lt;/code&gt; and this will remove the file from a &lt;code&gt;*.csproj&lt;/code&gt; file.  &lt;/p&gt;
+
+&lt;h2&gt;OSS FTW!&lt;/h2&gt;
+
+&lt;p&gt;Hopefully that's given you a taste of what the plugin can do and I hope you think its as cool as I do.  I believe that this will give users another option when deciding what editor to use when editing C# files.  A big thanks to &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; for OmniSharpServer which allows the plugin to provide all the code options and for him putting up with my questions.&lt;/p&gt;
+
+&lt;p&gt;If you're interested please &lt;a href="https://sublime.wbond.net/packages/OmniSharp"&gt;download&lt;/a&gt; the plugin and enjoy it.  Please let me know of any issues or features you think need adding, I already have plenty in my head but I'm sure there are more additions we can add to make the plugin better and better.  Some documentation can be found &lt;a href="http://omnisharp-sublime.readthedocs.org/en/latest/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also thanks to the guys who originally came up with the idea of the plugin and to the other contributors who have already submitted pull requests.&lt;/p&gt;
+
+&lt;h2&gt;Microsoft &amp;amp; OSS&lt;/h2&gt;
+
+&lt;p&gt;This blog post and project has been sitting on my file system for probably 4-5 weeks ready to be published but during that time I've had chance to make new friends and add new features which I've shown you above! &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Question: Why did I wait 4-5 weeks to publish this post?&lt;br /&gt;
+  Answer  : Microsoft!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Since my last &lt;a href="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/"&gt;blog post&lt;/a&gt; I'd been in touch with the authors of the Kulture plugin (&lt;a href="http://blog.jonathanchannon.com/18"&gt;Sayed Ibrahim Hashimi&lt;/a&gt;) who just happened to work for Microsoft.  They liked my &lt;a href="http://www.nancyfx.org"&gt;Nancy&lt;/a&gt; yeoman generator and I managed to convince them to merge my generator with their ASP.Net generator.  I asked a few questions here and there and &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; came onboard, then &lt;a href="http://twitter.com/mpdreamz"&gt;Martijn Laarman&lt;/a&gt; showed some interest in getting intellisense working and soon we started growing something.  &lt;a href="http://twitter.com/davidfowl"&gt;David Fowler&lt;/a&gt; was brought in to answer some questions and we started having Skype chats with &lt;a href="http://twitter.com/shanselman"&gt;Scott Hanselman&lt;/a&gt; and we then decided upon the path we were going to take.  OmniSharp was born!&lt;/p&gt;
+
+&lt;h2&gt;OmniSharp&lt;/h2&gt;
+
+&lt;p&gt;Our path was going to be make C# available on all the popular editors.  Soon we had &lt;a href="http://twitter.com/stephenhjames"&gt;Stephen James&lt;/a&gt; and &lt;a href="http://twitter.com/mpdreamz"&gt;Martijn Laarman&lt;/a&gt; working on making OmniSharp work with &lt;a href="https://github.com/OmniSharp/omnisharp-atom"&gt;Atom&lt;/a&gt;, &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; working with &lt;a href="https://github.com/OmniSharp/omnisharp-vim"&gt;Vim&lt;/a&gt;, &lt;a href="http://twitter.com/bbbscarter"&gt;Simon Carter&lt;/a&gt;, &lt;a href="http://twitter.com/sp3ctum"&gt;Mika Vilpas&lt;/a&gt; &amp;amp; &lt;a href="http://twitter.com/jasonimison"&gt;Jason Imison&lt;/a&gt; on &lt;a href="https://github.com/OmniSharp/omnisharp-emacs"&gt;Emacs&lt;/a&gt;, &lt;a href="http://twitter.com/mat_mcloughlin"&gt;Mat McLoughlin&lt;/a&gt; on &lt;a href="https://github.com/OmniSharp/omnisharp-brackets"&gt;Brackets&lt;/a&gt; and me on &lt;a href="https://github.com/OmniSharp/omnisharp-sublime"&gt;Sublime&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We then moved all our repositories to an &lt;a href="https://github.com/OmniSharp/"&gt;OmniSharp Github organization&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We built a &lt;a href="http://www.omnisharp.net/"&gt;website&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We created a &lt;a href="http://twitter.com/OmniSharp/"&gt;twitter account&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We created a &lt;a href="https://jabbr.net/#/rooms/omnisharp"&gt;Jabbr room&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Lets just make this clear, Microsoft were working with us to publicise and demonstrate C# working on all the major editors where we predominantly used them on OSX so Mono was going to be needed and they were happy about this!  &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Hang on, why did you have to wait 4-5 weeks to release the blog post?&lt;/em&gt;  &lt;/p&gt;
+
+&lt;p&gt;The reason was that Microsoft were going to have a &lt;strong&gt;big&lt;/strong&gt; announcement to make on November 12th 2014 and it was going to be that the .NET CLR was going to be built as a cross platform and open source tool and that they were going to demonstrate the work we'd been doing on OmniSharp as part of this announcement so we decided after that we'd go public so to speak!  &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;WHAT?!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;That's right, .NET is going OSS &amp;amp; cross platform! HUGE NEWS and we were working as part of an OSS team with Microsoft to highlight that you can use any editor you like to build .NET applications on any platform.  It appears Leopards can change their spots. Lets hope this new open Microsoft will continue for many years to come!&lt;/p&gt;
+
+&lt;h3&gt;Taking OmniSharp forward&lt;/h3&gt;
+
+&lt;p&gt;Jason has started working with the &lt;a href="https://github.com/aspnet/KRuntime"&gt;Design Time Host&lt;/a&gt; that is used for ASP.NET vNext projects which provides information about vnext assemblies and this will be integrated into OmniSharpServer and there are areas already in OmniSharpSublime that I have highlighted that need to become more vNext focused.  &lt;a href="https://twitter.com/sayedihashimi"&gt;Sayed&lt;/a&gt; is making changes to Kulture such as intellisense in project.json for NuGet packages, maybe our two projects will merge.  NRefactory are looking to use Roslyn for the code analysis engine underneath which effects OmniSharpServer. I'm hoping that OmniSharp will become an OSS success for all of us to gain from and I hope you will want to be apart of it.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So there you have it, C# as a first class citizen in Sublime Text, .Net as a cross platform tool and .Net going open source.  What a day! &lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;
+
+&lt;p&gt;Scott Hanselman has posted his views on OmniSharp and a cross platform OSS .NET &lt;a href="http://hnsl.mn/dotnet2015"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Mat McLoughlin has posted information on the Brackets plugin &lt;a href="http://mat-mcloughlin.net/2014/11/12/time-to-cast-away-visual-studio-and-use-a-text-editor/"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Martijn Laarman has posted information on the Brackets plugin &lt;a href="http://localghost.io/articles/getting-your-c-sharp-on-with-atom-2014-11-12/"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Leave them wanting more!&lt;/h2&gt;
+
+&lt;p&gt;I've been spiking NuGet support for Sublime and here's a brief intro&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/MB7EH6x.gif" alt="NuGet" /&gt;&lt;/p&gt;
+
+&lt;!-- 
+Notes for tooling blog post:
+
+    Nrefactory looking to move to Roslyn
+    MS providing DTH access that feeds OmniSharpServer
+--&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</guid><link>http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/</link><a10:author><a10:name /></a10:author><category>.net</category><category>community</category><category>nancyfx</category><category>oss</category><category>osx</category><title>Nancy, ASP.Net vNext, OSX and Sublime Text</title><description>&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href="http://www.mono-project.com/Main_Page"&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href="https://github.com/aspnet/KestrelHttpServer"&gt;Kestrel&lt;/a&gt;.  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. &lt;a href="http://blog.jonathanchannon.com/#vnext"&gt;Skip to nnext section&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 

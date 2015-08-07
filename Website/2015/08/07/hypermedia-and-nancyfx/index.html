@@ -1,0 +1,356 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2015-08-07T15:58:00.6756897+01:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - NancyFX and Hypermedia
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2015/08/07/hypermedia-and-nancyfx/">NancyFX and Hypermedia</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">August 07, 2015</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2015/08/07/hypermedia-and-nancyfx/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I've been slowly educating my self on hypermedia; what it is, how does it help and how to use it.  I must say I've found it a very interesting topic and I thought it was time I put some information into a blog post just in case the 2 people that read this blog might find it useful.</p>
+
+<p>In my day job I'm responsible for a HTTP API (notice I didn't use REST) and some months ago I spoke to Glenn Block around a general discussion about hypermedia.  Glenn put this on YouTube if you want to watch it.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/G4YeQMIdO6Q" frameborder="0" allowfullscreen></iframe>
+
+<!--excerpt-->
+
+<p>At the time I was deliberating whether our API should return payloads that adhere to a hypermedia type but from what I could tell its quite hard if you are the client consuming these payloads.  For example, if you have an Angular SPA, you need code to traverse the links that the server returns.  What happens if the user bookmarks a page and then comes back to it at a later date? The app will need to go back to the entry point of the API then traverse. What happens if the user presses the refresh button in the browser? Again more traversal.  My conclusions were that there is very little tooling and libraries to allow web applications to be hypermedia clients.  This was October 2014 and at the time of writing, August 2015 I think there have been some improvements but not a great deal.</p>
+
+<p>After my chat with Glenn, he was using a hypermedia type called <a href="http://amundsen.com/media-types/collection/">Collection+Json</a> and he wondered if I'd be interested in writing support for it for a <a href="http://nancyfx.org">Nancy</a> application.  I obliged as I wanted to learn more about hypermedia and Nancy now has a library you can use for Collection+Json if you choose to use that hypermedia type.  You can find this on nuget <a href="http://www.nuget.org/packages/Nancy.CollectionJson/">here</a>.</p>
+
+<p>In simple terms you may have a module such as:</p>
+
+<pre><code>public class OrderModule : NancyModule
+{
+  public OrderModule(IOrderRepository orderRepo) : base("/orders")
+  {
+    Get["/"] = _ =&gt;
+    {
+      var orders = orderRepo.GetOrders();
+      return orders;
+    };
+  }
+}
+</code></pre>
+
+<p>When you send in a request with <code>Accept : application/json</code> you will get a JSON representation of an array of orders</p>
+
+<pre><code>[
+    {
+        "id" : 1,
+        "status":"Complete",
+        "itemcount":3
+    },
+    {
+        "id" : 1,
+        "status":"Pending",
+        "itemcount":1
+    }
+]
+</code></pre>
+
+<p>However if you send in a request <code>Accept : application/vnd.collection+json</code> you will get a Collection+Json representation</p>
+
+<pre><code>{
+    "version": "1.0",
+    "href": "http://localhost:9200/orders/",
+    "links": [
+        {
+            "rel": "Feed",
+            "href": "http://localhost:9200/orders/rss"
+        }
+    ],
+    "items": [
+        {
+            "href": "http://localhost:9200/orders/1",
+            "data": [
+                {
+                    "name": "id",
+                    "value": "1",
+                    "prompt": "Id"
+                },
+                {
+                    "name": "itemcount",
+                    "value": "3",
+                    "prompt": "Item Count"
+                },
+                {
+                    "name": "status",
+                    "value": "complete",
+                    "prompt": "Status"
+                }
+            ],
+            "links": [
+                {
+                    "rel": "items",
+                    "href": "http://localhost:9200/orders/1/items",
+                    "prompt": "Items"
+                }
+            ]
+        },
+        {
+            "href": "http://localhost:9200/orders/2",
+            "data": [
+                {
+                    "name": "id",
+                    "value": "2",
+                    "prompt": "Id"
+                },
+                {
+                    "name": "itemcount",
+                    "value": "1",
+                    "prompt": "Item Count"
+                },
+                {
+                    "name": "status",
+                    "value": "pending",
+                    "prompt": "Status"
+                }
+            ],
+            "links": [
+                {
+                    "rel": "items",
+                    "href": "http://localhost:9200/orders/2/items",
+                    "prompt": "Items"
+                }
+            ]
+        }
+    ],
+    "queries": [
+        {
+            "rel": "search",
+            "href": "http://localhost:9200/orders/search",
+            "prompt": "Search",
+            "data": [
+                {
+                    "name": "name",
+                    "prompt": "Value to match against the order number"
+                }
+            ]
+        }
+    ],
+    "template": {
+        "data": [
+            {
+                "name": "productcode",
+                "prompt": "Product Code"
+            },
+            {
+                "name": "quantity",
+                "prompt": "Quantity"
+            }
+        ]
+    }
+}
+</code></pre>
+
+<p>How this works is by content negotiation. As with most things, Nancy makes this very simple.  In Nancy.Collection+Json I wrote a <code>ResponseProcessor</code> that handles Accept headers for Collection+Json and then finds a "writer" responsible for the entity being requested, which writes all the JSON properties seen above and then this is returned in the response.  The code and demo can be found <a href="https://github.com/jchannon/Nancy.CollectionJson">here</a> and more documentation is available <a href="https://github.com/WebApiContrib/CollectionJson.Net#returning-a-read-document-from-a-server">here</a>.</p>
+
+<p>After some months had passed I saw <a href="https://twitter.com/mamund">Mike Amundsen</a> had done a talk at NDC Oslo 2015 about building clients that consume hypermedia payloads.  This spiked my interest again in hypermedia and I thoroughly recommend you give it a watch.</p>
+
+<iframe src="https://player.vimeo.com/video/131642790" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<p>Leading on from this video I realised some of the differences between hypermedia types were how they enabled clients to perform.  For example, with <a href="http://stateless.co/hal_specification.html">HAL</a> this hypermedia type will return links about the resource you requested but it won't directly tell how you to add an order to the system in its payload, you have to follow a link to find out that information.  Collection+Json does give you that information as a <code>template</code> and so does <a href="https://github.com/kevinswiber/siren">Siren</a> in its <code>action</code>.</p>
+
+<p>It was at this point I thought I'd write another Nancy library that would allow you to return Siren payloads which you can check out <a href="https://github.com/jchannon/Nancy.Siren">here</a>.  This works in a similar way as the Nancy.Collection+Json library, in that you as the programmer create a "writer" class that forms the Siren response for a specific resource.  Check out the demo <a href="https://github.com/jchannon/Nancy.Siren/tree/master/src/Nancy.Siren.Demo">here</a>.</p>
+
+<p>At around the same time I also listened to a podcast that Mike was on which discussed REST, hypermedia and clients.  I would strongly recommend you listen to this.  I'd come to a lot of conclusions and had thoughts about REST and hypermedia and they were all validated in this podcast so <a href="https://t.co/V9NoBlWLOc">check it out</a>.</p>
+
+<p>One thing the podcast did touch on is browsers as clients and the complexities involved when they consume hypermedia.  I think this area is in need of huge improvement regarding tooling and libraries and I know Mike is working on a <a href="https://twitter.com/LCHBook">book</a> which may help that but I think we need more people talking about this and people hacking on it to try and make it "a thing".  Tomorrow, Aug 8th 2015, <a href="https://twitter.com/darrel_miller">Darrel Miller</a> is about to do a keynote at DDD Melbourne titled "Consuming REST APIs, for all interpretations of REST" which will be something that illustrates how we can write client apps that consumer hypermedia APIs and gets that information out there.  Without this information we have the potential of making hypermedia a tool that only serves the purpose of machine to machine communication and I'm not sure we want that if we can use it to make our client applications easier to maintain whether they be browsers, desktop apps or mobile apps.  </p>
+
+<p>So in conclusion I recommend you go learn a bit more about REST and hypermedia if it interests you, watch the videos and listen to the podcast.  Then have a play with returning hypermedia payloads with your Nancy app and then trying to consume them.</p>
+
+<p>One thing I will briefly touch on is when deciding upon the hypermedia type I think you need to discuss this with your consumers.  Its very easy to write an API and say "we are going to return X" but if you're not the client developer that has to handle that then you haven't made an informed decision.  You should try and make it as easy as possible for your consumers.  Discuss the types that they find easiest to use.  You as the API developer should try writing a client that consumes the content and realise the difficulties involved which may help you make a more rounded decision on what hypermedia type to return from your API.  Now this is assuming you only decide to return one hypermedia type from your API, of course if you wanted to go purist then you would return all the major hypermedia types from your API and all your clients would be happy but that's probably not reality.</p>
+
+<p>A quick shout out to <a href="https://twitter.com/danbarua">Dan Barua</a> who has written Nancy.HAL, a ResponseProcessor that allows your Nancy API to return HAL payloads.  Check this library out <a href="https://github.com/danbarua/Nancy.Hal">here</a>. Great work Dan!</p>
+
+<p>So in summary if you're using Nancy and want to return hypermedia payloads we have you covered:</p>
+
+<ul>
+<li><a href="https://github.com/danbarua/Nancy.Hal">Nancy.Hal</a></li>
+<li><a href="https://github.com/jchannon/Nancy.CollectionJson">Nancy.Collection+Json</a></li>
+<li><a href="https://github.com/jchannon/Nancy.Siren">Nancy.Siren</a></li>
+</ul>
+
+<p>Finally a big thank you to Glenn Block and Darrel Miller on answering all my API and hypermedia questions over the last year, you've been a great help.  If I now have any questions on API and hypermedia I bring out the big guns and call "Glenn Miller". I really need to get their phone numbers so I can have this ringtone. (For all you youngsters who have no idea who Glenn Miller is, Google it!)</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xPXwkWVEIIw?list=PLc9JoCRiZqs2us9wpl46_eKGO3_AkaIE-" frameborder="0" allowfullscreen></iframe>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/hypermedia"><span>hypermedia</span></a>
+     <a href="/category/nancyfx"><span>nancyfx</span></a>
+     <a href="/category/oss"><span>oss</span></a>
+     <a href="/category/rest"><span>REST</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2015/08/07/hypermedia-and-nancyfx/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2015/08/07/hypermedia-and-nancyfx/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

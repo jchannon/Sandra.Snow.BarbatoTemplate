@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2015-10-28T09:03:34.1880994+00:00" />
+    <meta http-equiv="last-modified" content="2015-11-16T09:55:18.8178797+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,45 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/09/11/comparing-object-instances-with-fakeiteasy/">Comparing object instances with FakeItEasy</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 11, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/11/comparing-object-instances-with-fakeiteasy/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I had the task of writing a new application recently and of course I chose <a href="http://nancyfx.org">Nancy</a>.  One of the many great reasons is the testing capabilites it offers (For more on that see <a href="http://www.marcusoft.net/2013/01/NancyTesting1.html">this</a> great series of articles).</p>
+
+<p>The basics of a test with Nancy looks like this:</p>
+
+<pre><code>[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+
+    // When
+    var result = browser.Get("/", with =&gt; {
+        with.HttpRequest();
+    });
+
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+</code></pre>
+
+<p>You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the <code>ConfigurableBootstrapper</code>.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/09/11/comparing-object-instances-with-fakeiteasy/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -171,32 +210,6 @@
 
       </div>
       <p><a class="readmore" href="/2013/05/29/why-net-should-become-independent/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/04/30/mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">April 30, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/04/30/mocking-httpcontext-with-fake-it-easy/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>Lets start with the conclusion first and say “use <a href="http://nancyfx.org">Nancy</a> for your web applications and APIs” as its brilliant!</p>
-
-<p>If you want to continue reading lets crack on.</p>
-
-<p>I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, <em>eg. Response.Write(“How will I mock thee?”);</em></p>
-
-<p>Having moved over to <a href="http://xunit.codeplex.com/">xUnit</a> and <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.</p>
-
-<p>Doing this is no easy feat with MVC (with Nancy its all <a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application">done for you</a>) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/04/30/mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

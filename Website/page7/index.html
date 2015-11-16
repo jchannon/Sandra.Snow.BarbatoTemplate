@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2015-10-28T09:03:34.1880994+00:00" />
+    <meta http-equiv="last-modified" content="2015-11-16T09:55:18.8178797+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,28 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/03/04/the-many-approaches-to-entity-framework/">The many approaches to Entity Framework</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">March 04, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/03/04/the-many-approaches-to-entity-framework/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I recently had a need to look into using <a href="http://www.asp.net/entity-framework">Entity Framework (EF)</a> for a <a href="http://www.asp.net/mvc">ASP.NET MVC</a> project. In the past I have always used <a href="http://www.toptensoftware.com/petapoco/">PetaPoco</a> as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.</p>
+
+<p>The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.</p>
+
+<p>I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/03/04/the-many-approaches-to-entity-framework/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -160,34 +182,6 @@
 
       </div>
       <p><a class="readmore" href="/2013/01/09/javascript-is-the-future-maybe/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/12/19/why-use-nancyfx/">Why use NancyFX?</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">December 19, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?</p>
-
-<p>I believe so and its called <a href="http://nancyfx.org/">NancyFX</a>. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?</p>
-
-<h2>What is Nancy?</h2>
-
-<p>Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.</p>
-
-<h2>Does it implement MVC?</h2>
-
-<p>Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/12/19/why-use-nancyfx/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

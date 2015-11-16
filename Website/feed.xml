@@ -1,4 +1,139 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2015/10/27/introducting-pogo-golang-twitter-pocket/</guid><link>http://blog.jonathanchannon.com/2015/10/27/introducting-pogo-golang-twitter-pocket/</link><a10:author><a10:name /></a10:author><category>golang</category><category>oss</category><title>Introducing PoGo  - a GoLang, Twitter favourites to Pocket importer</title><description>&lt;p&gt;I've always kept myself up to date with the latest languages arriving on the scene and I've spent time in the past learning Node and last year I learnt Python by doing the Omnisharp plugin for Sublime.  I have recently been looking for a static language that I can transfer my C# skills too and I had narrowed it down to 3; Swift, Kotlin and GoLang.  I started out with Kotlin and setting up a dev environment with IntelliJ and running the koans that Jetbrains advise you step through to pick up the language.  Whilst it seemed relatively straightforward I got "noob confused" when I saw examples of Java calling into Kotlin with get/set prefixes somehow magically added to Kotlin properties. It turns out the Kotlin compiler does this for Java libraries so it can communicate with it, to me it seemed strange that I code a library in one language and the compiler then exposes these methods and properties slightly differently. Superficial as this sounds I also didnt really like the mammoth that appears to be IntelliJ.  Coming from a predominantly Visual Studio background but working with Omnisharp I wanted a lightweight editor with some refactoring, intellisense and error highlighting.&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2015/11/16/content-negotiation-golang/</guid><link>http://blog.jonathanchannon.com/2015/11/16/content-negotiation-golang/</link><a10:author><a10:name /></a10:author><category>golang</category><category>nancyfx</category><category>oss</category><title>Introducing Negotiator  - a GoLang content negotiation library</title><description>&lt;p&gt;In my continued experience learning GoLang I started looking at how to best use it when dealing with HTTP.  The idiomatic way to use GoLang and HTTP is to use the standard library which keeps things minimal but there are a few features missing.  The first thing is a router.  OOTB GoLang doesn't have a router and the majority seem to suggest using a package called Mux from Gorilla Toolkit, a set of libraries that aims to improve the standard library from Go.  After having a play with it I didn't really warm to it so spent some time looking into the alternatives (and there are plenty!) and eventually decided upon &lt;a href="https://goji.io"&gt;Goji&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once I had started using Goji I then wanted to handle content negotiation in my HTTP handler.  As I said earlier GoLang is minimal in its offerings OOTB and this is a good thing.  Just for the record there are a few frameworks out there if you want/need and all encompassing framework such as Martini, Revel and Echo.  These tend to bend the idioms  of GoLang a bit and even the author of Martini blogged on this fact due to feedback from the community that although its capabilities are great they aren't idiomatic Go.
+</description><pubDate>Mon, 16 Nov 2015 00:00:00 Z</pubDate><a10:updated>2015-11-16T00:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;In my continued experience learning GoLang I started looking at how to best use it when dealing with HTTP.  The idiomatic way to use GoLang and HTTP is to use the standard library which keeps things minimal but there are a few features missing.  The first thing is a router.  OOTB GoLang doesn't have a router and the majority seem to suggest using a package called Mux from Gorilla Toolkit, a set of libraries that aims to improve the standard library from Go.  After having a play with it I didn't really warm to it so spent some time looking into the alternatives (and there are plenty!) and eventually decided upon &lt;a href="https://goji.io"&gt;Goji&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once I had started using Goji I then wanted to handle content negotiation in my HTTP handler.  As I said earlier GoLang is minimal in its offerings OOTB and this is a good thing.  Just for the record there are a few frameworks out there if you want/need and all encompassing framework such as Martini, Revel and Echo.  These tend to bend the idioms  of GoLang a bit and even the author of Martini blogged on this fact due to feedback from the community that although its capabilities are great they aren't idiomatic Go.
+&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h3&gt;Introducing Negotiator&lt;/h3&gt;
+
+&lt;p&gt;After realising that Goji didn't have content negotiation seeing as its just a router (although there are Goji compatible middleware, which in turn are standard library compatible) I started playing on how to implement conneg.&lt;/p&gt;
+
+&lt;p&gt;My first attempt was a piece of middleware that allowed the request to go to Goji and then on the way back up it would interrogate the context for a model which the HTTP handler would have inserted, it would then interrogate the Accept header obviously and then write out the JSON/XML to the response.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//***** HTTP Handler *****
+
+func HelloWorldHTTPHandler(ctx web.C, w http.ResponseWriter, req *http.Request) {
+    user := &amp;amp;User{"Joe","Bloggs"}
+
+    ctx.Env["model"] = user
+}
+
+//*****First stab at content negotiation midleware *****
+
+package conneg
+
+import (
+"encoding/json"
+"encoding/xml"
+"net/http"
+
+"github.com/zenazn/goji/web"
+)
+
+func Conneg(c *web.C, h http.Handler) http.Handler {
+    fn := func(w http.ResponseWriter, r *http.Request) {
+
+        h.ServeHTTP(w, r)
+
+        accept := r.Header.Get("Accept")
+        if model := c.Env["model"]; model != nil {
+
+            switch accept {
+            case "application/json":
+
+                w.Header().Set("Content-Type", "application/json")
+
+                js, err := json.Marshal(model)
+
+                if err != nil {
+                    http.Error(w, err.Error(), http.StatusInternalServerError)
+                    return
+                }
+                if statuscode := c.Env["statuscode"]; statuscode != nil {
+                    w.WriteHeader(statuscode.(int))
+                }
+                w.Write(js)
+
+            case "application/xml":
+                x, err := xml.MarshalIndent(model, "", "  ")
+                if err != nil {
+                    http.Error(w, err.Error(), http.StatusInternalServerError)
+                    return
+                }
+
+                w.Header().Set("Content-Type", "application/xml")
+                w.Write(x)
+            }
+        }
+
+    }
+    return http.HandlerFunc(fn)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see its pretty rudimentary but does the job but if I developed multiple web applications I would have to copy and paste this into every app that I wrote.  I would also have to add to the switch statement for every media type I wanted to handle.&lt;/p&gt;
+
+&lt;p&gt;I wanted to write a library that I could reference for every web application, separate out each response processor instead of having a switch statement, have the ability to write new response processors that conformed to an interface plus get more experience with Go and of course make it OSS.&lt;/p&gt;
+
+&lt;p&gt;To cut a long story short if you install a reference to &lt;code&gt;github.com/jchannon/negotiator&lt;/code&gt; you can how have a HTTP handler like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func getUser(w http.ResponseWriter, req *http.Request) {
+    user := &amp;amp;User{"Joe","Bloggs"}
+    negotiator.Negotiate(w, req, user)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This in my humble opinion keeps things pretty tidy.  If you want to extend the base functionality of JSON/XML handling you can implement this interface for your own response processor:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type ResponseProcessor interface {
+    CanProcess(mediaRange string) bool
+    Process(w http.ResponseWriter, model interface{})
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CanProcess is called when &lt;code&gt;negotiator&lt;/code&gt; loops over the media types in the Accept header.  This loop is also ordered by the weighted value in the Accept header eg. &lt;code&gt;Accept: application/json,application/xml;q=0.8,text/plain;q=0.5&lt;/code&gt;, some great work by &lt;a href="https://twitter.com/pdoh00"&gt;Phil Cleveland&lt;/a&gt; who helped with writing &lt;code&gt;negotiator&lt;/code&gt; (note: if there is no accept header or relevant response processor then &lt;code&gt;negotiator&lt;/code&gt; will return a 406).  The response processor will return a boolean saying whether it can handle the current media type.  If it returns true then &lt;code&gt;Process&lt;/code&gt; is called and it will then handle writing the body to the response in the format that is applicable to that response processor.&lt;/p&gt;
+
+&lt;p&gt;To add your new custom processor to &lt;code&gt;negotiator&lt;/code&gt; simple pass it to the &lt;code&gt;New&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func customHandler(w http.ResponseWriter, req *http.Request) {
+    user := &amp;amp;user{"Joe", "Bloggs"}
+    textplainNegotiator := negotiator.New(&amp;amp;PlainTextResponseProcessor{})
+    textplainNegotiator.Negotiate(w, req, user)
+}
+
+type PlainTextResponseProcessor struct {
+}
+
+func (*PlainTextResponseProcessor) CanProcess(mediaRange string) bool {
+    return strings.EqualFold(mediaRange, "text/plain")
+}
+
+func (*PlainTextResponseProcessor) Process(w http.ResponseWriter, model interface{}) {
+
+    w.Header().Set("Content-Type", "text/plain")
+
+    val := reflect.ValueOf(model).Elem()
+
+    for i := 0; i &amp;lt; val.NumField(); i++ {
+        valueField := val.Field(i).String()
+        typeField := val.Type().Field(i)
+
+        w.Write([]byte(typeField.Name + " : " + valueField + " "))
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a slightly contrived example but you can see what needs to be done to add your own response processor for it to be used by &lt;code&gt;negotiator&lt;/code&gt;.  One thing I don't like about this is that you need to call &lt;code&gt;New&lt;/code&gt; in every handler however, you may only want this processor in certain route handlers in your application.  Going back to my first example, what you could do is insert the pointer returned from calling &lt;code&gt;New&lt;/code&gt; and insert it into the http context and then in the handlers pull it out and then call &lt;code&gt;Negotiate&lt;/code&gt;.  You can see a demo of this in the Github repo &lt;a href="https://github.com/jchannon/negotiator/blob/master/demo/main.go"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Hopefully other Go developers will find this library useful but I'm happy with what I've done here and its allowed me to learn more Go and interact with the community.  I'm also pretty chuffed that its got 100% unit test coverage according to the built in golang tools.  I'm  very impressed with the receptiveness of the Go community and the amount of libraries and blog posts out there to learn from.  I've managed to pick up Go pretty easily and I'm really loving it.  Another big thanks to &lt;a href="https://twitter.com/pdoh00"&gt;Phil Cleveland&lt;/a&gt;, another .Net developer trying to pick up Go, for his help with &lt;code&gt;negotiator&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For more information check out the &lt;a href="http://github.com/jchannon/negotiator"&gt;Github repository&lt;/a&gt; and the &lt;code&gt;godoc&lt;/code&gt; documentation &lt;a href="https://godoc.org/github.com/jchannon/negotiator"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Shout out to &lt;a href="http://nancyfx.org"&gt;NancyFX&lt;/a&gt;, my first love, for inspiring the design of the ResponseProcessor interface.&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2015/10/27/introducting-pogo-golang-twitter-pocket/</guid><link>http://blog.jonathanchannon.com/2015/10/27/introducting-pogo-golang-twitter-pocket/</link><a10:author><a10:name /></a10:author><category>golang</category><category>oss</category><title>Introducing PoGo  - a GoLang, Twitter favourites to Pocket importer</title><description>&lt;p&gt;I've always kept myself up to date with the latest languages arriving on the scene and I've spent time in the past learning Node and last year I learnt Python by doing the Omnisharp plugin for Sublime.  I have recently been looking for a static language that I can transfer my C# skills too and I had narrowed it down to 3; Swift, Kotlin and GoLang.  I started out with Kotlin and setting up a dev environment with IntelliJ and running the koans that Jetbrains advise you step through to pick up the language.  Whilst it seemed relatively straightforward I got "noob confused" when I saw examples of Java calling into Kotlin with get/set prefixes somehow magically added to Kotlin properties. It turns out the Kotlin compiler does this for Java libraries so it can communicate with it, to me it seemed strange that I code a library in one language and the compiler then exposes these methods and properties slightly differently. Superficial as this sounds I also didnt really like the mammoth that appears to be IntelliJ.  Coming from a predominantly Visual Studio background but working with Omnisharp I wanted a lightweight editor with some refactoring, intellisense and error highlighting.&lt;/p&gt;
 
 </description><pubDate>Tue, 27 Oct 2015 00:00:00 Z</pubDate><a10:updated>2015-10-27T00:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;I've always kept myself up to date with the latest languages arriving on the scene and I've spent time in the past learning Node and last year I learnt Python by doing the Omnisharp plugin for Sublime.  I have recently been looking for a static language that I can transfer my C# skills too and I had narrowed it down to 3; Swift, Kotlin and GoLang.  I started out with Kotlin and setting up a dev environment with IntelliJ and running the koans that Jetbrains advise you step through to pick up the language.  Whilst it seemed relatively straightforward I got "noob confused" when I saw examples of Java calling into Kotlin with get/set prefixes somehow magically added to Kotlin properties. It turns out the Kotlin compiler does this for Java libraries so it can communicate with it, to me it seemed strange that I code a library in one language and the compiler then exposes these methods and properties slightly differently. Superficial as this sounds I also didnt really like the mammoth that appears to be IntelliJ.  Coming from a predominantly Visual Studio background but working with Omnisharp I wanted a lightweight editor with some refactoring, intellisense and error highlighting.&lt;/p&gt;
 

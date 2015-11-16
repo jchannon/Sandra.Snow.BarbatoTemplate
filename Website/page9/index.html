@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2015-10-28T09:03:34.1880994+00:00" />
+    <meta http-equiv="last-modified" content="2015-11-16T09:55:18.8178797+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,34 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2012/11/06/publishing-to-windows-azure-from-github/">Publishing to Windows Azure from Github</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">November 06, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/06/publishing-to-windows-azure-from-github/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>Back in <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">July 2012</a> Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/" title="NancyFX, RavenDB, NerdDinner and Me">DinnerParty blog post</a> but have only just looked at implementing it.</p>
+
+<h2>Preparation</h2>
+
+<p>As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on <a href="http://jabbr.net">Jabbr</a>. Luckily <a href="http://twitter.com/davidfowl">David Fowler</a> was online. Why is that lucky? He wrote the Github integration feature of Azure.</p>
+
+<p>To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.</p>
+
+<p><img src="/images/blogpostimages/deploymenthistory-620x604.png" alt="Deployment History" title="Deployment History" /></p>
+
+<p><em>Deployment History</em></p>
+
+
+      </div>
+      <p><a class="readmore" href="/2012/11/06/publishing-to-windows-azure-from-github/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -177,32 +205,6 @@
 
       </div>
       <p><a class="readmore" href="/2012/09/28/abstracting-the-file-system/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/09/25/is-oss-good-for-your-career/">Is OSS good for your career?</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">September 25, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>Got your attention? Good.</p>
-
-<p>Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.</p>
-
-<p>Let me explain that I have had 4 jobs in the last 10-11 years. 3 of those were via recruitment agents. They check your skills, tick them off and pass you over to the employer if they match and hopefully you get an interview. That process has happened to me in each of those 3 times.</p>
-
-<p>If you have read my previous blog posts you’ll know I have spent the last year reading a lot of other peoples code and learning all the best practices I can in a bid to become a better software developer as well as give back to the developer community where I can.</p>
-
-<p>After spending a couple of months porting <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me">NerdDinner over to NancyFX</a> I realised that I had not looked at <a href="http://www.asp.net/mvc">ASP.Net MVC 4</a> and the new features built into it. I felt slightly strange at that point as I was usually an early adopter of these things keen to check out the new stuff. I think this was partly due to the fact I had spent a lot of time learning <a href="http://www.nancyfx.org">NancyFX</a> and really quite enjoying the framework and interacting with the small community of people who use Nancy.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/09/25/is-oss-good-for-your-career/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

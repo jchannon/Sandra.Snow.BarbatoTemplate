@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2015-10-28T09:03:34.1880994+00:00" />
+    <meta http-equiv="last-modified" content="2015-11-16T09:55:18.8178797+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,34 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2012/12/19/why-use-nancyfx/">Why use NancyFX?</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">December 19, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?</p>
+
+<p>I believe so and its called <a href="http://nancyfx.org/">NancyFX</a>. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?</p>
+
+<h2>What is Nancy?</h2>
+
+<p>Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.</p>
+
+<h2>Does it implement MVC?</h2>
+
+<p>Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2012/12/19/why-use-nancyfx/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -168,34 +196,6 @@
 
       </div>
       <p><a class="readmore" href="/2012/11/18/gitignore-not-working-fixed/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2012/11/06/publishing-to-windows-azure-from-github/">Publishing to Windows Azure from Github</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 06, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/11/06/publishing-to-windows-azure-from-github/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>Back in <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">July 2012</a> Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/" title="NancyFX, RavenDB, NerdDinner and Me">DinnerParty blog post</a> but have only just looked at implementing it.</p>
-
-<h2>Preparation</h2>
-
-<p>As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on <a href="http://jabbr.net">Jabbr</a>. Luckily <a href="http://twitter.com/davidfowl">David Fowler</a> was online. Why is that lucky? He wrote the Github integration feature of Azure.</p>
-
-<p>To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.</p>
-
-<p><img src="/images/blogpostimages/deploymenthistory-620x604.png" alt="Deployment History" title="Deployment History" /></p>
-
-<p><em>Deployment History</em></p>
-
-
-      </div>
-      <p><a class="readmore" href="/2012/11/06/publishing-to-windows-azure-from-github/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-02-11T15:22:17.3571411+00:00" />
+    <meta http-equiv="last-modified" content="2016-02-11T15:30:05.7942174+00:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>
     Jonathan Channon Blog - Profiling a CoreCLR application with dotMemory
@@ -84,7 +84,7 @@
 
 <!--excerpt-->
 
-<p>I had spotted when I was debugging the appliation that memory usage was creeping up relatively slowly but assumed all would be ok when garbage collection kicked in.  Well it seems its true what they say about assumptions as running it for 6 hours caused the container to be killed.  I had mentioned to (Matt Ellis)[http://twitter.com/citizenmatt], he of Jetbrains fame, a few months ago that having profiling tools such as dotMemory &amp; dotTrace would be awesome for apps running on Linux.  Last I heard there may be plans to have a remote agent that could run on Linux and this would send the info back to dotMemory which would run on Windows as its all in WPF I believe.  Anyhow he pointed me to a blog post JB had done.  This illustrated dotMemory profiling a <code>*.exe</code> that had been built for CoreCLR but I wanted to do it from Visual Studio and not have to produce a binary.  Remeber CoreCLR apps don't produce binaries unless you explicitly tell dnx/dotnet cli to do so.  Anyhow long story short, we couldn't get VS to launch the startup project and monitor my app.  I assume they will solve this issue in the long run.</p>
+<p>I had spotted when I was debugging the appliation that memory usage was creeping up relatively slowly but assumed all would be ok when garbage collection kicked in.  Well it seems its true what they say about assumptions as running it for 6 hours caused the container to be killed.  I had mentioned to <a href="http://twitter.com/citizenmatt">Matt Ellis</a>, he of Jetbrains fame, a few months ago that having profiling tools such as dotMemory &amp; dotTrace would be awesome for apps running on Linux.  Last I heard there may be plans to have a remote agent that could run on Linux and this would send the info back to dotMemory which would run on Windows as its all in WPF I believe.  Anyhow he pointed me to a blog post JB had done.  This illustrated dotMemory profiling a <code>*.exe</code> that had been built for CoreCLR but I wanted to do it from Visual Studio and not have to produce a binary.  Remeber CoreCLR apps don't produce binaries unless you explicitly tell dnx/dotnet cli to do so.  Anyhow long story short, we couldn't get VS to launch the startup project and monitor my app.  I assume they will solve this issue in the long run.</p>
 
 <p>To get it working, we opened dotMemory and told it to profile a standalone application.  That application was dnx.exe.   Depending on your runtime target on Windows this executable will either be in <code>C:\Program Files\DNX\runtimes</code> or <code>C:\Users\[USERNAME]\.dnx\runtimes</code>.  The next thing to do is click the Advanced option.  Here you can enter any arguments which in this case it will be the command you use in <code>project.json</code> to start your application.  The final option you have is the working directory.  For me this was where the source code was.  So you should have something looking like this:</p>
 

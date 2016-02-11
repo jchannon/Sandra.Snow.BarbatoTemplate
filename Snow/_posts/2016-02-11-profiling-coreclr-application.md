@@ -31,7 +31,7 @@ Now being a guy on the cutting edge I knew the issue I had was this new piece of
     var obj = (MyObject)xml.Deserialize(stream);                             
 
 
-So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't withing a `using` statement (although that was fixed).
+So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't within a `using` statement (although that was fixed).
 
 From the dotMemory data it said it was the `XmlSerializer` constructor.  I had a look at that object and there was no `Dispose` method so decided I would create a static instance of it at the top of the class to save recreating it every time.
 

@@ -1,0 +1,223 @@
+<!doctype html>
+<!-- Microdata markup added by Google Structured Data Markup Helper. -->
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="last-modified" content="2016-02-11T15:20:28.8268661+00:00" />
+    <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <title>
+    Jonathan Channon Blog - Profiling a CoreCLR application with dotMemory
+</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" media="screen" rel="stylesheet">
+    <link href="/css/screen.css" media="screen" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog" href="/feed.xml" />
+</head>
+
+<body>
+<div itemscope itemtype="http://schema.org/Article" class="body_wrap">
+    
+    
+    <div class="logo">
+        <strong><a href="index.html">Blog</a></strong>
+        <div class="logo_description">curated by Jonathan Channon</div>
+    </div>
+    
+    <!-- header -->
+    <div class="header">            
+        <div class="header_inner">
+            <!-- topmenu -->    
+            <nav id="topmenu" class="clearfix">
+                <ul class="dropdown">
+                    <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                    <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                    <li class="menu-item-red"><a href="http://jonathanchannon.com"><span>Resume</span></a></li>
+                    <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                    <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                </ul>
+            
+            <select id="topm-select" onChange="location = this.value">
+                <option value="">Site Navigation</option>
+                <option value="/">Home</option>
+                <option value="/about">About Me</option>
+                <option value="http://www.jonathanchannon.com">Resume</option>
+                <option value="/archive">Archive</option>
+                <option value="/contact">Contact</option>
+            </select>
+            </nav>    
+            <!--/ topmenu -->
+
+        </div>
+    </div>
+    <!--/ header -->    
+
+    <!-- middle -->
+    <div id="middle" class="full_width">
+        <div class="container clearfix">                        
+            <!-- content -->
+            <div class="">
+                  
+
+
+<div class="post-item boxed post-detail">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2016/02/11/profiling-coreclr-application/">Profiling a CoreCLR application with dotMemory</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">February 11, 2016</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2016/02/11/profiling-coreclr-application/"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        <p>I had ported an application over to CoreCLR (that's a whole other blog post), along with my colleague <a href="http://twitter.com/yantrio">James Humphries</a> put it in a docker image and sat back and watched it do its thing.  After 6 hours of running the docker container had crashed.  Ah nuts we thought,  so pulled up the logs from docker and the last line looked like this <code>2016-02-10T20:18:31.728783069Z Killed</code>.  I'm pretty sure when you have a log entry with <code>Killed</code> in it, things can't be good. To the interweb...</p>
+
+<p>I opened up the CoreFX repository on Github to search for the term <code>Killed</code> and there were 2 comments but nothing that was logged out anywhere.  I then Googled for docker and killed and there was an entry that someone else had spotted on their container and the feedback was essentially it was probably out of memory.</p>
+
+<!--excerpt-->
+
+<p>I had spotted when I was debugging the appliation that memory usage was creeping up relatively slowly but assumed all would be ok when garbage collection kicked in.  Well it seems its true what they say about assumptions as running it for 6 hours caused the container to be killed.  I had mentioned to (Matt Ellis)[http://twitter.com/citizenmatt], he of Jetbrains fame, a few months ago that having profiling tools such as dotMemory &amp; dotTrace would be awesome for apps running on Linux.  Last I heard there may be plans to have a remote agent that could run on Linux and this would send the info back to dotMemory which would run on Windows as its all in WPF I believe.  Anyhow he pointed me to a blog post JB had done.  This illustrated dotMemory profiling a <code>*.exe</code> that had been built for CoreCLR but I wanted to do it from Visual Studio and not have to produce a binary.  Remeber CoreCLR apps don't produce binaries unless you explicitly tell dnx/dotnet cli to do so.  Anyhow long story short, we couldn't get VS to launch the startup project and monitor my app.  I assume they will solve this issue in the long run.</p>
+
+<p>To get it working, we opened dotMemory and told it to profile a standalone application.  That application was dnx.exe.   Depending on your runtime target on Windows this executable will either be in <code>C:\Program Files\DNX\runtimes</code> or <code>C:\Users\[USERNAME]\.dnx\runtimes</code>.  The next thing to do is click the Advanced option.  Here you can enter any arguments which in this case it will be the command you use in <code>project.json</code> to start your application.  The final option you have is the working directory.  For me this was where the source code was.  So you should have something looking like this:</p>
+
+<p><img src="/images/blogpostimages/dotmemoryrun.png" alt="dotMemory Usage" /></p>
+
+<p>Once you click Run it will start you application up and begin doing its thing.  What we did was to create a snapshot as soon as the app seemed to have started up, wait 60secs, take another snapshot, wait 120 seconds and repeat.  You can then compare the snapshots by selecting the snapshots checkbox and then clicking compare.  You can then see the differences.</p>
+
+<p><img src="/images/blogpostimages/dotmemorysnapshotselect.png" alt="dotMemory Snapshots" />
+<img src="/images/blogpostimages/dotmemorysnapshot.png" alt="dotMemory Differences" />
+<img src="/images/blogpostimages/dotmemorydiff.png" alt="dotMemory Drilldown" /></p>
+
+<p>On the comparison I was a bit confused with all this information and fumbled around for a bit but we came across the Back Traces option and then picked the object with the largest amount of allocated bytes and drilled down until we saw something that might have been in my code.  As we drilled down and saw system classes we knew roughly where in the app it would be until we finally hit the class and method name.</p>
+
+<p>Now being a guy on the cutting edge I knew the issue I had was this new piece of technology called XML, you should try it.  We looked in the code and found it was doing this, which was getting called every second.</p>
+
+<pre><code>var stream = new MemoryStream(Encoding.UTF8.GetBytes(myXml)));
+var sr = new StreamReader(stream));
+var serializer = new XmlSerializer(typeof(MyObject), new XmlRootAttribute("rootNode"));
+var obj = (MyObject)xml.Deserialize(stream);                             
+</code></pre>
+
+<p>So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't withing a <code>using</code> statement (although that was fixed).</p>
+
+<p>From the dotMemory data it said it was the <code>XmlSerializer</code> constructor.  I had a look at that object and there was no <code>Dispose</code> method so decided I would create a static instance of it at the top of the class to save recreating it every time.</p>
+
+<p>I made the changes, put them into a new docker image and watched the memory usage of my app with <a href="https://t.co/gR1uTzKCwq">cAdvisor</a> and bingo, rock solid and stable memory usage!</p>
+
+<p>After a quick Google just out of curiosity, I found the same exact issue on Stackoverflow and luckily the answer was what we had decided to do with the static instance.  Basically <code>XmlSerializer</code> uses assembly generation and they cannot be collected hence the memory issues we saw.</p>
+
+<p>Anyway hope that helps you on the path to profiling your CoreCLR app and hopefully things with Jetbrains will improve so we can profile apps running on Linux.</p>
+
+    </div> 
+    <div id="tagcloud">
+     <a href="/category/.net"><span>.net</span></a>
+     <a href="/category/c"><span>c#</span></a>
+     <a href="/category/coreclr"><span>coreclr</span></a>
+     <a href="/category/oss"><span>oss</span></a>
+    </div>
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    <div id="disqus_thread"></div>
+<script>
+    var reset_disqus = function(){
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                //this.page.identifier = '';
+                this.page.url = 'http://blog.jonathanchannon.com/2016/02/11/profiling-coreclr-application/';
+                //this.page.title = '';
+            }
+        });
+    };
+
+    var disqus_shortname = 'jonathanchannonblog';
+    var disqus_url = 'http://blog.jonathanchannon.com/2016/02/11/profiling-coreclr-application/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    window.addEventListener('orientationchange', reset_disqus);
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+            </div>
+                <!-- #content -->
+         </div>
+    </div>
+    <!--/ middle -->
+
+    <!-- footer social -->
+    <div class="footer_social">
+        <div class="footer_social_inner">
+            <div class="container">     
+              <!-- <a href="post-details.html#" class="social-fb">Facebook</a> -->
+                <a href="http://twitter.com/jchannon" class="social-twitter">Twitter</a>
+                <a href="http://github.com/jchannon" class="social-github">Github</a>
+                <a href="http://uk.linkedin.com/in/jonathanchannon/" class="social-linkedin">Linked In</a>
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            </div> 
+        </div>
+    </div>
+    <!--/ footer social -->
+
+    <div class="footer">
+        <div class="container">
+            <p class="copyright"><a href="https://github.com/Sandra/Sandra.Snow">Powered by Sandra.Snow</a></p>        
+        </div> 
+    </div>
+
+    </div>
+    
+    <!-- main JS libs  -->
+    <script src="/js/libs/modernizr.min.js"></script>
+    <script src="/js/libs/respond.min.js"></script>                   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- scripts  -->
+    <script src="/js/general.js"></script>
+    <script src="/js/hoverIntent.js"></script>
+
+    <script type='text/javascript'>
+      $(function () {
+        $("pre code").parent().each(function () {
+          if (!$(this).hasClass("prettyprint")) {
+            $(this).addClass("prettyprint");
+            a = true
+          }
+        });
+
+        //prettyPrint();
+      });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+
+_gaq.push(['_setAccount', 'UA-7138405-4']);
+_gaq.push(['_trackPageview']);
+        
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    
+</body>
+</html>

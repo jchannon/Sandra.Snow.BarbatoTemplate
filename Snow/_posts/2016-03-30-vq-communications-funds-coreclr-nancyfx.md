@@ -34,7 +34,7 @@ It can be that simple.  Does your company hit a bug with an open source project?
 
 Whilst each open source project is unique, how you enable full time work on it and how companies execute the funding for it will all be different, in essence what I believe VQ has managed to do is set a precedent to say it is possible for companies to fund open source projects.  This doesn't mean companies funding projects kill people's passion in contributing to open source projects, it means passionate developers can contribute as they do now but if there are companies out there able to contribute by funding or having developers contribute whilst in working hours this can only be a good thing for the project.  It's not just a discussion for a couple of developers in the company to have over the water cooler which never materialises into anything and it doesn't mean months on end checking on potential legal/licencing/support issues, its something any company can do if they really want to.  Just to be clear however, in case you're screaming "what a cavalier attitude", VQ were not cavalier in their approach to this, what we did was have a balanced discussion, things like licence issues pretty much went away at the start as Nancy is MIT so we were happy to donate any work paid for by us to the Nancy team, there were no legal issues and any other issues that were raised were either discussed and resolved or we checked with [@thecodejunkie][5] for clarification.  I'm just highlighting that each circumstance is different but luckily for VQ and Nancy it all came together nicely and I believe there can be many companies and open source projects that can have this relationship.
 
-Checkout the [blog post][12] from VQ about how the process above came about and what it means to them.
+Checkout the [blog post][12] from VQ about how the process above came about and what it means to them and the [blog post][13] from tretton37 about the relationship has evolved between VQ and NancyFX.
 
 
 If your company has a problem, if no one else can help, and if you can find them, maybe you can fund an open source project.
@@ -52,3 +52,4 @@ If your company has a problem, if no one else can help, and if you can find them
 [10]: https://github.com/FakeItEasy/FakeItEasy/pull/617
 [11]: https://www.nuget.org/packages/Nancy/2.0.0-alpha
 [12]: http://www.vqcomms.com/blog/2016-03-30/nancyfx-coreclr/
+[13]: https://tretton37.com/blog/tretton37_open_source

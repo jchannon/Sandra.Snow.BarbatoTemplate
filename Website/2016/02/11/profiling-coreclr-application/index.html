@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-02-11T15:30:05.7942174+00:00" />
+    <meta http-equiv="last-modified" content="2016-03-30T11:37:08.6996176+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>
     Jonathan Channon Blog - Profiling a CoreCLR application with dotMemory
@@ -106,7 +106,7 @@ var serializer = new XmlSerializer(typeof(MyObject), new XmlRootAttribute("rootN
 var obj = (MyObject)xml.Deserialize(stream);                             
 </code></pre>
 
-<p>So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't withing a <code>using</code> statement (although that was fixed).</p>
+<p>So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't within a <code>using</code> statement (although that was fixed).</p>
 
 <p>From the dotMemory data it said it was the <code>XmlSerializer</code> constructor.  I had a look at that object and there was no <code>Dispose</code> method so decided I would create a static instance of it at the top of the class to save recreating it every time.</p>
 

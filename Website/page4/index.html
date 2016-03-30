@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-02-11T15:30:05.7942174+00:00" />
+    <meta http-equiv="last-modified" content="2016-03-30T11:37:08.6996176+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,28 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/11/25/octopus-xml-transformation-in-services/">Octopus XML Transformation in Services</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">November 25, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/11/25/octopus-xml-transformation-in-services/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>We use <a href="http://octopusdeploy.com/">Octopus Deploy</a> at work and its a superb tool for deploying your applications whether they be websites or *.exes.</p>
+
+<p>One of the great things it also provides is the ability to use <a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx">Microsoft's Transformation</a> process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn't mention the steps needed to get this working so read on!  </p>
+
+<p>Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/11/25/octopus-xml-transformation-in-services/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -195,49 +217,6 @@ public void Should_Do_Something()
 
       </div>
       <p><a class="readmore" href="/2013/09/20/returning-multiple-fake-objects-with-fakeiteasy/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/09/16/enabling-cors-in-iisexpress/">Enabling CORS in IISExpress</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">September 16, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I was playing around with <a href="https://github.com/wordnik/swagger-ui">swagger-ui</a> and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.</p>
-
-<p>I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.</p>
-
-<p>The solution is to go to <code>C:\Program Files (x86)\IIS Express\AppServer</code> and open the <code>applicationhost.config</code> file.</p>
-
-<p>Search for <code>httpProtocol</code> and you should see this:</p>
-
-<pre><code>&lt;httpProtocol&gt;
-    &lt;customHeaders&gt;
-        &lt;clear /&gt;
-        &lt;add name="X-Powered-By" value="ASP.NET" /&gt;
-    &lt;/customHeaders&gt;
-    &lt;redirectHeaders&gt;
-        &lt;clear /&gt;
-    &lt;/redirectHeaders&gt;
-&lt;/httpProtocol&gt;
-</code></pre>
-
-<p>Now add this to the <code>customHeaders</code> node:</p>
-
-<pre><code>&lt;add name="Access-Control-Allow-Origin" value="*" /&gt;
-&lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&gt;
-</code></pre>
-
-<p>Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.</p>
-
-<p>Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress</p>
-
-      </div>
     </div>
   <!-- Pagination links -->
   <div class="text-center">

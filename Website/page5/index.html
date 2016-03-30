@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-02-11T15:30:05.7942174+00:00" />
+    <meta http-equiv="last-modified" content="2016-03-30T11:37:08.6996176+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,49 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/09/16/enabling-cors-in-iisexpress/">Enabling CORS in IISExpress</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 16, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/16/enabling-cors-in-iisexpress/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I was playing around with <a href="https://github.com/wordnik/swagger-ui">swagger-ui</a> and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.</p>
+
+<p>I went Googling and it couldn't find anything specific to IIS Express but managed to use some guidance for full blown IIS.</p>
+
+<p>The solution is to go to <code>C:\Program Files (x86)\IIS Express\AppServer</code> and open the <code>applicationhost.config</code> file.</p>
+
+<p>Search for <code>httpProtocol</code> and you should see this:</p>
+
+<pre><code>&lt;httpProtocol&gt;
+    &lt;customHeaders&gt;
+        &lt;clear /&gt;
+        &lt;add name="X-Powered-By" value="ASP.NET" /&gt;
+    &lt;/customHeaders&gt;
+    &lt;redirectHeaders&gt;
+        &lt;clear /&gt;
+    &lt;/redirectHeaders&gt;
+&lt;/httpProtocol&gt;
+</code></pre>
+
+<p>Now add this to the <code>customHeaders</code> node:</p>
+
+<pre><code>&lt;add name="Access-Control-Allow-Origin" value="*" /&gt;
+&lt;add name="Access-Control-Allow-Headers" value="Content-Type" /&gt;
+</code></pre>
+
+<p>Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.</p>
+
+<p>Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress</p>
+
+      </div>
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -170,38 +213,6 @@ public void Should_return_status_ok_when_route_exists()
 
       </div>
       <p><a class="readmore" href="/2013/08/22/a-quick-look-at-visual-node/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/07/03/modifying-files-within-git-history/">Modifying files within Git history</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">July 03, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/07/03/modifying-files-within-git-history/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
-
-<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
-
-<p>For Sublime Text run this in the command line:</p>
-
-<pre><code>git config --global core.editor "'C:/Program Files/Sublime Text 2/sublime_text.exe'"
-</code></pre>
-
-<p>Next up is finding the commit id you want to go back to, to edit:</p>
-
-<pre><code>git log
-</code></pre>
-
-<p>Make a note of the parent commit id of the commit you want to edit.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/07/03/modifying-files-within-git-history/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

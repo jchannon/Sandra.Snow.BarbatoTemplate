@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-03-30T15:26:48.9161181+01:00" />
+    <meta http-equiv="last-modified" content="2016-06-27T18:06:48.9641972+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,48 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/08/24/async-route-handling-with-nancy/">Async Route Handling with Nancy</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">August 24, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/24/async-route-handling-with-nancy/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. </p>
+
+<p>The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. </p>
+
+<p>It could also be argued that only "use asynchronicity in a web framework if you expect high traffic in your web application". If you only have 10 requests on a small site you're not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/08/24/async-route-handling-with-nancy/">Read more...</a></p>            
+    </div>
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/08/22/a-quick-look-at-visual-node/">A quick look at Visual Node</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">August 22, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/22/a-quick-look-at-visual-node/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  </p>
+
+<p>The hipster in me is screaming saying "You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging" but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that's just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I'm never going to touch a dynamic language again, "give me a statically typed language every time with a compiler".  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/08/22/a-quick-look-at-visual-node/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -156,67 +198,6 @@
       </div>
       <p><a class="readmore" href="/2013/04/30/mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>            
     </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/04/17/up-running-with-typescript-and-webstorm/">Up &amp; Running with TypeScript and WebStorm</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">April 17, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/04/17/up-running-with-typescript-and-webstorm/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.</p>
-
-<p>As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use <a href="http://www.jetbrains.com/webstorm/">WebStorm</a> from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).</p>
-
-<h2>TypeScript</h2>
-
-<p>So I went over to TypeScript’s <a href="http://www.typescriptlang.org/">website</a> and followed the Hello World type code examples under the “Learn” tab.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/04/17/up-running-with-typescript-and-webstorm/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/04/08/using-a-markdown-viewengine-with-nancy/">Using a Markdown ViewEngine with Nancy</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">April 08, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/04/08/using-a-markdown-viewengine-with-nancy/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>Whilst using <a href="http://stackoverflow.com">stackoverflow.com</a> and <a href="https://gist.github.com/">Github gists</a> I’ve become a frequent user of <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
-
-<p>For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:</p>
-
-<pre><code>#Hello World!
-##You're awesome!
-The quick brown fox jumped over the lazy coder
-What the **hell** is this?
-This is an [example link](http://example.com/)
-
-&lt;h1&gt;Hello World!&lt;/h1&gt;
-&lt;h2&gt;You're awesome!&lt;/h2&gt;
-&lt;p&gt;The quick brown fox jumped over the lazy coder&lt;/p&gt;
-What the &lt;strong&gt;hell&lt;/strong&gt; is this?
-This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
-</code></pre>
-
-<p>You can see more examples in the earlier link.</p>
-
-<p>When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into <a href="http://calepin.co/">Calepin</a> and <a href="http://scriptogr.am/">Scriptogr.am</a> as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/04/08/using-a-markdown-viewengine-with-nancy/">Read more...</a></p>            
-    </div>
   <!-- Pagination links -->
   <div class="text-center">
 
@@ -278,7 +259,7 @@ This is an &lt;a href="http://example.com/"&gt; example link&lt;/a&gt;
         //prettyPrint();
       });
     </script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
     <script type="text/javascript">
 var _gaq = _gaq || [];
 

@@ -76,7 +76,7 @@ Here we see some middleware and an extension so it can be used in an application
 &lt;pre&gt;&lt;code&gt;public void Configure(IApplicationBuilder app)
 {
     //Use the ASP.Net Core OWIN bridge
-    app.UseOwin(x.Invoke(MyMiddleware.ReturnAppFunc()));  
+    app.UseOwin(x =&amp;gt; x.Invoke(MyMiddleware.ReturnAppFunc()));  
 }
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -92,9 +92,10 @@ using MidFunc = System.Func&amp;lt;System.Func&amp;lt;System.Collections.Generic
 
 public static class MyMiddlewareExtensions
 {
-    public static MidFunc UseMyMiddleware(this Action&amp;lt;MidFunc&amp;gt; builder, MyMiddlewareOptions options = null)
+    public static Action&amp;lt;MidFunc&amp;gt; UseMyMiddleware(this Action&amp;lt;MidFunc&amp;gt; builder, MyMiddlewareOptions options = null)
     {
-        return next =&amp;gt; async environment =&amp;gt; new MyMiddleware(next, options).Invoke(environment);
+        builder(next =&amp;gt; new MyMiddleware(next, options).Invoke);
+        return builder;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;

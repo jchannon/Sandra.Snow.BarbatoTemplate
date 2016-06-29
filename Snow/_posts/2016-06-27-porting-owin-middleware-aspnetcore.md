@@ -52,7 +52,7 @@ As I said earlier, ASP.Net Core has a bridge to use OWIN components and as long 
     public void Configure(IApplicationBuilder app)
     {
         //Use the ASP.Net Core OWIN bridge
-        app.UseOwin(x.Invoke(MyMiddleware.ReturnAppFunc()));  
+        app.UseOwin(x => x.Invoke(MyMiddleware.ReturnAppFunc()));  
     }
 
 
@@ -69,9 +69,10 @@ Using our sample middleware above the extension class would now have to look lik
 
     public static class MyMiddlewareExtensions
     {
-        public static MidFunc UseMyMiddleware(this Action<MidFunc> builder, MyMiddlewareOptions options = null)
+        public static Action<MidFunc> UseMyMiddleware(this Action<MidFunc> builder, MyMiddlewareOptions options = null)
         {
-            return next => async environment => new MyMiddleware(next, options).Invoke(environment);
+            builder(next => new MyMiddleware(next, options).Invoke);
+            return builder;
         }
     }
 

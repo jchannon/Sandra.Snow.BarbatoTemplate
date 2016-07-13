@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-06-29T12:29:18.3235574+01:00" />
+    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,33 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2016/07/13/building-all-current-dotnet-core-projects-vscode/">Building all and current dotnet core projects in VSCode</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">July 13, 2016</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2016/07/13/building-all-current-dotnet-core-projects-vscode/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>As you may or may not know I try to work on OSX as much as possible and with .Net that's quite painful to be honest.  Things are moving along nicely with Jetbrains Rider,
+VSCode, Xamarin and Omnisharp.  I'll be honest, none of them are perfect and I often find myself using Visual Studio in a VM because it just works (yes, its clunky etc etc).
+Recently, VSCode got a 1.3 release with some new features, tabs being one of them.  I never really got on with VSCode so dismissed it most of the time but this new release
+opened my eyes a bit more and thought I'd give it a go.  Its C# support now runs on .Net Core RTM and most of my work at the moment is porting projects to .Net Core so it seemed
+this would be worthwhile.  I've tried to setup keybindings that are the ones I know from Visual Studio and installed couple of extensions to make things easier and prettier.  </p>
+
+<p>As VSCode is language agnostic the one thing I found was how to build .Net Core projects was a bit off.  For each project you have you have to configure a task runner.  VSCode tries to 
+help you here and gives you a few languages to choose from.  For .Net Core it creates a <code>dotnet build</code> task.  The problem with this is that it runs that command from the workspace root, 
+ie the folder where VSCode is opened.  What if you open it from the git root folder and your project(s) are under a src/MyProject folder?  It will fail as it cant find project.json.
+What you can do is set the <code>cwd</code> to be a specific directory by hardcoding it in the task configuration but thats not great if you have multiple projects.  You could use some predefined
+variables that VSCode provides eg/<code>${fileDirname}</code> but again if you are in a folder 4 levels deep that wont work either.
+
+      </div>
+      <p><a class="readmore" href="/2016/07/13/building-all-current-dotnet-core-projects-vscode/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -166,25 +193,6 @@ public static class MyMiddlewareExtensions
 
       </div>
       <p><a class="readmore" href="/2016/02/11/profiling-coreclr-application/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2015/11/16/content-negotiation-golang/">Introducing Negotiator  - a GoLang content negotiation library</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 16, 2015</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2015/11/16/content-negotiation-golang/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>In my continued experience learning GoLang I started looking at how to best use it when dealing with HTTP.  The idiomatic way to use GoLang and HTTP is to use the standard library which keeps things minimal but there are a few features missing.  The first thing is a router.  OOTB GoLang doesn't have a router and the majority seem to suggest using a package called Mux from Gorilla Toolkit, a set of libraries that aims to improve the standard library from Go.  After having a play with it I didn't really warm to it so spent some time looking into the alternatives (and there are plenty!) and eventually decided upon <a href="https://goji.io">Goji</a></p>
-
-<p>Once I had started using Goji I then wanted to handle content negotiation in my HTTP handler.  As I said earlier GoLang is minimal in its offerings OOTB and this is a good thing.  Just for the record there are a few frameworks out there if you want/need and all encompassing framework such as Martini, Revel and Echo.  These tend to bend the idioms  of GoLang a bit and even the author of Martini blogged on this fact due to feedback from the community that although its capabilities are great they aren't idiomatic Go.
-
-      </div>
-      <p><a class="readmore" href="/2015/11/16/content-negotiation-golang/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

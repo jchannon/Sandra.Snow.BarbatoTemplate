@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-06-29T12:29:18.3235574+01:00" />
+    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,25 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2015/11/16/content-negotiation-golang/">Introducing Negotiator  - a GoLang content negotiation library</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">November 16, 2015</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2015/11/16/content-negotiation-golang/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>In my continued experience learning GoLang I started looking at how to best use it when dealing with HTTP.  The idiomatic way to use GoLang and HTTP is to use the standard library which keeps things minimal but there are a few features missing.  The first thing is a router.  OOTB GoLang doesn't have a router and the majority seem to suggest using a package called Mux from Gorilla Toolkit, a set of libraries that aims to improve the standard library from Go.  After having a play with it I didn't really warm to it so spent some time looking into the alternatives (and there are plenty!) and eventually decided upon <a href="https://goji.io">Goji</a></p>
+
+<p>Once I had started using Goji I then wanted to handle content negotiation in my HTTP handler.  As I said earlier GoLang is minimal in its offerings OOTB and this is a good thing.  Just for the record there are a few frameworks out there if you want/need and all encompassing framework such as Martini, Revel and Echo.  These tend to bend the idioms  of GoLang a bit and even the author of Martini blogged on this fact due to feedback from the community that although its capabilities are great they aren't idiomatic Go.
+
+      </div>
+      <p><a class="readmore" href="/2015/11/16/content-negotiation-golang/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -155,26 +174,6 @@
 
       </div>
       <p><a class="readmore" href="/2014/11/24/running-gulp-in-visual-xamarin-studio/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2014/11/12/csharp-first-class-citizen-sublime-text/">Microsoft Endorsing C# as a First Class Citizen in Sublime Text</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 12, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/11/12/csharp-first-class-citizen-sublime-text/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>At the end of my last <a href="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/">post</a> on using ASP.Net vNext with Sublime Text I briefly mentioned a <a href="https://github.com/OmniSharp/omnisharp-sublime">plugin</a> that aimed at giving intellisense for C# within the editor.  Well 2 months later and I'm happy to announce that intellisense works and I've added a slew of other features that will hopefully make you feel at home away from Visual Studio.</p>
-
-<p>I discovered the plugin thanks to <a href="http://twitter.com/jasonimison">Jason Imison</a> but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn't have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn't expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don't really want to get into that debate here but all I'll say is, it's nice to have other editor options and with Microsoft's mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but "options" people, "options").</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2014/11/12/csharp-first-class-citizen-sublime-text/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

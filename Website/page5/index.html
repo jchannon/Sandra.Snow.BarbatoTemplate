@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-06-29T12:29:18.3235574+01:00" />
+    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,34 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/10/21/running-mocha-tests-with-sublime-text/">Running Mocha tests within Sublime Text</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">October 21, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/10/21/running-mocha-tests-with-sublime-text/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.</p>
+
+<p>In a bid to expand my mind I'm working on a little project that is made up of JS entirely so I've dug out <a href="http://sublimetext.com">Sublime Text</a>. It has lots of plugins that are very handy, especially <a href="https://github.com/victorporof/Sublime-HTMLPrettify">Sublime-HTMLPrettify</a> which will tidy your HTML, CSS &amp; JS for you.</p>
+
+<p>When writing tests for JS there are many libraries you can use but I've chosen <a href="http://visionmedia.github.io/mocha/">Mocha</a> for now.  The one thing I couldn't work out was to run my tests within Sublime Text until now.</p>
+
+<h3>Build System</h3>
+
+<p>Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via <kbd>cmd</kbd>+<kbd>B</kbd>.</p>
+
+<p>To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2013/10/21/running-mocha-tests-with-sublime-text/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -207,45 +235,6 @@ public void Should_Do_Something()
 
       </div>
       <p><a class="readmore" href="/2013/09/12/keeping-sql-data-organised-in-integration-tests/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/09/11/comparing-object-instances-with-fakeiteasy/">Comparing object instances with FakeItEasy</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">September 11, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/11/comparing-object-instances-with-fakeiteasy/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I had the task of writing a new application recently and of course I chose <a href="http://nancyfx.org">Nancy</a>.  One of the many great reasons is the testing capabilites it offers (For more on that see <a href="http://www.marcusoft.net/2013/01/NancyTesting1.html">this</a> great series of articles).</p>
-
-<p>The basics of a test with Nancy looks like this:</p>
-
-<pre><code>[Fact]
-public void Should_return_status_ok_when_route_exists()
-{
-    // Given
-    var bootstrapper = new DefaultNancyBootstrapper();
-    var browser = new Browser(bootstrapper);
-
-    // When
-    var result = browser.Get("/", with =&gt; {
-        with.HttpRequest();
-    });
-
-    // Then
-    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-}
-</code></pre>
-
-<p>You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the <code>ConfigurableBootstrapper</code>.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/09/11/comparing-object-instances-with-fakeiteasy/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

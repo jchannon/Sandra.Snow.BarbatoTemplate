@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
+    <meta http-equiv="last-modified" content="2017-05-04T16:08:53.2164673+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,33 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/09/12/keeping-sql-data-organised-in-integration-tests/">Keeping SQL Data Organised in Integration Tests</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 12, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/12/keeping-sql-data-organised-in-integration-tests/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp; MainApp.Tests.Integration.</p>
+
+<p>I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  <a href="http://xunit.codeplex.com/">xUnit</a> allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is <a href="http://xunit.codeplex.com/wikipage?title=Comparisons&amp;referringTitle=Home#note2">frowned upon</a>.  However I felt for my needs I would implement this.</p>
+
+<p>I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.</p>
+
+<p>This was working perfectly until I wanted to test another method on my repository.</p>
+
+<p>I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.</p>
+
+<p>My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.
+
+      </div>
+      <p><a class="readmore" href="/2013/09/12/keeping-sql-data-organised-in-integration-tests/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -175,41 +202,6 @@ public void Should_return_status_ok_when_route_exists()
 
       </div>
       <p><a class="readmore" href="/2013/07/03/modifying-files-within-git-history/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/05/29/why-net-should-become-independent/">Why .Net should become independent!</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">May 29, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/05/29/why-net-should-become-independent/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in <a href="http://nancyfx.org/">Nancy</a> on my first day and paved the way for Git in the first week).</p>
-
-<p>My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.</p>
-
-<p>These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.</p>
-
-<p><strong>Q:</strong> What’s the common denominator here?<br />
-<strong>A:</strong> They are all owned by Microsoft.</p>
-
-<p><strong>Q:</strong> What operating system do these all run on?<br />
-<strong>A:</strong> Microsoft Windows</p>
-
-<p><strong>Q:</strong> What framework and programming language do they run on?<br />
-<strong>A:</strong> Microsoft .Net and C#</p>
-
-<p>Spot a pattern?</p>
-
-<p>So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/05/29/why-net-should-become-independent/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
+    <meta http-equiv="last-modified" content="2017-05-04T16:08:53.2164673+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,36 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/11/07/using-git-to-update-youtrack-via-teamcity/">Using Git to update YouTrack via TeamCity</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">November 07, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/11/07/using-git-to-update-youtrack-via-teamcity/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.</p>
+
+<p>YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.</p>
+
+<p>There is some documentation <a href="http://confluence.jetbrains.com/display/YTD4/Executing+Commands+from+Comment+to+VCS+Commit">here</a> but its not the greatest in terms of clarity and I've spoken to <a href="https://twitter.com/hhariri">Hadi Hariri</a> from JetBrains about improving this so hopefully they're working on it.</p>
+
+<p>Anyhow here's some example Git commands to wire it all up</p>
+
+<pre><code>git commit -am "I fixed a massive bug #PROJ-158 Complete"
+git commit -am "I fixed a massive bug #PROJ-158 Complete add work 1h"
+</code></pre>
+
+<p>The first command will update the status of YouTrack item #PROJ-158 to Complete.  The second item will do the same but also add Time Tracking information to the item in YouTrack.</p>
+
+<p>Hope that helps, Happy Coding!</p>
+
+      </div>
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -208,33 +238,6 @@ public void Should_Do_Something()
 <p>Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress</p>
 
       </div>
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/09/12/keeping-sql-data-organised-in-integration-tests/">Keeping SQL Data Organised in Integration Tests</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">September 12, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/09/12/keeping-sql-data-organised-in-integration-tests/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp; MainApp.Tests.Integration.</p>
-
-<p>I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  <a href="http://xunit.codeplex.com/">xUnit</a> allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is <a href="http://xunit.codeplex.com/wikipage?title=Comparisons&amp;referringTitle=Home#note2">frowned upon</a>.  However I felt for my needs I would implement this.</p>
-
-<p>I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.</p>
-
-<p>This was working perfectly until I wanted to test another method on my repository.</p>
-
-<p>I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.</p>
-
-<p>My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.
-
-      </div>
-      <p><a class="readmore" href="/2013/09/12/keeping-sql-data-organised-in-integration-tests/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

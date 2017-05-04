@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
+    <meta http-equiv="last-modified" content="2017-05-04T16:08:53.2164673+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,43 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2012/09/28/abstracting-the-file-system/">Abstracting the File System</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">September 28, 2012</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2012/09/28/abstracting-the-file-system/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+
+<p>So you have a a method similar to this:</p>
+
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo("C:\Mytext.txt")
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine("This blog post is cool");
+    w.Close();
+  }
+}
+</code></pre>
+
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2012/09/28/abstracting-the-file-system/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">

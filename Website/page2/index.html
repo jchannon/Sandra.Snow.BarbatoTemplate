@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2016-07-13T11:34:06.6263117+01:00" />
+    <meta http-equiv="last-modified" content="2017-05-04T16:08:53.2164673+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,26 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2016/02/11/profiling-coreclr-application/">Profiling a CoreCLR application with dotMemory</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">February 11, 2016</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2016/02/11/profiling-coreclr-application/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>I had ported an application over to CoreCLR (that's a whole other blog post), along with my colleague <a href="http://twitter.com/yantrio">James Humphries</a> put it in a docker image and sat back and watched it do its thing.  After 6 hours of running the docker container had crashed.  Ah nuts we thought,  so pulled up the logs from docker and the last line looked like this <code>2016-02-10T20:18:31.728783069Z Killed</code>.  I'm pretty sure when you have a log entry with <code>Killed</code> in it, things can't be good. To the interweb...</p>
+
+<p>I opened up the CoreFX repository on Github to search for the term <code>Killed</code> and there were 2 comments but nothing that was logged out anywhere.  I then Googled for docker and killed and there was an entry that someone else had spotted on their container and the feedback was essentially it was probably out of memory.</p>
+
+
+      </div>
+      <p><a class="readmore" href="/2016/02/11/profiling-coreclr-application/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -154,26 +174,6 @@
 
       </div>
       <p><a class="readmore" href="/2015/04/27/cookie-authentication-angularjs-csrf-owin-mono/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2014/11/24/running-gulp-in-visual-xamarin-studio/">Running Gulp in Visual &amp; Xamarin Studio</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">November 24, 2014</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2014/11/24/running-gulp-in-visual-xamarin-studio/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don't really care and you just want the code!</p>
-
-<p><img src="http://i.imgur.com/iYjnPK0.png" alt="Show the code" /></p>
-
-
-      </div>
-      <p><a class="readmore" href="/2014/11/24/running-gulp-in-visual-xamarin-studio/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

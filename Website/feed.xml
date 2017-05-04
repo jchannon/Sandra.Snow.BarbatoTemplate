@@ -1,4 +1,179 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2016/07/13/building-all-current-dotnet-core-projects-vscode/</guid><link>http://blog.jonathanchannon.com/2016/07/13/building-all-current-dotnet-core-projects-vscode/</link><a10:author><a10:name /></a10:author><category>ASP.Net</category><category>VSCode</category><title>Building all and current dotnet core projects in VSCode</title><description>&lt;p&gt;As you may or may not know I try to work on OSX as much as possible and with .Net that's quite painful to be honest.  Things are moving along nicely with Jetbrains Rider,
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/</guid><link>http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>Botwin</category><category>C#</category><category>OSS</category><title>Announcing Botwin</title><description>&lt;p&gt;Whilst keeping my eye on what's going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the &lt;a href="https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs"&gt;routing&lt;/a&gt;.  I had also read this &lt;a href="https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/"&gt;blog post&lt;/a&gt; from &lt;a href="https://twitter.com/filip_woj"&gt;Filip&lt;/a&gt; about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!&lt;/p&gt;
+
+&lt;h3&gt;Sample&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;public class ActorsModule : BotwinModule
+{
+    public ActorsModule()
+    {
+        this.Get("/", async (req, res, routeData) =&amp;gt;
+        {
+            await res.WriteAsync("Hello World!");
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</description><pubDate>Wed, 03 May 2017 23:00:00 Z</pubDate><a10:updated>2017-05-03T23:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;Whilst keeping my eye on what's going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the &lt;a href="https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs"&gt;routing&lt;/a&gt;.  I had also read this &lt;a href="https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/"&gt;blog post&lt;/a&gt; from &lt;a href="https://twitter.com/filip_woj"&gt;Filip&lt;/a&gt; about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!&lt;/p&gt;
+
+&lt;h3&gt;Sample&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;public class ActorsModule : BotwinModule
+{
+    public ActorsModule()
+    {
+        this.Get("/", async (req, res, routeData) =&amp;gt;
+        {
+            await res.WriteAsync("Hello World!");
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;!--excerpt--&gt;
+Whilst the extensions in the routing allowed users to create some funcs I thought to myself once you get above 3 or 4 of them you are going to want to put them in their own file which tidies things up but then you would still have to register all the routes in your application at one central location ie. in a Startup class or as part of the WebHostBuilder setup.  Whilst that's ok for some I didn't like it particularly so I came up with the BotwinModule.  Now I'm sure many of you who are &lt;a href="http://nancyfx.org"&gt;Nancy&lt;/a&gt; lovers are thinking this looks exactly the same as a NancyModule and you'd be correct but sometimes you can't improve on perfection so I took what I knew from Nancy and made it work in a similar fashion.  Each BotwinModule is found and each route is registered with ASP.NET Core.  This is all under the hood, all the user has to do is below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBotwin();
+    }
+
+    public void Configure(IApplicationBuilder app)
+    {
+        app.UseBotwin();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Extensions&lt;/h2&gt;
+
+&lt;p&gt;When I had got the initial routing complete I then started going through some simple scenarios and realised I needed to add some extensions to make usability better.  At the moment this comes at a cost of dependencies and an opinionated approach.&lt;/p&gt;
+
+&lt;h3&gt;Binding &amp;amp; Validating&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;this.Put("/actors/{id:int}", async (req, res, routeData) =&amp;gt;
+{
+    var result = req.BindAndValidate&amp;lt;Actor&amp;gt;();
+
+    if (!result.ValidationResult.IsValid)
+    {
+        res.StatusCode = 422;
+        await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+        return;
+    }
+
+    //Update the user in your database
+
+    res.StatusCode = 204;
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above code uses FluentValidation under the hood and validates the incoming request body to &lt;code&gt;Actor&lt;/code&gt;. The result of BindAndValidate is a Tuple of ValidationResult and T.  At the moment the ValidationResult is from FV so that probably needs abstracting at some point however, as you can see you can check if validation is valid and if not act accordingly.  In this example I return the errors from the validation result using an extension &lt;code&gt;GetFormattedErrors&lt;/code&gt; and also use a &lt;code&gt;HttpRequest&lt;/code&gt; extension that negotiates the result ie. if the user asked for JSON with their &lt;code&gt;Accept&lt;/code&gt; header they get JSON, if they asked for XML or PDF they get that (as long as they implement a &lt;code&gt;IResponseNegotiator&lt;/code&gt;). Out of the box Botwin will return JSON.&lt;/p&gt;
+
+&lt;p&gt;If the user doesn't want to validate incoming data but does want the body deserialized they can simply use &lt;code&gt;req.Bind&amp;lt;Actor&amp;gt;()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Global Before &amp;amp; After Hooks&lt;/h3&gt;
+
+&lt;p&gt;There may be circumstances where you want to check something in the request before it hits the route handler or you may want to do something after the route handler has been executed.  This can be setup via options:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public void Configure(IApplicationBuilder app)
+{
+    app.UseBotwin(new BotwinOptions(
+        async (ctx) =&amp;gt; { await ctx.Response.WriteAsync("GlobalBefore"); return true; }, 
+        async (ctx) =&amp;gt; await ctx.Response.WriteAsync("GlobalAfter")
+    ));
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we setup that for each route it will write to the response body on the before and after hook.  Notice that the before hook has a boolean to signify if the routing should continue.  You may not want to continue the route execution for some reason after inspecting it in the Global before hook so can return false.&lt;/p&gt;
+
+&lt;h3&gt;Module Before &amp;amp; After Hooks&lt;/h3&gt;
+
+&lt;p&gt;Like the global before &amp;amp; after hooks these can be applied at a module level:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class TestModule : BotwinModule
+{
+    public TestModule()
+    {
+        this.Before = async (req, res, routeData) =&amp;gt; { await res.WriteAsync("Before"); return res; };
+
+        this.After = async (req, res, routeData) =&amp;gt; { await res.WriteAsync("After"); };
+
+        this.Get("/", async (request, response, routeData) =&amp;gt; { await response.WriteAsync("Hello"); });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Again fairly similar to the global hook but you can return the response object to continue execution or return null to stop the request in the before hook.&lt;/p&gt;
+
+&lt;h3&gt;IStatusCodeHandler&lt;/h3&gt;
+
+&lt;p&gt;An implementation of &lt;code&gt;IStatusCodeHandler&lt;/code&gt; means you can determine what happens if your route returns a certain status code. ASP.NET Core provides middleware called &lt;code&gt;UseStatusCodePages&lt;/code&gt; but it is not very elegant for users to use so I felt this was a cleaner option:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class ConflictStatusCodeHandler : IStatusCodeHandler
+{
+    public bool CanHandle(int statusCode)
+    {
+        return statusCode == 409;
+    }
+
+    public async Task Handle(HttpContext ctx)
+    {
+        await ctx.Response.WriteAsync("Can't we all just get along?");
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can obviously do whatever you want in the Handle method.&lt;/p&gt;
+
+&lt;h3&gt;IResponseNegotiator&lt;/h3&gt;
+
+&lt;p&gt;Mentioned previously, implementing this interface allows you to handle content negotiation if selected in the route:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class TestResponseNegotiator : IResponseNegotiator
+{
+    public bool CanHandle(IList&amp;lt;MediaTypeHeaderValue&amp;gt; accept)
+    {
+        return accept.Any(x =&amp;gt; x.MediaType.IndexOf("foo/bar", StringComparison.OrdinalIgnoreCase) &amp;gt;= 0);
+    }
+
+    public async Task Handle(HttpRequest req, HttpResponse res, object model)
+    {
+        await res.WriteAsync("FOOBAR");
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Obviously here you can make your response return CSV, PDF etc etc.  If you call &lt;code&gt;response.Negotiate&lt;/code&gt; and Botwin can't find a relevant implementation it will default to JSON.&lt;/p&gt;
+
+&lt;p&gt;If you explicitly want to return JSON from your route you can use another extension like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;this.Get("/actors", async (req, res, routeData) =&amp;gt;
+{
+    var people = actorProvider.Get();
+    await res.AsJson(people);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Dependency Injection&lt;/h3&gt;
+
+&lt;p&gt;You can inject dependencies into Botwin modules and these are resolved automatically via the ASP.NET Core built in DI so if you use Structuremap, Autofac etc that is plugged into ASP.NET Core then it will work fine:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class ActorsModule : BotwinModule
+{
+    public ActorsModule(IActorProvider actorProvider)
+    {
+       //Do stuff
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;So what have we got here? This is not Nancy re-imagined on ASP.NET Core, this is me wondering whether I could easily and quickly use some of the lower level parts of the routing to use Nancy-esque style routing.  It runs on pre-released binaries from Microsoft so just a warning for now!  The one thing I have never liked about ASP.NET is the routing whether that be configured in Global.asax or attribute routing or convention based methods in controllers.  This is not a framework.  Things like authentication and error handling etc should be handled by other middleware that comes with ASP.NET Core but Botwin contains enough functionality to get a decent sized app running.  My commitment to Nancy is still as strong but these days finding time to contribute to it is difficult so kind of makes me sad that there is no choice for web frameworks for .NET.  The performance is very good as it sits directly within the ASP.NET Core pipeline.  If you'd like to help out or have some ideas please visit the repo &lt;a href="https://github.com/jchannon/Botwin"&gt;here&lt;/a&gt; but today I'm happy to announce Botwin!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2016/07/13/building-all-current-dotnet-core-projects-vscode/</guid><link>http://blog.jonathanchannon.com/2016/07/13/building-all-current-dotnet-core-projects-vscode/</link><a10:author><a10:name /></a10:author><category>ASP.Net</category><category>VSCode</category><title>Building all and current dotnet core projects in VSCode</title><description>&lt;p&gt;As you may or may not know I try to work on OSX as much as possible and with .Net that's quite painful to be honest.  Things are moving along nicely with Jetbrains Rider,
 VSCode, Xamarin and Omnisharp.  I'll be honest, none of them are perfect and I often find myself using Visual Studio in a VM because it just works (yes, its clunky etc etc).
 Recently, VSCode got a 1.3 release with some new features, tabs being one of them.  I never really got on with VSCode so dismissed it most of the time but this new release
 opened my eyes a bit more and thought I'd give it a go.  Its C# support now runs on .Net Core RTM and most of my work at the moment is porting projects to .Net Core so it seemed

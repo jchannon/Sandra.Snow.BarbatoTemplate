@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2017-05-15T09:32:44.6674620+01:00" />
+    <meta http-equiv="last-modified" content="2017-06-07T15:49:30.9638585+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,51 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2017/06/07/debugging-netcore-docker/">Debugging .Net Core apps inside Docker container with VSCode</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">June 07, 2017</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.</p>
+
+<p>For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don't have to install dotnet in a container.</p>
+
+<p>To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.</p>
+
+<p><code>curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg</code></p>
+
+<p>We are also going to need to append the launch.json for VSCode in your project's root to have the below:</p>
+
+<pre><code>{
+    "name": ".NET Core Remote Attach",
+    "type": "coreclr",
+    "request": "attach",
+    "processId": "${command:pickRemoteProcess}",
+    "pipeTransport": {
+        "pipeProgram": "bash",
+        "pipeArgs": [ "-c", "docker exec -i json ${debuggerCommand}" ],
+        "debuggerPath": "/root/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceRoot}",
+        "quoteArgs": true
+    },
+    "sourceFileMap": {
+        "/Users/jonathan/Projects/jsonfile": "${workspaceRoot}"
+    },
+    "justMyCode": true
+}
+</code></pre>
+
+
+      </div>
+      <p><a class="readmore" href="/2017/06/07/debugging-netcore-docker/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -190,25 +235,6 @@ public static class MyMiddlewareExtensions
 <p>
       </div>
       <p><a class="readmore" href="/2016/06/27/porting-owin-middleware-aspnetcore/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2016/04/28/what-is-a-hypermedia-client/">What is a Hypermedia client?</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">April 28, 2016</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2016/04/28/what-is-a-hypermedia-client/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I've been interested in Hypermedia for quite a while.  I bugged <a href="http://twitter.com/darrelmiller">Darrel Miller</a> and <a href="http://twitter.com/gblock">Glenn Block</a> (Glenn Miller) so much so they created a <a href="https://www.youtube.com/playlist?list=PLbc9sDUxHqX60XJaTnNnKvI2mRighInDW">YouTube show</a> called "In The Mood for HTTP".  I bought their book <a href="http://webapibook.net/">"Designing Evolvable Web APIs with ASP.NET"</a>, I am waiting for <a href="http://shop.oreilly.com/product/0636920037958.do">"RESTful Web Clients Enabling Reuse Through Hypermedia"</a> by <a href="http://twitter.com/mamund">Mike Amundsen</a>, I have <a href="http://blog.jonathanchannon.com/2015/08/07/hypermedia-and-nancyfx/index.html">written</a> about how to return different media types with NancyFX and I am looking at going to <a href="http://2016.uk.restfest.org/">restfest.org</a> in Edinburgh this year, a REST conference.  </p>
-
-<p>The one thing that I have always discussed with Glenn Miller is that there seems, or from my perception, that there is a lot of emphasis on the server returning media types(HAL,Siren,JSON-LD, Collection+Json) and very little information about hypermedia clients.  The information that I have come across which is very little, again coulkd be due to my lack of Google-fu, seems to generate a mis-conception.  The mis-conception I have come across is that if you have an API that returns hypermedia then your client should be able to magically work with it.  It should know everything that is required to browse the API and discover its way around.  I never quite grasped how that was supposed to happen and was serioulsy confused.  I had seen a video that showed when the server returned its responses, using Javascript it would loop over all the properties in the payload and then display them in a HTML page.  The emphasis was that if new bits of data were added then they would appear magically in the UI.  That seemed like a nice feature but I still didn't quite get how it went from hitting the root of the API to finding its way into the guts of it.  The server would return links in the payload with "rels" and I was baffled how this magic client knew what to do with a rel or even how it knew what rels it would return.<br />
-
-      </div>
-      <p><a class="readmore" href="/2016/04/28/what-is-a-hypermedia-client/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

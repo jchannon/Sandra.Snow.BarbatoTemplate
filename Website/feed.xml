@@ -1,4 +1,100 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/05/15/using-docker-with-netcore-ci/</guid><link>http://blog.jonathanchannon.com/2017/05/15/using-docker-with-netcore-ci/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>C#</category><category>Docker</category><category>OSS</category><title>Using Docker with .Net Core in CI for OSS</title><description>&lt;p&gt;I recently wrote a &lt;a href="http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/"&gt;project&lt;/a&gt; for &lt;a href="https://t.co/kpkdInRgwG"&gt;ASP.NET Core 2&lt;/a&gt;  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp;amp; Linux and so the defacto place to go is TravisCI.  I've used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</guid><link>http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>C#</category><category>Docker</category><category>OSS</category><title>Debugging .Net Core apps inside Docker container with VSCode</title><description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+
+&lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don't have to install dotnet in a container.&lt;/p&gt;
+
+&lt;p&gt;To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We are also going to need to append the launch.json for VSCode in your project's root to have the below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    "name": ".NET Core Remote Attach",
+    "type": "coreclr",
+    "request": "attach",
+    "processId": "${command:pickRemoteProcess}",
+    "pipeTransport": {
+        "pipeProgram": "bash",
+        "pipeArgs": [ "-c", "docker exec -i json ${debuggerCommand}" ],
+        "debuggerPath": "/root/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceRoot}",
+        "quoteArgs": true
+    },
+    "sourceFileMap": {
+        "/Users/jonathan/Projects/jsonfile": "${workspaceRoot}"
+    },
+    "justMyCode": true
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+</description><pubDate>Tue, 06 Jun 2017 23:00:00 Z</pubDate><a10:updated>2017-06-06T23:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+
+&lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don't have to install dotnet in a container.&lt;/p&gt;
+
+&lt;p&gt;To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We are also going to need to append the launch.json for VSCode in your project's root to have the below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    "name": ".NET Core Remote Attach",
+    "type": "coreclr",
+    "request": "attach",
+    "processId": "${command:pickRemoteProcess}",
+    "pipeTransport": {
+        "pipeProgram": "bash",
+        "pipeArgs": [ "-c", "docker exec -i json ${debuggerCommand}" ],
+        "debuggerPath": "/root/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceRoot}",
+        "quoteArgs": true
+    },
+    "sourceFileMap": {
+        "/Users/jonathan/Projects/jsonfile": "${workspaceRoot}"
+    },
+    "justMyCode": true
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;p&gt;They key things to note are the &lt;code&gt;pipeArgs&lt;/code&gt; and &lt;code&gt;sourceFileMap&lt;/code&gt;. Where it says &lt;code&gt;json&lt;/code&gt;, under &lt;code&gt;pipeArgs&lt;/code&gt; this will need to be replaced the name of the container that you are trying to debug.  The &lt;code&gt;sourceFileMap&lt;/code&gt; is a mapping between where it was compiled on your machine and where it is in VSCode.  The rest of the properties are explained &lt;a href="https://github.com/OmniSharp/omnisharp-vscode/wiki/Attaching-to-remote-processes#configuring-launchjson"&gt;here&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;The final Dockerfile looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM microsoft/dotnet:1.1-runtime-deps
+
+RUN apt-get update
+
+RUN apt-get install curl unzip
+
+RUN curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
+
+COPY ./publish /app
+
+WORKDIR /app
+
+ENTRYPOINT ./jsonfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So we're ready to go with the following steps:&lt;/p&gt;
+
+&lt;p&gt;So we're ready to go, the steps are:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dotnet publish -c Debug -f netcoreapp1.1 -r debian.8-x64 -o ./publish&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;docker build -t jchannon/jsonfile --rm .&lt;/code&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;docker run -t —name json jchannon/jsonfile&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a breakpoint to you application&lt;/p&gt;
+
+&lt;p&gt;Go to VSCode Debug pane, select &lt;code&gt;.NET Core Remote Attach&lt;/code&gt; and hit F5&lt;/p&gt;
+
+&lt;p&gt;SUCCESS!!&lt;/p&gt;
+
+&lt;p&gt;One thing to note with this is, is that you cannot debug a project that has been compiled in Release mode.  Whilst the config above looks like it should work it doesn't. I tried! I believe there may be plans to allow this and the issue can be tracked &lt;a href="https://github.com/OmniSharp/omnisharp-vscode/issues/220"&gt;here&lt;/a&gt; .  A sample application and Dockerfile can be found &lt;a href="https://github.com/jchannon/DockerDebug"&gt;here&lt;/a&gt; &lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/05/15/using-docker-with-netcore-ci/</guid><link>http://blog.jonathanchannon.com/2017/05/15/using-docker-with-netcore-ci/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>C#</category><category>Docker</category><category>OSS</category><title>Using Docker with .Net Core in CI for OSS</title><description>&lt;p&gt;I recently wrote a &lt;a href="http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/"&gt;project&lt;/a&gt; for &lt;a href="https://t.co/kpkdInRgwG"&gt;ASP.NET Core 2&lt;/a&gt;  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp;amp; Linux and so the defacto place to go is TravisCI.  I've used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:&lt;/p&gt;
 
 &lt;blockquote class="twitter-tweet" data-partner="tweetdeck"&gt;&lt;p lang="en" dir="ltr"&gt;Is Travis still the go to Linux CI tool for OSS?&lt;/p&gt;— Jonathan Channon (@jchannon) &lt;a href="https://twitter.com/jchannon/status/860979690462474240"&gt;May 6, 2017&lt;/a&gt;&lt;/blockquote&gt;
 

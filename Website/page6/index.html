@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2017-06-07T15:49:30.9638585+01:00" />
+    <meta http-equiv="last-modified" content="2018-04-10T11:55:09.1126164+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,42 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2013/10/01/blogging-with-markdown-and-git/">Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">October 01, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/10/01/blogging-with-markdown-and-git/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>There are many markdown blogging engines out there such as <a href="http://calepin.co/">Calepin</a>, <a href="http://scriptogr.am/">Scriptogram</a> and even <a href="http://wordpress.org/">WordPress</a> allows you to write blog posts in Markdown but <a href="https://github.com/Sandra/Sandra.Snow">Sandra.Snow</a> tries to add something different.  Firstly, it is written in .Net and <a href="http://nancyfx.org">Nancy</a>, secondly its a static blog generator and finally it supports Git deployment.</p>
+
+<p>Even if you don't want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.</p>
+
+<pre><code>---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+</code></pre>
+
+<p>It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.</p>
+
+<p>The "layout" refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you'd prefer.  These "layout" files should exist in the "_layouts" folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.</p>
+
+<p>The "category" or "categories" property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.</p>
+
+<p>The "title" should hopefully be self explanatory!</p>
+
+<p>You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.
+
+      </div>
+      <p><a class="readmore" href="/2013/10/01/blogging-with-markdown-and-git/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -210,28 +246,6 @@ public void Should_return_status_ok_when_route_exists()
 
       </div>
       <p><a class="readmore" href="/2013/09/11/comparing-object-instances-with-fakeiteasy/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2013/08/24/async-route-handling-with-nancy/">Async Route Handling with Nancy</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">August 24, 2013</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2013/08/24/async-route-handling-with-nancy/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. </p>
-
-<p>The problem that comes with the new and shiny bandwagon is you need to understand what you're evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application's performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O. </p>
-
-<p>It could also be argued that only "use asynchronicity in a web framework if you expect high traffic in your web application". If you only have 10 requests on a small site you're not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2013/08/24/async-route-handling-with-nancy/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

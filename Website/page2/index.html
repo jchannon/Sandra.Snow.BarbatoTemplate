@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="last-modified" content="2017-06-07T15:49:30.9638585+01:00" />
+    <meta http-equiv="last-modified" content="2018-04-10T11:55:09.1126164+01:00" />
     <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <title>Jonathan Channon Blog</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
@@ -63,6 +63,53 @@
             <div class="">
                   
 
+    <div class="post-item boxed post-detail">
+      <span class="post-label label-quotes"></span>           
+      <div class="post-title">
+        <h1><a href="/2016/06/27/porting-owin-middleware-aspnetcore/">Porting OWIN middleware to ASP.Net Core</a></h1>
+      </div>
+      <div class="post-meta-top">
+          <span class="post-date">June 27, 2016</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+          <!-- <span class="link-comments"></span> -->
+          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2016/06/27/porting-owin-middleware-aspnetcore/"></div>
+      </div>
+      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+      <div class="post-descr entry">
+          <p>In our application at work we make use of various middleware and as we are making everything run on .Net Core the time has come to port said middleware to .Net Core.  If you don't already know ASP.Net Core has a bridge that allows you to use OWIN components in an ASP.Net Core application.  This will convert the HttpContext into a OWIN environment dictionary on input and then back again on output.</p>
+
+<p>Lets take an example of some middleware</p>
+
+<pre><code>public class MyMiddleware
+{
+    private readonly Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc;
+    private readonly OwinUserMiddlewareOptions options;
+
+    public OwinUserMiddleware(Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc, MyMiddlewareOptions options)
+    {
+        this.options = options;
+        this.nextFunc = nextFunc;
+    }
+
+    public Task Invoke(IDictionary&lt;string, object&gt; environment)
+    {
+        //Everything is awesome
+        return nextFunc(environment);
+    }
+}
+
+public static class MyMiddlewareExtensions
+{
+    public static IAppBuilder UseMyMiddleware(this IAppBuilder app, MyMiddlewareOptions options = null)
+    {
+        return app.Use(typeof(MyMiddleware), options);
+    }
+}
+</code></pre>
+
+<p>
+      </div>
+      <p><a class="readmore" href="/2016/06/27/porting-owin-middleware-aspnetcore/">Read more...</a></p>            
+    </div>
     <div class="post-item boxed post-detail">
       <span class="post-label label-quotes"></span>           
       <div class="post-title">
@@ -138,24 +185,6 @@
 
       </div>
       <p><a class="readmore" href="/2015/11/16/content-negotiation-golang/">Read more...</a></p>            
-    </div>
-    <div class="post-item boxed post-detail">
-      <span class="post-label label-quotes"></span>           
-      <div class="post-title">
-        <h1><a href="/2015/10/27/introducting-pogo-golang-twitter-pocket/">Introducing PoGo  - a GoLang, Twitter favourites to Pocket importer</a></h1>
-      </div>
-      <div class="post-meta-top">
-          <span class="post-date">October 27, 2015</span> <!-- <span class="post-author">Jonathan Channon</span> -->
-          <!-- <span class="link-comments"></span> -->
-          <div class="commentcount" data-disqus-url="http://blog.jonathanchannon.com/2015/10/27/introducting-pogo-golang-twitter-pocket/"></div>
-      </div>
-      <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
-      <div class="post-descr entry">
-          <p>I've always kept myself up to date with the latest languages arriving on the scene and I've spent time in the past learning Node and last year I learnt Python by doing the Omnisharp plugin for Sublime.  I have recently been looking for a static language that I can transfer my C# skills too and I had narrowed it down to 3; Swift, Kotlin and GoLang.  I started out with Kotlin and setting up a dev environment with IntelliJ and running the koans that Jetbrains advise you step through to pick up the language.  Whilst it seemed relatively straightforward I got "noob confused" when I saw examples of Java calling into Kotlin with get/set prefixes somehow magically added to Kotlin properties. It turns out the Kotlin compiler does this for Java libraries so it can communicate with it, to me it seemed strange that I code a library in one language and the compiler then exposes these methods and properties slightly differently. Superficial as this sounds I also didn't really like the mammoth that appears to be IntelliJ.  Coming from a predominantly Visual Studio background but working with Omnisharp I wanted a lightweight editor with some refactoring, intellisense and error highlighting.</p>
-
-
-      </div>
-      <p><a class="readmore" href="/2015/10/27/introducting-pogo-golang-twitter-pocket/">Read more...</a></p>            
     </div>
   <!-- Pagination links -->
   <div class="text-center">

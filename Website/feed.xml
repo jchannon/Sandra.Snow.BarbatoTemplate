@@ -1,4 +1,30 @@
-<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</guid><link>http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>C#</category><category>Docker</category><category>OSS</category><title>Debugging .Net Core apps inside Docker container with VSCode</title><description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jonathan Channon Blog</title><link>http://blog.jonathanchannon.com/feed.xml</link><description>Jonathan Channon Blog</description><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2018/04/10/announcing-carter/</guid><link>http://blog.jonathanchannon.com/2018/04/10/announcing-carter/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>Botwin</category><category>C#</category><category>Carter</category><category>OSS</category><title>Announcing Carter</title><description>&lt;p&gt;As of beginning of April 2018 Botwin has been renamed to Carter.  Whilst I thought the name was genius it became obvious that some people didn't like it or understand it and tried to interpret it as a Bot framework for Windows.  After spending too long trying to think of a new name I finally decided upon Carter. Carter comes from the surname of Jay-Z (Shawn Carter) and in his song Empire State of Mind he sings "I'm the new Sinatra". Sinatra is a web framework which inspired Nancy which heavily inspired Botwin.&lt;/p&gt;
+
+&lt;p&gt;The last release of Botwin was 3.5.0 but the same package has also been released under Carter 3.5.0&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://www.nuget.org/packages/Botwin/3.5.0"&gt;https://www.nuget.org/packages/Botwin/3.5.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://www.nuget.org/packages/Carter/3.5.0"&gt;https://www.nuget.org/packages/Carter/3.5.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As part of the rename I have created a Github organization with the Carter repository inside it - &lt;a href="https://github.com/CarterCommunity"&gt;https://github.com/CarterCommunity&lt;/a&gt;.  If people would like to build their own Carter extensions then they can push to repositories in that organization and maintain the repos from there.  A little attempt to build an OSS community for Carter.  Let me know if you'd like to add a repo.&lt;/p&gt;
+
+&lt;p&gt;Also we now have a Carter Slack channel.  Please sign up &lt;a href="https://join.slack.com/t/cartercommunity/shared_invite/enQtMzQwNjIwODcwMTMxLWQwMjk5NDFlYWI3Yzg5Y2M4ODNmOTkwMzA2YjkxNmE0YjI3YWU4MjU2ZjI2NmQwMmE4NjVlODBlM2RlMDI1ZmY"&gt;here&lt;/a&gt; and if you have any questions or just want to check Carter out please jump in!&lt;/p&gt;
+
+&lt;p&gt;You'll also notice Carter has a new logo, indicating you can parachute Carter into your application and all will be well!!&lt;/p&gt;
+</description><pubDate>Mon, 09 Apr 2018 23:00:00 Z</pubDate><a10:updated>2018-04-09T23:00:00Z</a10:updated><a10:content type="html">&lt;p&gt;As of beginning of April 2018 Botwin has been renamed to Carter.  Whilst I thought the name was genius it became obvious that some people didn't like it or understand it and tried to interpret it as a Bot framework for Windows.  After spending too long trying to think of a new name I finally decided upon Carter. Carter comes from the surname of Jay-Z (Shawn Carter) and in his song Empire State of Mind he sings "I'm the new Sinatra". Sinatra is a web framework which inspired Nancy which heavily inspired Botwin.&lt;/p&gt;
+
+&lt;p&gt;The last release of Botwin was 3.5.0 but the same package has also been released under Carter 3.5.0&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://www.nuget.org/packages/Botwin/3.5.0"&gt;https://www.nuget.org/packages/Botwin/3.5.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://www.nuget.org/packages/Carter/3.5.0"&gt;https://www.nuget.org/packages/Carter/3.5.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As part of the rename I have created a Github organization with the Carter repository inside it - &lt;a href="https://github.com/CarterCommunity"&gt;https://github.com/CarterCommunity&lt;/a&gt;.  If people would like to build their own Carter extensions then they can push to repositories in that organization and maintain the repos from there.  A little attempt to build an OSS community for Carter.  Let me know if you'd like to add a repo.&lt;/p&gt;
+
+&lt;p&gt;Also we now have a Carter Slack channel.  Please sign up &lt;a href="https://join.slack.com/t/cartercommunity/shared_invite/enQtMzQwNjIwODcwMTMxLWQwMjk5NDFlYWI3Yzg5Y2M4ODNmOTkwMzA2YjkxNmE0YjI3YWU4MjU2ZjI2NmQwMmE4NjVlODBlM2RlMDI1ZmY"&gt;here&lt;/a&gt; and if you have any questions or just want to check Carter out please jump in!&lt;/p&gt;
+
+&lt;p&gt;You'll also notice Carter has a new logo, indicating you can parachute Carter into your application and all will be well!!&lt;/p&gt;
+</a10:content></item><item><guid isPermaLink="true">http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</guid><link>http://blog.jonathanchannon.com/2017/06/07/debugging-netcore-docker/</link><a10:author><a10:name /></a10:author><category>ASP.NET</category><category>C#</category><category>Docker</category><category>OSS</category><title>Debugging .Net Core apps inside Docker container with VSCode</title><description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
 
 &lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don't have to install dotnet in a container.&lt;/p&gt;
 
@@ -78,8 +104,6 @@ ENTRYPOINT ./jsonfile
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;So we're ready to go with the following steps:&lt;/p&gt;
-
-&lt;p&gt;So we're ready to go, the steps are:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;dotnet publish -c Debug -f netcoreapp1.1 -r debian.8-x64 -o ./publish&lt;/code&gt;&lt;/p&gt;
 

@@ -58,8 +58,6 @@ The final Dockerfile looks like this:
 
 So we're ready to go with the following steps:
 
-So we're ready to go, the steps are:
-
 `dotnet publish -c Debug -f netcoreapp1.1 -r debian.8-x64 -o ./publish`
 
 
